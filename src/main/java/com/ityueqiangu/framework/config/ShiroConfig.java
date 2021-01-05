@@ -45,8 +45,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig
 {
-    public static final String PREMISSION_STRING = "perms[\"{0}\"]";
-
     // Session超时时间，单位为毫秒（默认30分钟）
     @Value("${shiro.session.expireTime}")
     private int expireTime;
