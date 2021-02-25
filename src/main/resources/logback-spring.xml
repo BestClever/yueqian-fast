@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="false" scanPeriod="60000" debug="false">
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+	<springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <property name="GLOBAL-LOG-LEVEL" value="INFO" /> <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
+    <property name="GLOBAL-LOG-PATH" value="log/" />  <!-- 日志输出路径变量 -->
+    <property name="GLOBAL-LOG-MODULE" value="${springAppName}" /> <!-- 日志文件命名变量，一般以模块名命名 -->
+
+<!-- You can override this to have a custom pattern -->
+<property name="CONSOLE_LOG_PATTERN"
+	value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- Minimum logging level to be presented in the console logs-->
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+	        <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+	        <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="ROLLING-FILE-1" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${GLOBAL-LOG-PATH}/${GLOBAL-LOG-MODULE}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+	   <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+	   <charset>utf8</charset>
+
+        </encoder>
+    </appender>
+
+    <!-- 异步输出 -->
+    <appender name ="ASYNC" class= "ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的90%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>10</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>256</queueSize>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref ="ROLLING-FILE-1"/>
+    </appender>
+
+    <!-- 日志级别最好每个logger节点都设置，不要引用传递root节点的日志级别，有利于性能 -->
+    <springProfile name="dev">
+        <logger name="com.ityueqiangu" level="DEBUG"/>
+        <root level="${GLOBAL-LOG-LEVEL}">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ASYNC"/>
+        </root>
+    </springProfile>
+</configuration>
