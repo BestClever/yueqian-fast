@@ -4,9 +4,9 @@ spring:
   datasource:
     name: mysql_db
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://cdb-dzuvsk24.cd.tencentcdb.com:10075/tutor-service-platform?useSSL=FALSE&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/yueqian-fast?useSSL=FALSE&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: yun@2020
+    password: 123456
     druid:
       filters: stat
       driver-class-name: com.mysql.cj.jdbc.Driver

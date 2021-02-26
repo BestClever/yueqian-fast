@@ -40,51 +40,53 @@
         }
     </style>
 </head>
-<body>
-<!--查询条件-->
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 15px;">
-    <legend>搜索条件</legend>
-</fieldset>
-<form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form">
-    <div class="layui-form-item">
-        <div class="layui-inline">
-            <label class="layui-form-label">所属部门</label>
-            <div class="layui-input-inline">
-                <input type="hidden" name="deptid" id="search_deptid">
-                <ul id="search_deptTree" class="dtree" data-id="0"></ul>
-            </div>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="layui-row">
+        <div class="layui-col-md12 search-collapse">
+            <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">所属部门</label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="deptid" id="search_deptid">
+                            <ul id="search_deptTree" class="dtree" data-id="0"></ul>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" id="name" class="layui-input input-radius" placeholder="请输入用户名">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户地址</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="address" class="layui-input input-radius"
+                                   placeholder="请输入用户地址">
+                        </div>
+                    </div>
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-radius" lay-submit="" lay-filter="doSearch"><i
+                            class="layui-icon layui-icon-search layui-icon-normal"></i>查询
+                    </button>
+                    <button type="reset" onclick="javascript:document.getElementById('search_deptid').value=''"
+                            class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm"><i
+                            class="layui-icon layui-icon-refresh"></i><span>重置</span>
+                    </button>
+                </div>
+
+            </form>
         </div>
 
-        <div class="layui-inline">
-            <label class="layui-form-label">用户名</label>
-            <div class="layui-input-inline">
-                <input type="text" name="name" id="name" class="layui-input input-radius" placeholder="请输入用户名">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">用户地址</label>
-            <div class="layui-input-inline">
-                <input type="text" name="address" class="layui-input input-radius"
-                       placeholder="请输入用户地址">
-            </div>
+        <div class="layui-col-md12 select-table">
+            <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
         </div>
     </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block" style="text-align: center;padding-right: 15%;">
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-radius" lay-submit="" lay-filter="doSearch"><i
-                    class="layui-icon layui-icon-search layui-icon-normal"></i>查询
-            </button>
-            <button type="reset" onclick="javascript:document.getElementById('search_deptid').value=''"
-                    class="layui-btn layui-btn-sm layui-btn-radius layui-btn-warm"><i
-                    class="layui-icon layui-icon-refresh"></i><span>重置</span>
-            </button>
-        </div>
-    </div>
-</form>
-
+</div>
 <!--数据表格-->
 <div>
-    <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
+
     <div id="userToolBar" style="display: none">
         <button type="button" lay-event="add" shiro:hasPermission="user:create" class="layui-btn layui-btn-sm layui-btn-normal layui-btn-radius">
             <i class="layui-icon layui-icon-add-1"></i>添加用户
@@ -247,7 +249,6 @@
             url: "/user/loadAllUser",
             toolbar: "#userToolBar",
             page: true,
-            height: "full-180",
             cols: [ [
                 {field: 'id', title: 'ID', align: 'center', width: '50'},
                 {field: 'name', title: '用户名', align: 'center', width: '130'},
