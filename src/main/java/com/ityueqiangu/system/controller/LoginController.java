@@ -3,8 +3,11 @@ package com.ityueqiangu.system.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import com.ityueqiangu.core.common.ResultObj;
+import com.ityueqiangu.core.enums.CommonEnum;
 import com.ityueqiangu.core.utils.ServletUtils;
 import com.ityueqiangu.core.web.domain.ActiverUser;
+import com.ityueqiangu.core.web.result.ResultDataUtil;
+import com.ityueqiangu.core.web.result.ResultInfo;
 import com.ityueqiangu.system.domain.Loginfo;
 import com.ityueqiangu.system.service.ILoginfoService;
 import com.ityueqiangu.system.vo.UserVo;
@@ -37,7 +40,7 @@ public class LoginController {
     private ILoginfoService loginfoService;
 
     @RequestMapping("login")
-    public ResultObj login(UserVo userVo, String code, HttpSession session){
+    public ResultInfo login(UserVo userVo, String code, HttpSession session){
 
         //获得存储在session中的验证码
         String sessionCode = (String) session.getAttribute("code");
@@ -58,13 +61,13 @@ public class LoginController {
                 entity.setLogintime(new Date());
                 loginfoService.save(entity);
 
-                return ResultObj.LOGIN_SUCCESS;
+                return ResultDataUtil.createSuccess(CommonEnum.LOGIN_SUCCESS);
             } catch (AuthenticationException e) {
                 e.printStackTrace();
-                return ResultObj.LOGIN_ERROR_PASS;
+                return ResultDataUtil.createFail(CommonEnum.LOGIN_ERROR_PASS);
             }
         }else {
-            return ResultObj.LOGIN_ERROR_CODE;
+            return ResultDataUtil.createFail(CommonEnum.LOGIN_ERROR_CODE);
         }
 
     }

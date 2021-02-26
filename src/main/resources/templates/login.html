@@ -52,19 +52,23 @@
             var btn =  $(this);
             //设置登录按钮  为不可点击
             btn.text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
-            $.post("/login/login",data.field,function(rs){
+            $.post("/login/login",data.field,function(result){
                 //设置登录按钮 恢复可点击   在前端防止 重复点击
                 btn.text("登录").attr("disabled",false).removeClass("layui-disabled");
-                layer.msg(rs.msg);
-                if(rs.code != 200){
-                    layer.msg(rs.msg);
-                    $.get("/login/getCode",function (code) {
-                        $("#img").attr("src","/login/getCode");
-                    })
+                layer.msg(result.msg);
+                if(!result.success){
+                    layer.msg(result.msg,function () {
+						$.get("/login/getCode",function (code) {
+							$("#img").attr("src","/login/getCode");
+						})
+					});
+
                 }else{
                     //跳转到templates/system/index/index.html页面
-                    layer.msg(rs.msg);
-                    location.href="/sys/index";
+                    layer.msg(result.msg,function () {
+						location.href="/sys/index";
+					});
+
                 }
             });
 	        return false;

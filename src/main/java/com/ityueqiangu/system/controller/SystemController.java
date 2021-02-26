@@ -19,7 +19,7 @@ public class SystemController {
      */
     @RequestMapping("toLogin")
     public String toLogin(){
-        return "system/index/login";
+        return "login";
     }
 
     /**
@@ -48,7 +48,7 @@ public class SystemController {
     public String toSignOut(){
         //销毁session
         ServletUtils.getSession().removeAttribute("user");
-        return "system/index/login";
+        return "login";
     }
 
     /**
@@ -57,7 +57,7 @@ public class SystemController {
      */
     @RequestMapping("index")
     public String index(){
-        return "system/index/index";
+        return "index";
     }
 
     /**

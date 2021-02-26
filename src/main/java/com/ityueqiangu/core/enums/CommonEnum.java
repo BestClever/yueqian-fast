@@ -30,8 +30,10 @@ public enum CommonEnum implements BaseInfoInterface {
     LOGIN_SUCCESS(9001, "登录成功！"),
     REGISTER_SUCCESS(9002, "注册成功！"),
     LOGIN_FAILURE(9050,"登录失败！"),
+    LOGIN_ERROR_PASS(9051,"用户名或密码错误"),
     PWD_ERROR(9052,"密码错误"),
     ACCOUNT_DISABLED(9053,"账号停用,请联系管理员！"),
+    LOGIN_ERROR_CODE(9054,"验证码错误"),
 
     /**查询**/
     SELECT_SUCCESS(2000,"查询成功！"),

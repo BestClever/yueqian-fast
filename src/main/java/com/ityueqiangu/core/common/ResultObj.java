@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+
 /**
  * @Author: 落亦-
  * @Date: 2019/11/21 21:35
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultObj {
+public class ResultObj extends HashMap<String, Object> {
 
     private Integer code;
     private String msg;
