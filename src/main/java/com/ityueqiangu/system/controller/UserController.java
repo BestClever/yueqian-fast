@@ -21,8 +21,10 @@ import com.ityueqiangu.system.vo.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -37,7 +39,7 @@ import java.util.Map;
  * @author luoyi-
  * @since 2019-11-21
  */
-@RestController
+@Controller
 @RequestMapping("user")
 public class UserController {
 
@@ -50,12 +52,18 @@ public class UserController {
     @Autowired
     private IRoleService roleService;
 
+    @RequestMapping(value = "/add")
+    public String add(){
+        return "/system/user/add";
+    }
+
     /**
      * 查询所有用户
      * @param userVo
      * @return
      */
     @RequestMapping("loadAllUser")
+    @ResponseBody
     public DataGridView loadAllUser(UserVo userVo){
         IPage<User> page = new Page<User>(userVo.getPage(),userVo.getLimit());
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
@@ -93,6 +101,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("loadUserMaxOrderNum")
+    @ResponseBody
     public Map<String,Object> loadUserMaxOrderNum(){
         Map<String,Object> map = new HashMap<String,Object>();
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
@@ -113,6 +122,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("loadUsersByDeptId")
+    @ResponseBody
     public DataGridView loadUsersByDeptIp(Integer deptId){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         queryWrapper.eq(deptId!=null,"deptid",deptId);
@@ -131,6 +141,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("changeChineseToPinyin")
+    @ResponseBody
     public Map<String,Object> changeChineseToPinyin(String username){
         Map<String,Object> map = new HashMap<String, Object>(16);
         if (null!=username){
@@ -148,6 +159,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("addUser")
+    @ResponseBody
     public ResultObj addUser(UserVo userVo){
         try {
             //设置类型
@@ -173,6 +185,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("loadUserById")
+    @ResponseBody
     public DataGridView loadUserById(Integer id){
         return new DataGridView(userService.getById(id));
     }
@@ -183,6 +196,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("updateUser")
+    @ResponseBody
     public ResultObj updateUser(UserVo userVo){
         try {
             userService.updateById(userVo);
@@ -199,6 +213,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("deleteUser/{id}")
+    @ResponseBody
     public ResultObj deleteUser(@PathVariable("id") Integer id){
         try {
             userService.removeById(id);
@@ -215,6 +230,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("queryMgrByUserId")
+    @ResponseBody
     public ResultObj queryMgrByUserId(Integer userId){
         Boolean isMgr = userService.queryMgrByUserId(userId);
         if (isMgr){
@@ -230,6 +246,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("resetPwd/{id}")
+    @ResponseBody
     public ResultObj resetPwd(@PathVariable("id") Integer id){
         try {
             User user = new User();
@@ -253,6 +270,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("initRoleByUserId")
+    @ResponseBody
     public DataGridView initRoleByUserId(Integer id){
         //1.查询所有可用的角色
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
@@ -282,6 +300,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("saveUserRole")
+    @ResponseBody
     public ResultObj saveUserRole(Integer uid,Integer[] ids){
         try {
             userService.saveUserRole(uid,ids);
@@ -300,6 +319,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("changePassword")
+    @ResponseBody
     public ResultObj changePassword(String oldPassword,String newPwdOne,String newPwdTwo){
         //1.先通过session获得当前用户的ID
         User user =(User) ServletUtils.getSession().getAttribute("user");
@@ -330,6 +350,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("getNowUser")
+    @ResponseBody
     public User getNowUser(){
         //1.获取当前session中的user
         User user = (User) ServletUtils.getSession().getAttribute("user");

@@ -7,7 +7,9 @@ layui.config({
     base: rootPath + "modules/",
     version: true
 }).extend({
+    popup: "popup",
     common: "common",
     utilCustom:"utilCustom",
     ajaxUtils:"ajaxUtils",
+    dtree:"dtree",
 });

@@ -2,9 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include::header('用户管理')"/>
-    <link rel="stylesheet" th:href="@{/resources/css/public.css}" media="all"/>
-    <link rel="stylesheet" th:href="@{/resources/layui_ext/dtree/dtree.css}" media="all"/>
-    <link rel="stylesheet" th:href="@{/resources/layui_ext/dtree/font/dtreefont.css}" media="all"/>
     <style>
         input#search_deptTree_select_input_id {
             border-radius: 10px;
@@ -187,14 +184,15 @@
                 </div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block" style="text-align: center;padding-right: 7%">
-                <button type="button" class="layui-btn layui-btn-radius" lay-submit="" lay-filter="doSubmit"
-                        id="doSubmit"><i
-                        class="layui-icon layui-icon-search layui-icon-normal"></i>提交
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit="" lay-filter="user-save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
                 </button>
-                <button type="reset" onclick="javascript:document.getElementById('deptid').value=''" class="layui-btn layui-btn-radius layui-btn-warm"><i
-                        class="layui-icon layui-icon-refresh"></i><span>重置</span>
+                <button type="reset" class="pear-btn pear-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
                 </button>
             </div>
         </div>
@@ -213,15 +211,15 @@
     //提升数据表格的作用域，因为底下还有一个reloadTable方法
     var tableIns;
 
-    layui.extend({
-        dtree: '/resources/layui_ext/dtree/dtree'
-    }).use(['jquery', 'form', 'layer', 'laydate', 'table', 'layedit', 'dtree','laydate'], function () {
+    layui.use(['jquery', 'form', 'layer', 'laydate', 'table', 'layedit', 'dtree','laydate','common','popup'], function () {
         var $ = layui.jquery;
         var form = layui.form;
         var layer = layui.layer;
         var table = layui.table;
         var dtree = layui.dtree;
         var laydate = layui.laydate;
+        var common = layui.common;
+        var popup = layui.popup;
 
         //初始化时间选择器
         laydate.render({
@@ -236,6 +234,8 @@
             url: "/user/loadAllUser",
             toolbar: "#userToolBar",
             page: true,
+            skin: 'line',
+            height: 'full-100',
             cols: [ [
                 {field: 'id', title: 'ID', align: 'center', width: '50'},
                 {field: 'name', title: '用户名', align: 'center', width: '130'},
@@ -259,7 +259,7 @@
                 }
                 },
                 {field: 'ordernum', title: '排序码', align: 'center', width: '80'},
-                {fixed: 'right', title: '操作', toolbar: '#userRowBar', align: 'center', width: '330'}
+                {fixed: 'right', title: '操作', toolbar: '#userRowBar', align: 'center', width: '450'}
             ] ],
             done: function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -320,26 +320,39 @@
 
         //打开添加弹出层
         function openAddLayer() {
-            mainIndex = layer.open({
-                type: 1,
-                content: $("#addOrUpdateDiv"),
-                area: ['800px', '550px'],
-                title: '添加用户',
-                success: function () {
-                    $("#dataFrm")[0].reset();
-                    //设置下拉树中父节点的值为空
-                    $("#deptid").val("");
-                    url = "/user/addUser";
-                    //初始化排序码
-                    $.get("/user/loadUserMaxOrderNum", function (res) {
-                        $("#ordernum").val(res.value);
-                    });
-                    //重新渲染直属领导的下拉列表
-                    var html = "<option value='0'>请选择直属领导</option>";
-                    $("#mgr").html(html);
-                    form.render("select");
-                }
-            });
+            // mainIndex = layer.open({
+            //     type: 1,
+            //     content: $("#addOrUpdateDiv"),
+            //     area: ['800px', '550px'],
+            //     title: '添加用户',
+            //     success: function () {
+            //         $("#dataFrm")[0].reset();
+            //         //设置下拉树中父节点的值为空
+            //         $("#deptid").val("");
+            //         url = "/user/addUser";
+            //         //初始化排序码
+            //         $.get("/user/loadUserMaxOrderNum", function (res) {
+            //             $("#ordernum").val(res.value);
+            //         });
+            //         //重新渲染直属领导的下拉列表
+            //         var html = "<option value='0'>请选择直属领导</option>";
+            //         $("#mgr").html(html);
+            //         form.render("select");
+            //     }
+            // });
+            var options = {
+                title: '人员选择',
+                width: "800",
+                url: ctx + "user/add",
+                callBack: doSubmit
+            };
+            popup.openOptions(options);
+        }
+
+        function doSubmit(index, layero){
+            var body = layer.getChildFrame('body', index);
+           debugger
+            layer.close(index);
         }
 
         //打开修改的弹出层
