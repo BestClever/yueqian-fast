@@ -3,7 +3,7 @@ package com.ityueqiangu.core.common;
 import com.alibaba.fastjson.JSON;
 
 /**
- * @Author: 落亦-
+ * @Author: clever、xia
  * @Date: 2019/12/20 18:40
  */
 public class CacheBean {

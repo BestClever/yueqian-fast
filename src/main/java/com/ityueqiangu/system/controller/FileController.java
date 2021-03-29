@@ -1,9 +1,19 @@
 package com.ityueqiangu.system.controller;
 
 import cn.hutool.core.date.DateUtil;
+import com.ityueqiangu.core.config.FrameworkConfig;
+import com.ityueqiangu.core.constant.Constants;
+import com.ityueqiangu.core.enums.CommonEnum;
+import com.ityueqiangu.core.exception.BizException;
 import com.ityueqiangu.core.utils.AppFileUtils;
+import com.ityueqiangu.core.utils.ServletUtils;
+import com.ityueqiangu.core.utils.file.FileUploadUtils;
+import com.ityueqiangu.core.web.result.ResultDataUtil;
+import com.ityueqiangu.core.web.result.ResultInfo;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,19 +24,62 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Author: 落亦-
+ * @Author: clever、xia
  * @Date: 2019/12/15 23:46
  */
 @RestController
-@RequestMapping("file")
+@RequestMapping("/file")
 public class FileController {
+
+
+    /**
+     * 通用上传请求
+     */
+    @PostMapping("/upload")
+    @ResponseBody
+    public ResultInfo upload(MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            throw new BizException("文件不能为空");
+        }
+        // 上传文件路径
+        String filePath = FrameworkConfig.getUploadPath();
+        // 上传并返回新文件名称
+        String fileName = FileUploadUtils.upload(filePath, file);
+        String url = ServletUtils.getUrl() + fileName;
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("fileName", fileName);
+        resultMap.put("url", url);
+        return ResultDataUtil.createSuccess(CommonEnum.FILE_UPLOAD_SUCCESS).setData(resultMap);
+    }
+
+    /**
+     * layui 文件上传
+     */
+    @PostMapping("/uploadImage")
+    @ResponseBody
+    public ResultInfo uploadImage(MultipartFile file) throws Exception {
+        if (file.isEmpty()) {
+            throw new BizException("文件不能为空");
+        }
+        // 上传文件路径
+        String filePath = FrameworkConfig.getUploadPath();
+        // 上传并返回新文件名称
+        String fileName = FileUploadUtils.upload(filePath, file);
+        String url = ServletUtils.getUrl() + fileName;
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap.put("title", fileName);
+        resultMap.put("src", url);
+        return ResultDataUtil.createSuccess(CommonEnum.FILE_UPLOAD_SUCCESS_LAYUI).setData(resultMap);
+    }
+
+
 
     /**
      * 文件上传
      * @param mf
      * @return
      */
-    @RequestMapping("uploadFile")
+    @RequestMapping("/uploadFile")
     public Map<String,Object> uploadFile(MultipartFile mf) {
         //1.得到文件名
         String oldName = mf.getOriginalFilename();

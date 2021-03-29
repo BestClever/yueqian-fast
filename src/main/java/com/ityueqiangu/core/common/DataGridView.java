@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * json数据实体
- * @Author: 落亦-
+ * @Author: clever、xia
  * @Date: 2019/11/22 15:17
  */
 @Data
