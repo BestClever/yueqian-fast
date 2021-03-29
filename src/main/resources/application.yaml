@@ -1,3 +1,17 @@
+framework:
+  # 名称
+  name: ItYueQianGu
+  # 版本
+  version: 1.0
+  # 版权年份
+  copyrightYear: 2020
+  # 实例演示开关
+  demoEnabled: false
+  # 文件路径 示例（ Windows配置D:/ityueqiangu/uploadPath，Linux配置 /home/ityueqiangu/uploadPath）
+  profile: D:/ityueqiangu/uploadPath
+  # 获取ip地址开关
+  addressEnabled: true
+
 server:
   port: 8086
 spring:

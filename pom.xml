@@ -42,8 +42,9 @@
         <poi.version>4.1.2</poi.version>
         <oshi.version>5.3.6</oshi.version>
         <jna.version>5.6.0</jna.version>
-        <hutool-version>5.5.8</hutool-version>
+        <hutool-version>5.6.1</hutool-version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
+        <zxing.version>3.3.3</zxing.version>
     </properties>
 
     <dependencies>
@@ -293,7 +294,7 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
-            <version>3.3.3</version>
+            <version>${zxing.version}</version>
         </dependency>
     </dependencies>
 

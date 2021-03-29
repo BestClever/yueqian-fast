@@ -2,6 +2,7 @@ package com.ityueqiangu.core.utils;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
+import com.ityueqiangu.core.config.FrameworkConfig;
 import com.ityueqiangu.core.constant.Constants;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,22 +23,7 @@ public class AppFileUtils {
     /**
      * 文件上传的保存路径  默认值
      */
-    public static String UPLOAD_PATH="G:/upload/";
-
-    static {
-        //通过反射的方式，读取配置文件的存储地址
-        InputStream stream = AppFileUtils.class.getClassLoader().getResourceAsStream("file.properties");
-        Properties properties=new Properties();
-        try {
-            properties.load(stream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String property = properties.getProperty("filepath");
-        if(null!=property) {
-            UPLOAD_PATH=property;
-        }
-    }
+    public static String UPLOAD_PATH = FrameworkConfig.getProfile();
 
     /**
      * 根据文件老名字得到新名字
