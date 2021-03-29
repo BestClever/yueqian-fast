@@ -1,6 +1,8 @@
 package com.ityueqiangu.project.system.user.controller;
 
+import com.ityueqiangu.common.constant.UserConstants;
 import com.ityueqiangu.common.utils.DateUtils;
+import com.ityueqiangu.common.utils.StringUtils;
 import com.ityueqiangu.common.utils.file.FileUploadUtils;
 import com.ityueqiangu.framework.aspectj.lang.annotation.Log;
 import com.ityueqiangu.framework.aspectj.lang.enums.BusinessType;
@@ -15,13 +17,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 个人信息 业务处理
- * 
- * @author Clever、xia
+ *
+ * @author ruoyi
  */
 @Controller
 @RequestMapping("/system/user/profile")
@@ -129,6 +135,16 @@ public class ProfileController extends BaseController
         currentUser.setEmail(user.getEmail());
         currentUser.setPhonenumber(user.getPhonenumber());
         currentUser.setSex(user.getSex());
+        if (StringUtils.isNotEmpty(user.getPhonenumber())
+                && UserConstants.USER_PHONE_NOT_UNIQUE.equals(userService.checkPhoneUnique(currentUser)))
+        {
+            return error("修改用户'" + currentUser.getLoginName() + "'失败，手机号码已存在");
+        }
+        else if (StringUtils.isNotEmpty(user.getEmail())
+                && UserConstants.USER_EMAIL_NOT_UNIQUE.equals(userService.checkEmailUnique(currentUser)))
+        {
+            return error("修改用户'" + currentUser.getLoginName() + "'失败，邮箱账号已存在");
+        }
         if (userService.updateUserInfo(currentUser) > 0)
         {
             setSysUser(userService.selectUserById(currentUser.getUserId()));
