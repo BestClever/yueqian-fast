@@ -7,7 +7,7 @@ package com.ityueqiangu.core.constant;
  * @description:
  * @date 2021-02-25 16:13
  */
-public class Constant {
+public class Constants {
     /**
      * 状态码  正常 200  错误  -1
      */
@@ -57,4 +57,10 @@ public class Constant {
      * 用户默认图片
      */
     public static final String DEFAULT_IMG_USER="/images/defaultUserTitle.jpg";
+
+
+    /**
+     * 资源映射路径 前缀
+     */
+    public static final String RESOURCE_PREFIX = "/profile";
 }

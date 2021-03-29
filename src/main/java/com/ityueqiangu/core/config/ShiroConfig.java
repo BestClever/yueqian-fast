@@ -1,7 +1,8 @@
 package com.ityueqiangu.core.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.ityueqiangu.core.constant.Constant;
+import com.ityueqiangu.core.constant.Constants;
+import com.ityueqiangu.core.shiro.MyAuthenticationFilter;
 import com.ityueqiangu.core.shiro.UserRealm;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -9,6 +10,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class ShiroConfig {
     /**
      * 散列次数
      */
-    private int hashIterations = Constant.HASHITERATIONS;
+    private int hashIterations = Constants.HASHITERATIONS;
     /**
      * 默认的登陆页面
      */
@@ -66,14 +67,24 @@ public class ShiroConfig {
         return userRealm;
     }
 
+    @Bean(name="SessionManager")
+    public DefaultWebSessionManager webSessionManager(){
+        DefaultWebSessionManager webSessionManager = new DefaultWebSessionManager();
+        //去掉 jessionid
+        webSessionManager.setSessionIdUrlRewritingEnabled(false);
+        return webSessionManager;
+    }
+
     /**
      * 配置SecurityManager
      */
     @Bean("securityManager")
-    public SecurityManager securityManager(UserRealm userRealm) {
+    public SecurityManager securityManager(UserRealm userRealm,DefaultWebSessionManager SessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 注入userRealm
         securityManager.setRealm(userRealm);
+        //注入 自定义的 sessionmanager
+        securityManager.setSessionManager(SessionManager);
         return securityManager;
     }
 
@@ -83,10 +94,15 @@ public class ShiroConfig {
     @Bean(SHIRO_FILTER)
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+        //将重写的Filter注入到factoryBean的filter中
+        filters.put("authc",new MyAuthenticationFilter());
+        shiroFilterFactoryBean.setFilters(filters);
+
         // Shiro的核心安全接口,这个属性是必须的
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 身份认证失败，则跳转到登录页面的配置
-        shiroFilterFactoryBean.setLoginUrl(loginUrl);
+//        shiroFilterFactoryBean.setLoginUrl(loginUrl);
         // 权限认证失败，则跳转到指定页面
 //        shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
         // Shiro连接约束配置，即过滤链的定义

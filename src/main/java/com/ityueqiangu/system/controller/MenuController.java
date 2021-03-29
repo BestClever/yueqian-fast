@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ityueqiangu.core.common.DataGridView;
 import com.ityueqiangu.core.common.ResultObj;
-import com.ityueqiangu.core.constant.Constant;
+import com.ityueqiangu.core.constant.Constants;
 import com.ityueqiangu.core.tree.TreeNode;
 import com.ityueqiangu.core.tree.TreeNodeBuilder;
 import com.ityueqiangu.core.utils.ServletUtils;
@@ -45,14 +45,14 @@ public class MenuController {
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<Permission>();
         //设置查询条件
         //查询的必须是菜单，不能是crud的权限
-        queryWrapper.eq("type",Constant.TYPE_MENU);
+        queryWrapper.eq("type", Constants.TYPE_MENU);
         //菜单必须可用
-        queryWrapper.eq("available", Constant.AVAILABLE_TRUE);
+        queryWrapper.eq("available", Constants.AVAILABLE_TRUE);
 
         //获得用户  判断用户的类型
         User user = (User) ServletUtils.getSession().getAttribute("user");
         List<Permission> list = null;
-        if (user.getType().equals(Constant.USER_TYPE_SUPER)){
+        if (user.getType().equals(Constants.USER_TYPE_SUPER)){
             //用户类型为超级管理员
             list = permissionService.list(queryWrapper);
         }else {
@@ -87,7 +87,7 @@ public class MenuController {
             String title = p.getTitle();
             String icon = p.getIcon();
             String href = p.getHref();
-            Boolean spread = p.getOpen().equals(Constant.OPEN_TRUE)?true:false;
+            Boolean spread = p.getOpen().equals(Constants.OPEN_TRUE)?true:false;
             treeNodes.add(new TreeNode(id,pid,title,icon,href,spread));
         }
 
@@ -109,7 +109,7 @@ public class MenuController {
     public DataGridView loadMenuManagerLeftTreeJson(PermissionVo permissionVo){
 
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("type",Constant.TYPE_MENU);
+        queryWrapper.eq("type", Constants.TYPE_MENU);
         //查询出所有的菜单，存放进list中
         List<Permission> list = permissionService.list(queryWrapper);
         List<TreeNode> treeNodes = new ArrayList<>();
@@ -133,7 +133,7 @@ public class MenuController {
         QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(permissionVo.getId()!=null,"id",permissionVo.getId()).or().eq(permissionVo.getId()!=null,"pid",permissionVo.getId());
         //只能查询菜单
-        queryWrapper.eq("type",Constant.TYPE_MENU);
+        queryWrapper.eq("type", Constants.TYPE_MENU);
         queryWrapper.like(StringUtils.isNotBlank(permissionVo.getTitle()),"title",permissionVo.getTitle());
         queryWrapper.orderByAsc("ordernum");
         //进行查询
@@ -151,7 +151,7 @@ public class MenuController {
     public ResultObj addMenu(PermissionVo permissionVo){
         try {
             //设置添加类型为 menu
-            permissionVo.setType(Constant.TYPE_MENU);
+            permissionVo.setType(Constants.TYPE_MENU);
             permissionService.save(permissionVo);
             return ResultObj.ADD_SUCCESS;
         } catch (Exception e) {

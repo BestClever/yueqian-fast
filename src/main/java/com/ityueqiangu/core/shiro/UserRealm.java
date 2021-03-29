@@ -1,7 +1,7 @@
 package com.ityueqiangu.core.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.ityueqiangu.core.constant.Constant;
+import com.ityueqiangu.core.constant.Constants;
 import com.ityueqiangu.core.web.domain.ActiverUser;
 import com.ityueqiangu.system.domain.Permission;
 import com.ityueqiangu.system.domain.User;
@@ -66,7 +66,7 @@ public class UserRealm extends AuthorizingRealm {
         List<String> superPermission = new ArrayList<>();
         superPermission.add("*:*");
         List<String> permissions = activerUser.getPermission();
-        if (user.getType().equals(Constant.USER_TYPE_SUPER)){
+        if (user.getType().equals(Constants.USER_TYPE_SUPER)){
             authorizationInfo.addStringPermissions(superPermission);
         }else {
             if (null!=permissions&&permissions.size()>0){
@@ -96,8 +96,8 @@ public class UserRealm extends AuthorizingRealm {
             //根据用户ID查询percode
             QueryWrapper<Permission> qw = new QueryWrapper<>();
             //设置只能查询所有可用的菜单
-            qw.eq("type", Constant.TYPE_PERMISSION);
-            qw.eq("available",Constant.AVAILABLE_TRUE);
+            qw.eq("type", Constants.TYPE_PERMISSION);
+            qw.eq("available", Constants.AVAILABLE_TRUE);
             Integer userId = user.getId();
             //根据用户ID查询角色ID，因为一个用户可能有多个角色，所以使用list进行存储
             List<Integer> currentUserRoleIds = roleService.queryUserRoleIdsByUid(userId);

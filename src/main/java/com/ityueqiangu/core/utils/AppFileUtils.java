@@ -2,7 +2,7 @@ package com.ityueqiangu.core.utils;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
-import com.ityueqiangu.core.constant.Constant;
+import com.ityueqiangu.core.constant.Constants;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -98,7 +98,7 @@ public class AppFileUtils {
      */
     public static void removeFileByPath(String oldPath) {
         //图片的路径不是默认图片的路径
-        if (!oldPath.equals(Constant.DEFAULT_IMG_GOODS)){
+        if (!oldPath.equals(Constants.DEFAULT_IMG_GOODS)){
             File file = new File(UPLOAD_PATH,oldPath);
             if (file.exists()){
                 file.delete();
