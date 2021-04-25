@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.system.mapper.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.ityueqiangu.system.domain.SysUser">
+        <result column="id" property="id"/>
+        <result column="login_name" property="loginName"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="email" property="email"/>
+        <result column="user_type" property="userType"/>
+        <result column="college_id" property="collegeId"/>
+        <result column="college_name" property="collegeName"/>
+        <result column="classe_id" property="classeId"/>
+        <result column="classe_name" property="classeName"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user_id" property="createUserId"/>
+        <result column="create_user_name" property="createUserName"/>
+        <result column="update_user_id" property="updateUserId"/>
+        <result column="update_user_name" property="updateUserName"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.login_name
+    , t.user_name
+    , t.password
+    , t.sex
+    , t.email
+    , t.user_type
+    , t.college_id
+    , t.college_name
+    , t.classe_id
+    , t.classe_name
+    , t.is_deleted
+    , t.create_time
+    , t.create_user_id
+    , t.create_user_name
+    , t.update_user_id
+    , t.update_user_name
+    , t.update_time
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSysUserList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysUser">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null  and id != ''">
+                and t.id= #{id}
+            </if>
+            <if test="loginName != null  and loginName != ''">
+                and t.login_name= #{loginName}
+            </if>
+            <if test="userName != null  and userName != ''">
+                and t.user_name= #{userName}
+            </if>
+            <if test="password != null  and password != ''">
+                and t.password= #{password}
+            </if>
+            <if test="sex != null  and sex != ''">
+                and t.sex= #{sex}
+            </if>
+            <if test="email != null  and email != ''">
+                and t.email= #{email}
+            </if>
+            <if test="userType != null  and userType != ''">
+                and t.user_type= #{userType}
+            </if>
+            <if test="collegeId != null  and collegeId != ''">
+                and t.college_id= #{collegeId}
+            </if>
+            <if test="collegeName != null  and collegeName != ''">
+                and t.college_name= #{collegeName}
+            </if>
+            <if test="classeId != null  and classeId != ''">
+                and t.classe_id= #{classeId}
+            </if>
+            <if test="classeName != null  and classeName != ''">
+                and t.classe_name= #{classeName}
+            </if>
+            <if test="isDeleted != null  and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createTime != null  and createTime != ''">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="createUserId != null  and createUserId != ''">
+                and t.create_user_id= #{createUserId}
+            </if>
+            <if test="createUserName != null  and createUserName != ''">
+                and t.create_user_name= #{createUserName}
+            </if>
+            <if test="updateUserId != null  and updateUserId != ''">
+                and t.update_user_id= #{updateUserId}
+            </if>
+            <if test="updateUserName != null  and updateUserName != ''">
+                and t.update_user_name= #{updateUserName}
+            </if>
+            <if test="updateTime != null  and updateTime != ''">
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="selectSysUserById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user t
+        WHERE t.id = #{id}
+    </select>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysUser" parameterType="com.ityueqiangu.system.domain.SysUser"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="userType != null">
+                user_type,
+            </if>
+            <if test="collegeId != null">
+                college_id,
+            </if>
+            <if test="collegeName != null">
+                college_name,
+            </if>
+            <if test="classeId != null">
+                classe_id,
+            </if>
+            <if test="classeName != null">
+                classe_name,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createUserName != null">
+                create_user_name,
+            </if>
+            <if test="updateUserId != null">
+                update_user_id,
+            </if>
+            <if test="updateUserName != null">
+                update_user_name,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="loginName != null">
+                #{loginName},
+            </if>
+            <if test="userName != null">
+                #{userName},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="userType != null">
+                #{userType},
+            </if>
+            <if test="collegeId != null">
+                #{collegeId},
+            </if>
+            <if test="collegeName != null">
+                #{collegeName},
+            </if>
+            <if test="classeId != null">
+                #{classeId},
+            </if>
+            <if test="classeName != null">
+                #{classeName},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId},
+            </if>
+            <if test="createUserName != null">
+                #{createUserName},
+            </if>
+            <if test="updateUserId != null">
+                #{updateUserId},
+            </if>
+            <if test="updateUserName != null">
+                #{updateUserName},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysUser" parameterType="com.ityueqiangu.system.domain.SysUser">
+        UPDATE sys_user
+        <set>
+            <if test="loginName != null">
+                login_name=#{loginName},
+            </if>
+            <if test="userName != null">
+                user_name=#{userName},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="sex != null">
+                sex=#{sex},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+            <if test="userType != null">
+                user_type=#{userType},
+            </if>
+            <if test="collegeId != null">
+                college_id=#{collegeId},
+            </if>
+            <if test="collegeName != null">
+                college_name=#{collegeName},
+            </if>
+            <if test="classeId != null">
+                classe_id=#{classeId},
+            </if>
+            <if test="classeName != null">
+                classe_name=#{classeName},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted=#{isDeleted},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="createUserId != null">
+                create_user_id=#{createUserId},
+            </if>
+            <if test="createUserName != null">
+                create_user_name=#{createUserName},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id=#{updateUserId},
+            </if>
+            <if test="updateUserName != null">
+                update_user_name=#{updateUserName},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据主键删除记录 -->
+    <delete id="deleteSysUserById" parameterType="Integer">
+        delete from sys_user where id = #{id}
+	</delete>
+
+    <select id="getOne" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysUser">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="loginName != null  and loginName != ''">
+                and t.login_name= #{loginName}
+            </if>
+            <if test="userType != null  and userType != ''">
+                and t.user_type= #{userType}
+            </if>
+        </trim>
+    </select>
+
+    <select id="notEvaluateList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysUser">
+    SELECT
+        <include refid="baseColumns"/>
+    FROM sys_user t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            not EXISTS ( SELECT * FROM t_assess_evaluate tae WHERE tae.assess_user_id = t.id)
+            and t.user_type = '4'
+            <if test="classeId != null">
+                classe_id=#{classeId},
+            </if>
+        </trim>
+    </select>
+
+</mapper>

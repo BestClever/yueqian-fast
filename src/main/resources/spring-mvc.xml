@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!--只扫描controller 和   org.springframework.web.bind.annotation.ControllerAdvice-->
+	<context:component-scan base-package="com.ityueqiangu" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	<!-- 开启springmvc 的注解 -->
+	<mvc:annotation-driven/>
+	<!-- 配置静态资源文件的访问  -->
+	<mvc:default-servlet-handler/>
+	<!--配置 开启aop 类代理-->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+
+	<!-- json转换器 -->
+	<bean id="jsonMessageConverter"
+		  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/WEB-INF/view/login.jsp"/>
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/register"/>
+			<mvc:exclude-mapping path="/user/register"/>
+			<mvc:exclude-mapping path="/user/checkIsExist"/>
+			<mvc:exclude-mapping path="/checkUniqueUserNo"/>
+			<mvc:exclude-mapping path="/getVerifiyCode"/>
+			<mvc:exclude-mapping path="/static/**"/>
+			<mvc:exclude-mapping path="/js/**"/>
+			<mvc:exclude-mapping path="/profile/**"/>
+			<mvc:exclude-mapping path="/portal/**"/>
+			<bean class="com.ityueqiangu.core.interceptor.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!--配置文件上传-->
+	<bean	id="multipartResolver"	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="maxUploadSize" value="10485760000"></property>
+		<property name="maxInMemorySize" value="40960"></property>
+	</bean>
+
+	<!--配置view name 返回什么样子的格式-->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+	<!--json 处理，json配置 modelAndView 时候 使用的 jsonView -->
+	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+	<!-- 配置视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"  value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	<!-- 配置用于开启Shiro Spring AOP 权限注解的支持 -->
+</beans>

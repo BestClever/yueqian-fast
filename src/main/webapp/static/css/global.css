@@ -1,0 +1,166 @@
+
+.input-radius {
+    border-radius: 10px;
+    height: 30px;
+    margin-top: 4px;
+}
+
+/*公共样式*/
+.childrenBody {
+    padding: 10px;
+}
+
+.layui-table-view {
+    margin: 0 !important;
+}
+
+.magb0 {
+    margin-bottom: 0 !important;
+}
+
+.magt0 {
+    margin-top: 0 !important;
+}
+
+.magt3 {
+    margin-top: 3px !important;
+}
+
+.magt10 {
+    margin-top: 10px !important;
+}
+
+.magb15 {
+    margin-bottom: 15px !important;
+}
+
+.magt30 {
+    margin-top: 30px !important;
+}
+
+/* BACKGROUNDS */
+.gray-bg {
+    background-color: #f3f3f4;
+}
+
+.white-bg {
+    background-color: #ffffff;
+}
+
+.navy-bg {
+    background-color: #1ab394;
+    color: #ffffff;
+}
+
+.blue-bg {
+    background-color: #1c84c6;
+    color: #ffffff;
+}
+
+.lazur-bg {
+    background-color: #23c6c8;
+    color: #ffffff;
+}
+
+.yellow-bg {
+    background-color: #f8ac59;
+    color: #ffffff;
+}
+
+.red-bg {
+    background-color: #ed5565;
+    color: #ffffff;
+}
+
+.black-bg {
+    background-color: #262626;
+}
+
+.layui-left {
+    text-align: left;
+}
+
+.layui-block {
+    width: 100% !important;
+}
+
+.layui-center {
+    text-align: center;
+}
+
+.layui-right {
+    text-align: right;
+}
+
+.layui-elem-quote.title {
+    padding: 10px 15px;
+    margin-bottom: 0;
+}
+
+.layui-bg-white {
+    background-color: #fff !important;
+}
+
+.border {
+    border: 1px solid #e6e6e6 !important;
+    padding: 10px;
+    border-top: none;
+}
+
+.main_btn .layui-btn {
+    margin: 2px 5px 2px 0;
+}
+
+.layui-timeline-axis {
+    left: -4px;
+}
+
+.layui-elem-quote {
+    word-break: break-all;
+}
+
+.icons li, .icons li:hover, .loginBody .seraph, .loginBody .seraph:hover, .loginBody .layui-form-item.layui-input-focus label, .loginBody .layui-form-item label, .loginBody .layui-form-item.layui-input-focus input, .loginBody .layui-form-item input {
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+}
+
+.icons li:hover i, .icons li i {
+    transition: font-size 0.3s ease-in-out;
+    -webkit-transition: font-size 0.3s ease-in-out;
+}
+
+.loginBody .layui-input-focus .layui-input::-webkit-input-placeholder {
+    transition: color 0.2s linear 0.2s;
+    -webkit-transition: color 0.2s linear 0.2s;
+}
+
+.loginBody .layui-input-focus .layui-input::-moz-placeholder {
+    transition: color 0.2s linear 0.2s;
+}
+
+.loginBody .layui-input-focus .layui-input:-ms-input-placeholder {
+    transition: color 0.2s linear 0.2s;
+}
+
+.loginBody .layui-input-focus .layui-input::placeholder {
+    transition: color 0.2s linear 0.2s;
+    -webkit-transition: color 0.2s linear 0.2s;
+}
+
+.layui-panel {
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px rgb(0 0 0 / 8%);
+    background-color: #fff;
+    color: #666
+}
+
+.layui-panel-window {
+    position: relative;
+    padding: 15px;
+    border-radius: 0;
+    border-top: 5px solid #eee;
+    background-color: #fff
+}
