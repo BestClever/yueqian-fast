@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>管理员列表</title>
+    <title>部门列表</title>
 
     <link rel="stylesheet" href="${baseurl}/static/lib/yueqain/css/yueqian.all.css" media="all">
 </head>
@@ -33,17 +33,31 @@
     </div>
 </div>
 
-<div class="layui-card">
-    <div class="layui-card-body">
-        <div class="layui-btn-group operateTable" style="margin: 5px">
-            <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" data-type="add">
-                <i class="layui-icon layui-icon-add-1"></i>
-                新增
-            </button>
+<div class="layui-row layui-col-space15">
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div id="organizationTreeContent" style="overflow: auto">
+                    <ul id="organizationTree" class="dtree organizationTree" data-id="9527"></ul>
+                </div>
+            </div>
         </div>
-        <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+    </div>
+    <div class="layui-col-md9">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-btn-group operateTable" style="margin: 5px">
+                    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" data-type="add">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                        新增
+                    </button>
+                </div>
+                <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <!--操作-->
 <script type="text/html" id="tableTool">
@@ -79,13 +93,26 @@
 <script src="${baseurl}/static/lib/yueqain/yueqian.all.js" charset="utf-8"></script>
 <script>
     //JavaScript代码区域
-    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom'], function () {
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom','dtree'], function () {
         var element = layui.element;
         table = layui.table,
             $ = layui.jquery,
             layerCustom = layui.layerCustom,
             layer = layui.layer,
             form = layui.form;
+        dtree = dtree = layui.dtree;
+
+        var DTree = dtree.render({
+            elem: "#organizationTree",
+            //data: data,
+            initLevel: "2", //默认展开层级为1
+            line: true, // 有线树
+            ficon: ["1", "-1"], // 设定一级图标样式。0表示方形加减图标，8表示小圆点图标
+            icon: ["0", "2"], // 设定二级图标样式。0表示文件夹图标，5表示叶子图标
+            method: 'get',
+            url: BaseUrl+"static/json/organizationtree.json"
+        });
+
 
         var myTalbe = table.render({
             elem: '#tableId'
@@ -104,6 +131,17 @@
 
         });
 
+        // 绑定节点点击事件
+        dtree.on("node(organizationTree)", function(obj) {
+            if (!obj.param.leaf) {
+                var $div = obj.dom;
+                DTree.clickSpread($div); //调用内置函数展开节点
+            } else {
+                layer.msg("叶子节点就不展开了,刷新右侧列表");
+                table.reload("tableId");
+            }
+        });
+
         form.on("submit(search)", function (data) {
             myTalbe.reload({
                 where: data.field,
@@ -120,10 +158,10 @@
                     break;
                 case "del":
                     del(data);
-                break;
+                    break;
                 case "restPwd":
                     restPwd(data);
-                break;
+                    break;
             }
         });
 
@@ -195,7 +233,7 @@
 
         function del(data){
             layerCustom.confirm("是否要删除"+data.userName,function () {
-               var loading = layer.load();
+                var loading = layer.load();
                 var params ={
                     id:data.id
                 }

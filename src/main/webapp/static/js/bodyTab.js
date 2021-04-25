@@ -36,7 +36,7 @@ layui.define(["element", "jquery"], function (exports) {
                 ulHtml += '<a>';
                 if (data[i].icon != undefined && data[i].icon != '') {
                     if (data[i].icon.indexOf("icon-") != -1) {
-                        ulHtml += '<i class="seraph ' + data[i].icon + '" data-icon="' + data[i].icon + '"></i>';
+                        ulHtml += '<i class="iconfont ' + data[i].icon + '" data-icon="' + data[i].icon + '"></i>';
                     } else {
                         ulHtml += '<i class="layui-icon" data-icon="' + data[i].icon + '">' + data[i].icon + '</i>';
                     }
@@ -53,7 +53,7 @@ layui.define(["element", "jquery"], function (exports) {
                     }
                     if (data[i].children[j].icon != undefined && data[i].children[j].icon != '') {
                         if (data[i].children[j].icon.indexOf("icon-") != -1) {
-                            ulHtml += '<i class="seraph ' + data[i].children[j].icon + '" data-icon="' + data[i].children[j].icon + '"></i>';
+                            ulHtml += '<i class="iconfont ' + data[i].children[j].icon + '" data-icon="' + data[i].children[j].icon + '"></i>';
                         } else {
                             ulHtml += '<i class="layui-icon" data-icon="' + data[i].children[j].icon + '">' + data[i].children[j].icon + '</i>';
                         }
@@ -69,7 +69,7 @@ layui.define(["element", "jquery"], function (exports) {
                 }
                 if (data[i].icon != undefined && data[i].icon != '') {
                     if (data[i].icon.indexOf("icon-") != -1) {
-                        ulHtml += '<i class="seraph ' + data[i].icon + '" data-icon="' + data[i].icon + '"></i>';
+                        ulHtml += '<i class="iconfont ' + data[i].icon + '" data-icon="' + data[i].icon + '"></i>';
                     } else {
                         ulHtml += '<i class="layui-icon" data-icon="' + data[i].icon + '">' + data[i].icon + '</i>';
                     }
@@ -138,9 +138,9 @@ layui.define(["element", "jquery"], function (exports) {
             window.open(_this.attr("data-url"));
         } else if (_this.attr("data-url") != undefined) {
             var title = '';
-            if (_this.find("i.seraph,i.layui-icon").attr("data-icon") != undefined) {
-                if (_this.find("i.seraph").attr("data-icon") != undefined) {
-                    title += '<i class="seraph ' + _this.find("i.seraph").attr("data-icon") + '"></i>';
+            if (_this.find("i.iconfont,i.layui-icon").attr("data-icon") != undefined) {
+                if (_this.find("i.iconfont").attr("data-icon") != undefined) {
+                    title += '<i class="iconfont ' + _this.find("i.iconfont").attr("data-icon") + '"></i>';
                 } else {
                     title += '<i class="layui-icon">' + _this.find("i.layui-icon").attr("data-icon") + '</i>';
                 }

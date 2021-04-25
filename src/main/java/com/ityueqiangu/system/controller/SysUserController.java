@@ -38,7 +38,7 @@ public class SysUserController extends BaseController {
      */
     @RequestMapping(value = "/index")
     public String index(){
-        return PATH_PREFIX+"admin/index";
+        return PATH_PREFIX+"user/index";
     }
 
     /**
@@ -47,7 +47,7 @@ public class SysUserController extends BaseController {
      */
     @RequestMapping(value = "/add")
     public String add(){
-        return PATH_PREFIX+"admin/add";
+        return PATH_PREFIX+"user/add";
     }
 
     /**
@@ -56,7 +56,7 @@ public class SysUserController extends BaseController {
      */
     @RequestMapping(value = "/edit")
     public String edit(){
-        return PATH_PREFIX+"admin/edit";
+        return PATH_PREFIX+"user/edit";
     }
 	
     /**

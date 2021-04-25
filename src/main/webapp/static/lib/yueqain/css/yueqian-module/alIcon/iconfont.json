@@ -6,6 +6,34 @@
   "description": "layui扩展",
   "glyphs": [
     {
+      "icon_id": "7720064",
+      "name": "关闭",
+      "font_class": "guanbi3",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "2604472",
+      "name": "关闭",
+      "font_class": "guanbi2",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "693654",
+      "name": "部门管理",
+      "font_class": "bumenguanli",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "8426369",
+      "name": "部门管理",
+      "font_class": "ml",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
       "icon_id": "7674873",
       "name": "关闭",
       "font_class": "guanbi",

@@ -208,7 +208,7 @@
                     openTitle = '';
                     if (menu[i].icon) {
                         if (menu[i].icon.split("-")[0] == 'icon') {
-                            openTitle += '<i class="seraph ' + menu[i].icon + '"></i>';
+                            openTitle += '<i class="iconfont ' + menu[i].icon + '"></i>';
                         } else {
                             openTitle += '<i class="layui-icon">' + menu[i].icon + '</i>';
                         }

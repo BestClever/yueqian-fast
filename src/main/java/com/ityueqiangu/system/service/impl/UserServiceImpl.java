@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @date 2021-03-31 21:46
  */
 @Service
-public class IUserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService {
 
     @Autowired
     private ISysUserService sysUserService;
@@ -29,7 +29,6 @@ public class IUserServiceImpl implements IUserService {
     public ActiverUser login(ActiverUser activerUser) {
         SysUser sysUser = new SysUser();
         sysUser.setLoginName(activerUser.getLoginName());
-        sysUser.setUserType(activerUser.getUserType());
         SysUser resultUser = sysUserService.selectSysUserByLoginName(sysUser);
         if (StringUtils.isNull(resultUser)) {
             throw new BizException(CommonEnum.USER_NOT_EXIST);
@@ -37,9 +36,10 @@ public class IUserServiceImpl implements IUserService {
         if (!StringUtils.equals(resultUser.getPassword(), activerUser.getPassword())) {
             throw new BizException(CommonEnum.PASSWORD_ERROR);
         }
-        if (StringUtils.equals(SysFlagStatusEnum.ONE.getKey(), resultUser.getIsDeleted())) {
+        if (StringUtils.equals(SysFlagStatusEnum.ONE.getKey(), resultUser.getIsAvailable())) {
             throw new BizException(CommonEnum.ACCOUNT_DISABLED);
         }
+        activerUser.setSysUser(resultUser);
         BeanUtils.copyProperties(resultUser, activerUser);
         return activerUser;
     }

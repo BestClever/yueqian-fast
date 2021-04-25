@@ -1,5 +1,6 @@
 package com.ityueqiangu.core.web.vo;
 
+import com.ityueqiangu.system.domain.SysUser;
 import lombok.Data;
 
 /**
@@ -24,10 +25,12 @@ public class ActiverUser {
 
     private Integer roleId;
 
+    private Integer deptId;
+
     private String roleName;
 
-    private String userType;
-
     private String verifyCode;
+
+    private SysUser sysUser;
 
 }

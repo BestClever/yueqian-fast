@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.system.mapper.SysDeptMapper">
+	<resultMap id="BaseResultMap" type="com.ityueqiangu.system.domain.SysDept">
+        <result column="id" property="id" />
+        <result column="dept_name" property="deptName" />
+        <result column="parent_id" property="parentId" />
+        <result column="dept_description" property="deptDescription" />
+        <result column="is_spread" property="isSpread" />
+        <result column="is_available" property="isAvailable" />
+        <result column="sort_num" property="sortNum" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_user_name" property="updateUserName" />
+        <result column="update_time" property="updateTime" />
+	</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.dept_name
+    , t.parent_id
+    , t.dept_description
+    , t.is_spread
+    , t.is_available
+    , t.sort_num
+    , t.is_deleted
+    , t.remark
+    , t.create_user_id
+    , t.create_user_name
+    , t.create_time
+    , t.update_user_id
+    , t.update_user_name
+    , t.update_time
+    </sql> 
+    
+    <!-- 分页查询 -->
+    <select id="selectSysDeptList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysDept">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_dept t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="deptName != null  and deptName != ''" >
+             and t.dept_name= #{deptName} 
+           </if>
+           <if test="parentId != null  and parentId != ''" >
+             and t.parent_id= #{parentId} 
+           </if>
+           <if test="deptDescription != null  and deptDescription != ''" >
+             and t.dept_description= #{deptDescription} 
+           </if>
+           <if test="isSpread != null  and isSpread != ''" >
+             and t.is_spread= #{isSpread} 
+           </if>
+           <if test="isAvailable != null  and isAvailable != ''" >
+             and t.is_available= #{isAvailable} 
+           </if>
+           <if test="sortNum != null  and sortNum != ''" >
+             and t.sort_num= #{sortNum} 
+           </if>
+           <if test="isDeleted != null  and isDeleted != ''" >
+             and t.is_deleted= #{isDeleted} 
+           </if>
+           <if test="remark != null  and remark != ''" >
+             and t.remark= #{remark} 
+           </if>
+           <if test="createUserId != null  and createUserId != ''" >
+             and t.create_user_id= #{createUserId} 
+           </if>
+           <if test="createUserName != null  and createUserName != ''" >
+             and t.create_user_name= #{createUserName} 
+           </if>
+           <if test="createTime != null  and createTime != ''" >
+             and t.create_time= #{createTime} 
+           </if>
+           <if test="updateUserId != null  and updateUserId != ''" >
+             and t.update_user_id= #{updateUserId} 
+           </if>
+           <if test="updateUserName != null  and updateUserName != ''" >
+             and t.update_user_name= #{updateUserName} 
+           </if>
+           <if test="updateTime != null  and updateTime != ''" >
+             and t.update_time= #{updateTime} 
+           </if>
+        </trim>
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="selectSysDeptById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_dept t
+		WHERE t.id = #{id}
+	</select>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysDept" parameterType="com.ityueqiangu.system.domain.SysDept"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_dept    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+          <if test="deptName != null">
+          	dept_name,
+          </if>
+          <if test="parentId != null">
+          	parent_id,
+          </if>
+          <if test="deptDescription != null">
+          	dept_description,
+          </if>
+          <if test="isSpread != null">
+          	is_spread,
+          </if>
+          <if test="isAvailable != null">
+          	is_available,
+          </if>
+          <if test="sortNum != null">
+          	sort_num,
+          </if>
+          <if test="isDeleted != null">
+          	is_deleted,
+          </if>
+          <if test="remark != null">
+          	remark,
+          </if>
+          <if test="createUserId != null">
+          	create_user_id,
+          </if>
+          <if test="createUserName != null">
+          	create_user_name,
+          </if>
+          <if test="createTime != null">
+          	create_time,
+          </if>
+          <if test="updateUserId != null">
+          	update_user_id,
+          </if>
+          <if test="updateUserName != null">
+          	update_user_name,
+          </if>
+          <if test="updateTime != null">
+          	update_time,
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+          <if test="deptName != null" >
+            #{deptName},                    
+          </if>
+          <if test="parentId != null" >
+            #{parentId},                    
+          </if>
+          <if test="deptDescription != null" >
+            #{deptDescription},                    
+          </if>
+          <if test="isSpread != null" >
+            #{isSpread},                    
+          </if>
+          <if test="isAvailable != null" >
+            #{isAvailable},                    
+          </if>
+          <if test="sortNum != null" >
+            #{sortNum},                    
+          </if>
+          <if test="isDeleted != null" >
+            #{isDeleted},                    
+          </if>
+          <if test="remark != null" >
+            #{remark},                    
+          </if>
+          <if test="createUserId != null" >
+            #{createUserId},                    
+          </if>
+          <if test="createUserName != null" >
+            #{createUserName},                    
+          </if>
+          <if test="createTime != null" >
+            #{createTime},                    
+          </if>
+          <if test="updateUserId != null" >
+            #{updateUserId},                    
+          </if>
+          <if test="updateUserName != null" >
+            #{updateUserName},                    
+          </if>
+          <if test="updateTime != null" >
+            #{updateTime},                    
+          </if>
+        </trim>
+    </insert>    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysDept" parameterType="com.ityueqiangu.system.domain.SysDept">
+    UPDATE sys_dept
+    <set>
+       <if test="deptName != null" >
+         dept_name=#{deptName},                 
+       </if>
+       <if test="parentId != null" >
+         parent_id=#{parentId},                 
+       </if>
+       <if test="deptDescription != null" >
+         dept_description=#{deptDescription},                 
+       </if>
+       <if test="isSpread != null" >
+         is_spread=#{isSpread},                 
+       </if>
+       <if test="isAvailable != null" >
+         is_available=#{isAvailable},                 
+       </if>
+       <if test="sortNum != null" >
+         sort_num=#{sortNum},                 
+       </if>
+       <if test="isDeleted != null" >
+         is_deleted=#{isDeleted},                 
+       </if>
+       <if test="remark != null" >
+         remark=#{remark},                 
+       </if>
+       <if test="createUserId != null" >
+         create_user_id=#{createUserId},                 
+       </if>
+       <if test="createUserName != null" >
+         create_user_name=#{createUserName},                 
+       </if>
+       <if test="createTime != null" >
+         create_time=#{createTime},                 
+       </if>
+       <if test="updateUserId != null" >
+         update_user_id=#{updateUserId},                 
+       </if>
+       <if test="updateUserName != null" >
+         update_user_name=#{updateUserName},                 
+       </if>
+       <if test="updateTime != null" >
+         update_time=#{updateTime},                 
+       </if>
+    </set>
+    WHERE id = #{id}
+    </update>
+
+	<!-- 根据主键删除记录 -->
+	<delete id="deleteSysDeptById" parameterType="Integer">
+        delete from sys_dept where id = #{id}
+	</delete>
+
+</mapper>
