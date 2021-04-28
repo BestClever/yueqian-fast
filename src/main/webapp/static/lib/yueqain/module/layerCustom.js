@@ -20,7 +20,7 @@ layui.define(["layer"], function (exports) {
          * @param endFunction
          */
         open: function (title, content, width, height, successFunction, endFunction) {
-            layer.open({
+           var index = layer.open({
                 title: title,
                 type: 2,
                 maxmin: true,
@@ -33,6 +33,10 @@ layui.define(["layer"], function (exports) {
                 success: successFunction,
                 end: endFunction
             });
+            //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
+            // $(window).on("resize",function(){
+            //     layui.layer.full(index);
+            // })
         },
         /**
          * 弹出及全屏

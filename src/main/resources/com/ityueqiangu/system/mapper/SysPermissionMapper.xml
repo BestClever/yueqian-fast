@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.system.mapper.SysPermissionMapper">
+	<resultMap id="BaseResultMap" type="com.ityueqiangu.system.domain.SysPermission">
+        <result column="id" property="id" />
+        <result column="permission_name" property="permissionName" />
+        <result column="permission_type" property="permissionType" />
+        <result column="permission_code" property="permissionCode" />
+        <result column="permission_url" property="permissionUrl" />
+        <result column="open_type" property="openType" />
+        <result column="parent_id" property="parentId" />
+        <result column="icon" property="icon" />
+        <result column="sort_num" property="sortNum" />
+        <result column="is_spread" property="isSpread" />
+        <result column="is_available" property="isAvailable" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_user_name" property="updateUserName" />
+        <result column="update_time" property="updateTime" />
+	</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.permission_name
+    , t.permission_type
+    , t.permission_code
+    , t.permission_url
+    , t.open_type
+    , t.parent_id
+    , t.icon
+    , t.sort_num
+    , t.is_spread
+    , t.is_available
+    , t.is_deleted
+    , t.remark
+    , t.create_user_id
+    , t.create_user_name
+    , t.create_time
+    , t.update_user_id
+    , t.update_user_name
+    , t.update_time
+    </sql> 
+    
+    <!-- 分页查询 -->
+    <select id="selectSysPermissionList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysPermission">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_permission t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="permissionName != null  and permissionName != ''" >
+             and t.permission_name= #{permissionName} 
+           </if>
+           <if test="permissionType != null  and permissionType != ''" >
+             and t.permission_type= #{permissionType} 
+           </if>
+           <if test="permissionCode != null  and permissionCode != ''" >
+             and t.permission_code= #{permissionCode} 
+           </if>
+           <if test="permissionUrl != null  and permissionUrl != ''" >
+             and t.permission_url= #{permissionUrl} 
+           </if>
+           <if test="openType != null  and openType != ''" >
+             and t.open_type= #{openType} 
+           </if>
+           <if test="parentId != null  and parentId != ''" >
+             and t.parent_id= #{parentId} 
+           </if>
+           <if test="icon != null  and icon != ''" >
+             and t.icon= #{icon} 
+           </if>
+           <if test="sortNum != null  and sortNum != ''" >
+             and t.sort_num= #{sortNum} 
+           </if>
+           <if test="isSpread != null  and isSpread != ''" >
+             and t.is_spread= #{isSpread} 
+           </if>
+           <if test="isAvailable != null  and isAvailable != ''" >
+             and t.is_available= #{isAvailable} 
+           </if>
+           <if test="isDeleted != null  and isDeleted != ''" >
+             and t.is_deleted= #{isDeleted} 
+           </if>
+           <if test="remark != null  and remark != ''" >
+             and t.remark= #{remark} 
+           </if>
+           <if test="createUserId != null  and createUserId != ''" >
+             and t.create_user_id= #{createUserId} 
+           </if>
+           <if test="createUserName != null  and createUserName != ''" >
+             and t.create_user_name= #{createUserName} 
+           </if>
+           <if test="createTime != null  and createTime != ''" >
+             and t.create_time= #{createTime} 
+           </if>
+           <if test="updateUserId != null  and updateUserId != ''" >
+             and t.update_user_id= #{updateUserId} 
+           </if>
+           <if test="updateUserName != null  and updateUserName != ''" >
+             and t.update_user_name= #{updateUserName} 
+           </if>
+           <if test="updateTime != null  and updateTime != ''" >
+             and t.update_time= #{updateTime} 
+           </if>
+        </trim>
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="selectSysPermissionById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_permission t
+		WHERE t.id = #{id}
+	</select>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysPermission" parameterType="com.ityueqiangu.system.domain.SysPermission"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_permission    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+          <if test="permissionName != null">
+          	permission_name,
+          </if>
+          <if test="permissionType != null">
+          	permission_type,
+          </if>
+          <if test="permissionCode != null">
+          	permission_code,
+          </if>
+          <if test="permissionUrl != null">
+          	permission_url,
+          </if>
+          <if test="openType != null">
+          	open_type,
+          </if>
+          <if test="parentId != null">
+          	parent_id,
+          </if>
+          <if test="icon != null">
+          	icon,
+          </if>
+          <if test="sortNum != null">
+          	sort_num,
+          </if>
+          <if test="isSpread != null">
+          	is_spread,
+          </if>
+          <if test="isAvailable != null">
+          	is_available,
+          </if>
+          <if test="isDeleted != null">
+          	is_deleted,
+          </if>
+          <if test="remark != null">
+          	remark,
+          </if>
+          <if test="createUserId != null">
+          	create_user_id,
+          </if>
+          <if test="createUserName != null">
+          	create_user_name,
+          </if>
+          <if test="createTime != null">
+          	create_time,
+          </if>
+          <if test="updateUserId != null">
+          	update_user_id,
+          </if>
+          <if test="updateUserName != null">
+          	update_user_name,
+          </if>
+          <if test="updateTime != null">
+          	update_time,
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+          <if test="permissionName != null" >
+            #{permissionName},                    
+          </if>
+          <if test="permissionType != null" >
+            #{permissionType},                    
+          </if>
+          <if test="permissionCode != null" >
+            #{permissionCode},                    
+          </if>
+          <if test="permissionUrl != null" >
+            #{permissionUrl},                    
+          </if>
+          <if test="openType != null" >
+            #{openType},                    
+          </if>
+          <if test="parentId != null" >
+            #{parentId},                    
+          </if>
+          <if test="icon != null" >
+            #{icon},                    
+          </if>
+          <if test="sortNum != null" >
+            #{sortNum},                    
+          </if>
+          <if test="isSpread != null" >
+            #{isSpread},                    
+          </if>
+          <if test="isAvailable != null" >
+            #{isAvailable},                    
+          </if>
+          <if test="isDeleted != null" >
+            #{isDeleted},                    
+          </if>
+          <if test="remark != null" >
+            #{remark},                    
+          </if>
+          <if test="createUserId != null" >
+            #{createUserId},                    
+          </if>
+          <if test="createUserName != null" >
+            #{createUserName},                    
+          </if>
+          <if test="createTime != null" >
+            #{createTime},                    
+          </if>
+          <if test="updateUserId != null" >
+            #{updateUserId},                    
+          </if>
+          <if test="updateUserName != null" >
+            #{updateUserName},                    
+          </if>
+          <if test="updateTime != null" >
+            #{updateTime},                    
+          </if>
+        </trim>
+    </insert>    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysPermission" parameterType="com.ityueqiangu.system.domain.SysPermission">
+    UPDATE sys_permission
+    <set>
+       <if test="permissionName != null" >
+         permission_name=#{permissionName},                 
+       </if>
+       <if test="permissionType != null" >
+         permission_type=#{permissionType},                 
+       </if>
+       <if test="permissionCode != null" >
+         permission_code=#{permissionCode},                 
+       </if>
+       <if test="permissionUrl != null" >
+         permission_url=#{permissionUrl},                 
+       </if>
+       <if test="openType != null" >
+         open_type=#{openType},                 
+       </if>
+       <if test="parentId != null" >
+         parent_id=#{parentId},                 
+       </if>
+       <if test="icon != null" >
+         icon=#{icon},                 
+       </if>
+       <if test="sortNum != null" >
+         sort_num=#{sortNum},                 
+       </if>
+       <if test="isSpread != null" >
+         is_spread=#{isSpread},                 
+       </if>
+       <if test="isAvailable != null" >
+         is_available=#{isAvailable},                 
+       </if>
+       <if test="isDeleted != null" >
+         is_deleted=#{isDeleted},                 
+       </if>
+       <if test="remark != null" >
+         remark=#{remark},                 
+       </if>
+       <if test="createUserId != null" >
+         create_user_id=#{createUserId},                 
+       </if>
+       <if test="createUserName != null" >
+         create_user_name=#{createUserName},                 
+       </if>
+       <if test="createTime != null" >
+         create_time=#{createTime},                 
+       </if>
+       <if test="updateUserId != null" >
+         update_user_id=#{updateUserId},                 
+       </if>
+       <if test="updateUserName != null" >
+         update_user_name=#{updateUserName},                 
+       </if>
+       <if test="updateTime != null" >
+         update_time=#{updateTime},                 
+       </if>
+    </set>
+    WHERE id = #{id}
+    </update>
+
+	<!-- 根据主键删除记录 -->
+	<delete id="deleteSysPermissionById" parameterType="Integer">
+        delete from sys_permission where id = #{id}
+	</delete>
+
+</mapper>

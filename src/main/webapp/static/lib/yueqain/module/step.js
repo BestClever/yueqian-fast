@@ -54,7 +54,7 @@ layui.define(['layer', 'carousel'], function (exports) {
         $('.step-item').css('width', bfb + '%');
     };
 
-    var pearStep = {
+    var yueqianStep = {
         // 渲染步骤条
         render: function (param) {
             param.indicator = 'none';  // 不显示指示器
@@ -94,5 +94,5 @@ layui.define(['layer', 'carousel'], function (exports) {
             $(elem).find('.layui-carousel-arrow[lay-type=sub]').trigger('click');
         }
     };
-    exports('step', pearStep);
+    exports('step', yueqianStep);
 });

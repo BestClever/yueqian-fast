@@ -5,11 +5,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
         $ = layui.jquery,
 		element = layui.element;
 		
-    var pearFrame = function (opt) {
+    var yueqianFrame = function (opt) {
         this.option = opt;
     };
 
-    pearFrame.prototype.render = function (opt) {
+    yueqianFrame.prototype.render = function (opt) {
         //默认配置值
 		var option = {
 			elem:opt.elem,
@@ -26,10 +26,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    $("#"+option.elem).width(option.width);
 	    $("#"+option.elem).height(option.height);
 		
-		return new pearFrame(option);
+		return new yueqianFrame(option);
     } 
 	
-	pearFrame.prototype.changePage = function(url,title,loading){
+	yueqianFrame.prototype.changePage = function(url,title,loading){
 		
 		if(loading){
 			var loading = $("#"+this.option.elem).find(".yueqian-frame-loading");
@@ -54,7 +54,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	
 	}
 	
-	pearFrame.prototype.refresh = function (time) {
+	yueqianFrame.prototype.refresh = function (time) {
 		
 		
 		// 刷 新 指 定 的 选 项 卡
@@ -89,5 +89,5 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     $("#"+option.elem).html(iframe+loading);	
 	}
 	
-	exports(MOD_NAME,new pearFrame());
+	exports(MOD_NAME,new yueqianFrame());
 })

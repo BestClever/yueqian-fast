@@ -54,5 +54,7 @@ public interface SysDeptMapper {
      * @return 返回影响行数
      */
 	Integer deleteSysDeptById(Integer id);
+
+	SysDept getOne(SysDept sysDept);
 	
 }

@@ -2,7 +2,11 @@ package com.ityueqiangu.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 import com.ityueqiangu.core.web.domain.BaseEntity;
 /**
@@ -29,4 +33,9 @@ public class SysDept extends BaseEntity{
 	private String isAvailable;
 	/** 排序 */
 	private String sortNum;
+
+	/*父节点名称*/
+    private String parentName;
+
+    List<SysDept> children = new ArrayList<>();
 }

@@ -81,11 +81,10 @@
 <script src="${baseurl}/static/lib/yueqain/yueqian.all.js" charset="utf-8"></script>
 <script>
 
-    var initData;
-
     function initForm(data) {
         var jsonString = JSON.stringify(data);
-        initData = JSON.parse(jsonString);
+        var initData = JSON.parse(jsonString);
+        setFormVal(initData);
     }
 
     layui.use(['form', 'jquery', 'upload', 'element', 'layer', 'laydate', 'common', 'layerCustom'], function () {
@@ -98,7 +97,10 @@
             common = layui.common,
             form = layui.form;
 
-        form.val("dataForm", initData);
+        /*初始化 表单*/
+        window.setFormVal = function(initData){
+            form.val("dataForm", initData);
+        }
         /*表单验证*/
         form.verify({});
 

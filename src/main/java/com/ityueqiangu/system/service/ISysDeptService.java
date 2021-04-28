@@ -51,5 +51,8 @@ public interface ISysDeptService {
      * @return 返回ResultInfo
      */
     Integer deleteSysDeptById(Integer id);
-	
+
+    SysDept existDeptName(SysDept sysDept);
+
+    List<SysDept> buildTree();
 }

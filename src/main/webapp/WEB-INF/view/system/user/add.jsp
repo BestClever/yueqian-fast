@@ -12,25 +12,25 @@
         <div class="main-container">
             <div class="main-container">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">登录名称</label>
+                    <label class="layui-form-label layui-required">登录名称</label>
                     <div class="layui-input-block">
                         <input type="text" name="loginName"  autocomplete="off" placeholder="请输入登录名称" class="layui-input"  lay-verify="required|loginName">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">用户名称</label>
+                    <label class="layui-form-label layui-required">用户名称</label>
                     <div class="layui-input-block">
                         <input type="text" name="userName"  autocomplete="off" placeholder="请输入用户名称" class="layui-input"  lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
+                    <label class="layui-form-label layui-required">密码</label>
                     <div class="layui-input-block">
                         <input type="text" name="password" id="password"  autocomplete="off" placeholder="请输入密码" class="layui-input"  lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">确认密码</label>
+                    <label class="layui-form-label layui-required">确认密码</label>
                     <div class="layui-input-block">
                         <input type="text" name="confirmPassword"  autocomplete="off" placeholder="请输入密码" class="layui-input"  lay-verify="required|confirmPassword">
                     </div>
@@ -44,9 +44,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">用户类型</label>
+                    <label class="layui-form-label layui-required">角色</label>
                     <div class="layui-input-block">
-                        <select name="userType" lay-verify="required" lay-filter="LAY-select" id="userType" placeholder="请输入用户类型">
+                        <select name="userType" lay-verify="required" lay-filter="LAY-select" id="role" placeholder="请输入用户类型">
                             <option value="1">管理员</option>
                             <option value="2">老师</option>
                             <option value="3">辅导员</option>

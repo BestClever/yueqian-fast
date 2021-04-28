@@ -20,7 +20,7 @@ layui.define(["element", "jquery"], function (exports) {
     //生成左侧菜单
     Tab.prototype.navBar = function (strData) {
         var data;
-        if (typeof(strData) == "string") {
+        if (typeof (strData) == "string") {
             var data = JSON.parse(strData); //部分用户解析出来的是字符串，转换一下
         } else {
             data = strData;
@@ -134,6 +134,7 @@ layui.define(["element", "jquery"], function (exports) {
         var that = this;
         var openTabNum = that.tabConfig.openTabNum;
         tabFilter = that.tabConfig.tabFilter;
+        debugger
         if (_this.attr("target") == "_blank") {
             window.open(_this.attr("data-url"));
         } else if (_this.attr("data-url") != undefined) {
@@ -154,11 +155,13 @@ layui.define(["element", "jquery"], function (exports) {
                 tabIdIndex++;
                 title += '<cite>' + _this.find("cite").text() + '</cite>';
                 title += '<i class="layui-icon layui-unselect layui-tab-close" data-id="' + tabIdIndex + '">&#x1006;</i>';
+                //使用加载层
+                layer.load(2,{shade:0.8});
                 element.tabAdd(tabFilter, {
                     title: title,
                     content: "<iframe src='" + _this.attr("data-url") + "' data-id='" + tabIdIndex + "'></iframe>",
                     id: new Date().getTime()
-                })
+                });
                 //当前窗口内容
                 var curmenu = {
                     "icon": _this.find("i.seraph").attr("data-icon") != undefined ? _this.find("i.seraph").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
@@ -171,17 +174,21 @@ layui.define(["element", "jquery"], function (exports) {
                 window.sessionStorage.setItem("curmenu", JSON.stringify(curmenu));  //当前的窗口
                 element.tabChange(tabFilter, that.getLayId(_this.find("cite").text()));
                 that.tabMove(); //顶部窗口是否可滚动
+                layer.closeAll('loading');//关闭加载层
             } else {
                 //当前窗口内容
                 var curmenu = {
                     "icon": _this.find("i.seraph").attr("data-icon") != undefined ? _this.find("i.seraph").attr("data-icon") : _this.find("i.layui-icon").attr("data-icon"),
                     "title": _this.find("cite").text(),
                     "href": _this.attr("data-url")
-                }
+                };
+                //使用加载层
+                layer.load(2,{shade:0.8});
                 that.changeRegresh(_this.parent('.layui-nav-item').index());
                 window.sessionStorage.setItem("curmenu", JSON.stringify(curmenu));  //当前的窗口
                 element.tabChange(tabFilter, that.getLayId(_this.find("cite").text()));
                 that.tabMove(); //顶部窗口是否可滚动
+                layer.closeAll('loading');//关闭加载层
             }
         }
     }

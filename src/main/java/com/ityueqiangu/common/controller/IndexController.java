@@ -131,6 +131,16 @@ public class IndexController {
         return "main";
     }
 
+
+    /**
+     * 跳转到公告的部门选择页面
+     * @return
+     */
+    @RequestMapping(value = "/common/deptselect")
+    public String commonDept(){
+        return "common/deptselect";
+    }
+
     /**
      * 获取菜单
      */
@@ -163,6 +173,15 @@ public class IndexController {
         bmgl.setParentId(1);
         yhglChildren.add(bmgl);
 
+        Menu jsgl = new Menu();
+        jsgl.setId(13);
+        jsgl.setTitle("角色管理");
+        jsgl.setHref("sysRole/index");
+        jsgl.setIcon("layui-icon-ali-jiaoseguanli2");
+        jsgl.setSpread(false);
+        jsgl.setParentId(1);
+        yhglChildren.add(jsgl);
+
 
         yhgl.setId(1);
         yhgl.setTitle("用户管理");
@@ -193,4 +212,6 @@ public class IndexController {
         session.setAttribute("activerUser", user);
         return ResultDataUtil.createSuccess(CommonEnum.LOGIN_SUCCESS);
     }
+
+
 }

@@ -61,9 +61,18 @@
 
 <!--操作-->
 <script type="text/html" id="tableTool">
-    <a class="layui-btn layui-btn-xs"  lay-event="update">修改</a>
-    <a class="layui-btn layui-btn-xs"  lay-event="restPwd">初始化密码</a>
-    <a class="layui-btn layui-btn-xs"  lay-event="del">删除</a>
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="iconfont layui-icon-ali-xiugai"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-success yueqian-btn-md" lay-event="restPwd">
+        <i class="iconfont layui-icon-ali-add"></i>
+        新增
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="iconfont layui-icon-ali-shanchu1"></i>
+        删除
+    </a>
 </script>
 
 <%--用户类别--%>
@@ -93,14 +102,14 @@
 <script src="${baseurl}/static/lib/yueqain/yueqian.all.js" charset="utf-8"></script>
 <script>
     //JavaScript代码区域
-    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom','dtree'], function () {
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom', 'dtree'], function () {
         var element = layui.element;
         table = layui.table,
             $ = layui.jquery,
             layerCustom = layui.layerCustom,
             layer = layui.layer,
             form = layui.form;
-        dtree = dtree = layui.dtree;
+            dtree = dtree = layui.dtree;
 
         var DTree = dtree.render({
             elem: "#organizationTree",
@@ -110,7 +119,15 @@
             ficon: ["1", "-1"], // 设定一级图标样式。0表示方形加减图标，8表示小圆点图标
             icon: ["0", "2"], // 设定二级图标样式。0表示文件夹图标，5表示叶子图标
             method: 'get',
-            url: BaseUrl+"static/json/organizationtree.json"
+            dataStyle: "layuiStyle",
+            url: BaseUrl + "sysDept/tree",
+            response: {
+                message: "msg",
+                statusCode: 0,
+                treeId: "id", //节点ID（必填）
+                parentId: "parentId", //父节点ID（必填）
+                title: "deptName"
+            }
         });
 
 
@@ -118,12 +135,13 @@
             elem: '#tableId'
             , url: BaseUrl + 'sysUser/list'
             , skin: 'line'
+            , loading:false
             , cols: [[
+                {type: 'checkbox'},
                 {field: 'userName', title: '用户名称'}
                 , {field: 'loginName', title: '登录名称'}
-                , {field: 'collegeName', title: '所属学院'}
-                , {field: 'sex', title: '性别',templet:"#sexTpl"}
-                , {field: 'userType', title: '用户类型',templet:"#userTypeTpl"}
+                , {field: 'deptName', title: '部门'}
+                , {field: 'sex', title: '性别', templet: "#sexTpl"}
                 , {field: 'email', title: '邮箱'}
                 , {title: '操作', toolbar: '#tableTool', fixed: "right", width: 250}
             ]]
@@ -132,14 +150,14 @@
         });
 
         // 绑定节点点击事件
-        dtree.on("node(organizationTree)", function(obj) {
-            if (!obj.param.leaf) {
-                var $div = obj.dom;
-                DTree.clickSpread($div); //调用内置函数展开节点
-            } else {
-                layer.msg("叶子节点就不展开了,刷新右侧列表");
-                table.reload("tableId");
-            }
+        dtree.on("node(organizationTree)", function (obj) {
+            //刷新右边表格
+            myTalbe.reload({
+                where: {
+                    deptId:obj.param.nodeId
+                },
+                page: {curr: 1}
+            });
         });
 
         form.on("submit(search)", function (data) {
@@ -179,10 +197,10 @@
                 //给子页面赋值
                 var body = layer.getChildFrame('body', index);
                 //初始化学院选择下拉框
-                var url =BaseUrl+"college/list";
-                var param ={
-                    limit:9999,
-                    page:0
+                var url = BaseUrl + "college/list";
+                var param = {
+                    limit: 9999,
+                    page: 0
                 }
                 $.ajax({
                     url: url,
@@ -192,7 +210,7 @@
                     dataType: "json",
                     success: function (result) {
                         body.find("#collegeNameSelect").append("<option  value=>请选择学院</option>");
-                        for (var i=0;i < result.data.length;i++) {
+                        for (var i = 0; i < result.data.length; i++) {
                             var item = result.data[i];
                             body.find("#collegeNameSelect").append("<option  value=" + item.id + ">" + item.collegeName + "</option>");
                         }
@@ -206,10 +224,10 @@
                 //给子页面赋值
                 var body = layer.getChildFrame('body', index);
                 //初始化学院选择下拉框
-                var url =BaseUrl+"college/list";
-                var param ={
-                    limit:9999,
-                    page:0
+                var url = BaseUrl + "college/list";
+                var param = {
+                    limit: 9999,
+                    page: 0
                 }
                 $.ajax({
                     url: url,
@@ -219,7 +237,7 @@
                     dataType: "json",
                     success: function (result) {
                         body.find("#collegeNameSelect").append("<option  value=>请选择学院</option>");
-                        for (var i=0;i < result.data.length;i++) {
+                        for (var i = 0; i < result.data.length; i++) {
                             var item = result.data[i];
                             body.find("#collegeNameSelect").append("<option  value=" + item.id + ">" + item.collegeName + "</option>");
                         }
@@ -231,21 +249,21 @@
             })
         }
 
-        function del(data){
-            layerCustom.confirm("是否要删除"+data.userName,function () {
+        function del(data) {
+            layerCustom.confirm("是否要删除" + data.userName, function () {
                 var loading = layer.load();
-                var params ={
-                    id:data.id
+                var params = {
+                    id: data.id
                 }
                 $.ajax({
                     url: BaseUrl + "sysUser/remove",
-                    data:params,
+                    data: params,
                     dataType: 'json',
                     type: 'post',
                     success: function (result) {
                         layer.close(loading);
                         if (result.success) {
-                            layerCustom.greenLaughMsg(result.msg,function () {
+                            layerCustom.greenLaughMsg(result.msg, function () {
                                 myTalbe.reload();
                             });
                         } else {
@@ -257,20 +275,20 @@
         }
 
         function restPwd(data) {
-            layerCustom.confirm("是否要初始化"+data.userName+"的密码",function () {
+            layerCustom.confirm("是否要初始化" + data.userName + "的密码", function () {
                 var loading = layer.load();
-                var params ={
-                    id:data.id
+                var params = {
+                    id: data.id
                 }
                 $.ajax({
                     url: BaseUrl + "sysUser/restPwd",
-                    data:params,
+                    data: params,
                     dataType: 'json',
                     type: 'post',
                     success: function (result) {
                         layer.close(loading);
                         if (result.success) {
-                            layerCustom.greenLaughMsg(result.msg,function () {
+                            layerCustom.greenLaughMsg(result.msg, function () {
                                 myTalbe.reload();
                             });
                         } else {

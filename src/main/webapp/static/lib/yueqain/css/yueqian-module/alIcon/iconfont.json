@@ -6,6 +6,160 @@
   "description": "layui扩展",
   "glyphs": [
     {
+      "icon_id": "4143531",
+      "name": "授权",
+      "font_class": "shouquan",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "12316654",
+      "name": "授权",
+      "font_class": "shouquan1",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "14015795",
+      "name": "-_授权管理",
+      "font_class": "-_shouquanguanli",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "1391486",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "5434324",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli1",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "7159322",
+      "name": "角色列表",
+      "font_class": "jiaoseliebiao",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "8198527",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli2",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "11121397",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli3",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "18533068",
+      "name": "角色",
+      "font_class": "jiaose",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "20624118",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli_huaban1",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "14918584",
+      "name": "角色",
+      "font_class": "zu1775-copy",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "427203",
+      "name": "放弃",
+      "font_class": "fangqi",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "1687289",
+      "name": "删除",
+      "font_class": "ziyuan",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "2020253",
+      "name": "修改",
+      "font_class": "xiugai",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "2198313",
+      "name": "批量删除",
+      "font_class": "batch-del",
+      "unicode": "e73a",
+      "unicode_decimal": 59194
+    },
+    {
+      "icon_id": "3217860",
+      "name": "上传",
+      "font_class": "icon-",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "9003198",
+      "name": "撤回",
+      "font_class": "chehui",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
+      "icon_id": "12771526",
+      "name": "批量删除",
+      "font_class": "piliangshanchu",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "15838424",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "17587010",
+      "name": "修改",
+      "font_class": "xiugai1",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "18311262",
+      "name": "删 除",
+      "font_class": "shanchu1",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "20422590",
+      "name": "批量删除",
+      "font_class": "piliangshanchu1",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
       "icon_id": "7720064",
       "name": "关闭",
       "font_class": "guanbi3",

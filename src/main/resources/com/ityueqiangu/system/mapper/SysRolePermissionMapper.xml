@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.system.mapper.SysRolePermissionMapper">
+	<resultMap id="BaseResultMap" type="com.ityueqiangu.system.domain.SysRolePermission">
+        <result column="id" property="id" />
+        <result column="role_id" property="roleId" />
+        <result column="permission_id" property="permissionId" />
+	</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.role_id
+    , t.permission_id
+    </sql> 
+    
+    <!-- 分页查询 -->
+    <select id="selectSysRolePermissionList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysRolePermission">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_role_permission t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="roleId != null  and roleId != ''" >
+             and t.role_id= #{roleId} 
+           </if>
+           <if test="permissionId != null  and permissionId != ''" >
+             and t.permission_id= #{permissionId} 
+           </if>
+        </trim>
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="selectSysRolePermissionById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_role_permission t
+		WHERE t.id = #{id}
+	</select>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysRolePermission" parameterType="com.ityueqiangu.system.domain.SysRolePermission"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_role_permission    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+          <if test="roleId != null">
+          	role_id,
+          </if>
+          <if test="permissionId != null">
+          	permission_id,
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+          <if test="roleId != null" >
+            #{roleId},                    
+          </if>
+          <if test="permissionId != null" >
+            #{permissionId},                    
+          </if>
+        </trim>
+    </insert>    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysRolePermission" parameterType="com.ityueqiangu.system.domain.SysRolePermission">
+    UPDATE sys_role_permission
+    <set>
+       <if test="roleId != null" >
+         role_id=#{roleId},                 
+       </if>
+       <if test="permissionId != null" >
+         permission_id=#{permissionId},                 
+       </if>
+    </set>
+    WHERE id = #{id}
+    </update>
+
+	<!-- 根据主键删除记录 -->
+	<delete id="deleteSysRolePermissionById" parameterType="Integer">
+        delete from sys_role_permission where id = #{id}
+	</delete>
+
+</mapper>

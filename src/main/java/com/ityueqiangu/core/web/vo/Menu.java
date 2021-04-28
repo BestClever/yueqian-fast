@@ -2,6 +2,7 @@ package com.ityueqiangu.core.web.vo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class Menu {
     /*目标*/
     private String target;
     /*子数组*/
-    private List<Menu> children;
+    private List<Menu> children = new ArrayList<>();
     /*是否选中*/
     private String checkArr;
     /*父节点id*/

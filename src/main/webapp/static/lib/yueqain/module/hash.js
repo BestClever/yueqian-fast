@@ -16,7 +16,7 @@ layui.define(function (exports) {
      * SHA512 - http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf
      * HMAC - http://www.ietf.org/rfc/rfc2104.txt
      */
-    var pearHash;
+    var yueqianHash;
 
     function utf8Encode(str) {
         var x, y, output = '',
@@ -277,7 +277,7 @@ layui.define(function (exports) {
         return output;
     }
 
-    pearHash = {
+    yueqianHash = {
         /**
          * @property {String} version
          * @readonly
@@ -1738,38 +1738,38 @@ layui.define(function (exports) {
     };
 
     // new MD5 instance
-    var MD5 = new pearHash.MD5
+    var MD5 = new yueqianHash.MD5
     // new SHA1 instance
-    var SHA1 = new pearHash.SHA1
+    var SHA1 = new yueqianHash.SHA1
     // new SHA256 instance
-    var SHA256 = new pearHash.SHA256
+    var SHA256 = new yueqianHash.SHA256
     // new SHA512 instace
-    var SHA512 = new pearHash.SHA512
+    var SHA512 = new yueqianHash.SHA512
     // new RIPEMD-160 instace
-    var RMD160 = new pearHash.RMD160
-    var Base64 = new pearHash.Base64
+    var RMD160 = new yueqianHash.RMD160
+    var Base64 = new yueqianHash.Base64
 
-    pearHash.md5 = function (str) {
+    yueqianHash.md5 = function (str) {
         return MD5.hex(str);
     }
-    pearHash.sha1 = function (str) {
+    yueqianHash.sha1 = function (str) {
         return SHA1.hex(str);
     }
-    pearHash.sha256 = function (str) {
+    yueqianHash.sha256 = function (str) {
         return SHA256.hex(str);
     }
-    pearHash.sha512 = function (str) {
+    yueqianHash.sha512 = function (str) {
         return SHA512.hex(str);
     }
-    pearHash.crc32 = pearHash.CRC32;
-    pearHash.rmd160 = function (str) {
+    yueqianHash.crc32 = yueqianHash.CRC32;
+    yueqianHash.rmd160 = function (str) {
         return RMD160.hex(str);
     }
-    pearHash.Base64Encode = function (str) {
+    yueqianHash.Base64Encode = function (str) {
         return Base64.encode(str);
     }
-    pearHash.Base64Decode = function (str) {
+    yueqianHash.Base64Decode = function (str) {
         return Base64.decode(str);
     }
-    exports('hash', pearHash);
+    exports('hash', yueqianHash);
 });

@@ -5,11 +5,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		$ = layui.jquery,
 		element = layui.element;
 
-	var pearMenu = function(opt) {
+	var yueqianMenu = function(opt) {
 		this.option = opt;
 	};
 
-	pearMenu.prototype.render = function(opt) {
+	yueqianMenu.prototype.render = function(opt) {
 
 		var option = {
 			elem: opt.elem,
@@ -38,10 +38,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				renderMenu(option);
 			}, 500);
 		}
-		return new pearMenu(opt);
+		return new yueqianMenu(opt);
 	}
 
-	pearMenu.prototype.click = function(clickEvent) {
+	yueqianMenu.prototype.click = function(clickEvent) {
 		var _this = this;
 		$("body").on("click", "#" + _this.option.elem + " .site-demo-active", function() {
 			var dom = $(this);
@@ -79,43 +79,43 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		return dom.parent().parent().prev();
 	}
 
-	pearMenu.prototype.skin = function(skin) {
+	yueqianMenu.prototype.skin = function(skin) {
 		var menu = $(".yueqian-nav-tree[lay-filter='" + this.option.elem + "']").parent();
 		menu.removeClass("dark-theme");
 		menu.removeClass("light-theme");
 		menu.addClass(skin);
 	}
 
-	pearMenu.prototype.selectItem = function(pearId) {
+	yueqianMenu.prototype.selectItem = function(yueqianId) {
 		if (this.option.control != false) {
-			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-side-scroll ").find("ul").css({
+			$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents(".layui-side-scroll ").find("ul").css({
 				display: "none"
 			});
-			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-side-scroll ").find(".layui-this").removeClass(
+			$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents(".layui-side-scroll ").find(".layui-this").removeClass(
 				"layui-this");
-			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("ul").css({
+			$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents("ul").css({
 				display: "block"
 			});
-			var controlId = $("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("ul").attr("yueqian-id");
+			var controlId = $("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents("ul").attr("yueqian-id");
 
 			$("#" + this.option.control).find(".layui-this").removeClass("layui-this");
 			$("#" + this.option.control).find("[yueqian-id='" + controlId + "']").addClass("layui-this");
 		}
 		if (this.option.accordion == true) {
-			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".yueqian-nav-tree").find(".layui-nav-itemed").removeClass(
+			$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents(".yueqian-nav-tree").find(".layui-nav-itemed").removeClass(
 				"layui-nav-itemed");
 		}
-		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".yueqian-nav-tree").find(".layui-this").removeClass(
+		$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents(".yueqian-nav-tree").find(".layui-this").removeClass(
 			"layui-this");
 		if (!$("#" + this.option.elem).is(".yueqian-nav-mini")) {
-			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-nav-item").addClass("layui-nav-itemed");
-			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("dd").addClass("layui-nav-itemed");
+			$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents(".layui-nav-item").addClass("layui-nav-itemed");
+			$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parents("dd").addClass("layui-nav-itemed");
 		}
-		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parent().addClass("layui-this");
+		$("#" + this.option.elem + " a[menu-id='" + yueqianId + "']").parent().addClass("layui-this");
 	}
 
 	var activeMenus;
-	pearMenu.prototype.collaspe = function(time) {
+	yueqianMenu.prototype.collaspe = function(time) {
 		var elem = this.option.elem;
 		var config = this.option;
 		if ($("#" + this.option.elem).is(".yueqian-nav-mini")) {
@@ -407,5 +407,5 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			$("#" + option.elem + " dd").off('mouseenter').unbind('mouseleave');
 		}
 	}
-	exports(MOD_NAME, new pearMenu());
+	exports(MOD_NAME, new yueqianMenu());
 })

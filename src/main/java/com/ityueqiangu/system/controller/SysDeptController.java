@@ -1,6 +1,7 @@
 package com.ityueqiangu.system.controller;
 
 
+import cn.hutool.core.util.ObjectUtil;
 import com.ityueqiangu.core.web.controller.BaseController;
 import com.ityueqiangu.core.constant.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,11 @@ import com.ityueqiangu.core.web.result.ResultDataUtil;
 import com.ityueqiangu.core.web.result.ResultInfo;
 import org.springframework.stereotype.Controller;
 import com.ityueqiangu.core.enums.CommonEnum;
+
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ityueqiangu.system.domain.SysDept;
 import com.ityueqiangu.system.service.ISysDeptService;
 
@@ -67,7 +72,19 @@ public class SysDeptController extends BaseController{
     public DataGridResultInfo list(SysDept sysDept) {
     	startPage();
         List<SysDept> list = sysDeptService.selectSysDeptList(sysDept);
+        //按照排序码 进行排序
+        list = list.stream().sorted(Comparator.comparing(SysDept::getSortNum)).collect(Collectors.toList());
         return getDataTable(list);
+    }
+
+    /**
+     * 生成部门树
+     * @return
+     */
+    @RequestMapping(value = "tree")
+    @ResponseBody
+    public ResultInfo tree(){
+        return ResultDataUtil.createSuccess(CommonEnum.FILE_UPLOAD_SUCCESS_LAYUI).setData(sysDeptService.buildTree());
     }
 
 
@@ -131,5 +148,20 @@ public class SysDeptController extends BaseController{
             ResultDataUtil.createFail(CommonEnum.DELETE_FAILURE);
         }
         return ResultDataUtil.createSuccess(CommonEnum.DELETE_SUCCESS);
-    } 
+    }
+
+    /**
+     * 查询部门名称是否存在
+     * @param sysDept
+     * @return
+     */
+    @RequestMapping(value = "/existDeptName")
+    @ResponseBody
+    public ResultInfo existDeptName(SysDept sysDept){
+        SysDept result = sysDeptService.existDeptName(sysDept);
+        if (ObjectUtil.isNotNull(result)) {
+            return  ResultDataUtil.createFail(CommonEnum.DATA_EXIST);
+        }
+        return ResultDataUtil.createSuccess(CommonEnum.DATA_NOT_EXIST);
+    }
 }

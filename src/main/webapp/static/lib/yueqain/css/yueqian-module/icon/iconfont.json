@@ -1,9 +1,9 @@
 {
   "id": "1858883",
-  "name": "pearui",
+  "name": "yueqianui",
   "font_family": "yueqian-icon",
   "css_prefix_text": "yueqian-icon-",
-  "description": "Pear ui 的图标组件",
+  "description": "yueqian ui 的图标组件",
   "glyphs": [
     {
       "icon_id": "12654162",

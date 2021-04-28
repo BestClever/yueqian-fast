@@ -5,14 +5,14 @@ layui.define(['jquery', 'element'], function(exports) {
 		$ = layui.jquery,
 		element = layui.element;
 
-	var pearTab = function(opt) {
+	var yueqianTab = function(opt) {
 		this.option = opt;
 	};
 
 	var tabData = new Array();
 	var tabDataCurrent = 0;
 
-	pearTab.prototype.render = function(opt) {
+	yueqianTab.prototype.render = function(opt) {
 		//默认配置值
 		var option = {
 			elem: opt.elem,
@@ -113,10 +113,10 @@ layui.define(['jquery', 'element'], function(exports) {
 			return false;
 		})
 
-		return new pearTab(option);
+		return new yueqianTab(option);
 	}
 
-	pearTab.prototype.click = function(callback) {
+	yueqianTab.prototype.click = function(callback) {
 		var elem = this.option.elem;
 		var option = this.option;
 		element.on('tab(' + this.option.elem + ')', function(data) {
@@ -126,7 +126,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		});
 	}
 
-	pearTab.prototype.positionTab = function() {
+	yueqianTab.prototype.positionTab = function() {
 		var $tabTitle = $('.layui-tab[lay-filter=' + this.option.elem + ']  .layui-tab-title');
 		var autoLeft = 0;
 		$tabTitle.children("li").each(function() {
@@ -141,12 +141,12 @@ layui.define(['jquery', 'element'], function(exports) {
 		}, 200);
 	}
 
-	pearTab.prototype.clear = function() {
+	yueqianTab.prototype.clear = function() {
 		sessionStorage.removeItem(this.option.elem + "-yueqian-tab-data");
 		sessionStorage.removeItem(this.option.elem + "-yueqian-tab-data-current");
 	}
 
-	pearTab.prototype.addTab = function(opt) {
+	yueqianTab.prototype.addTab = function(opt) {
 		var title = '';
 		if (opt.close) {
 			title += '<span class="yueqian-tab-active"></span><span class="able-close">' + opt.title +
@@ -170,7 +170,7 @@ layui.define(['jquery', 'element'], function(exports) {
 	var index = 0;
 
 	// 根据过滤 filter 标识, 删除执行选项卡
-	pearTab.prototype.delTabByElem = function(elem, id, callback) {
+	yueqianTab.prototype.delTabByElem = function(elem, id, callback) {
 		var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title [lay-id='" + id + "']");
 		if (currentTab.find("span").is(".able-close")) {
 			tabDelete(elem, id, callback);
@@ -178,7 +178,7 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	// 根据过滤 filter 标识, 删除当前选项卡
-	pearTab.prototype.delCurrentTabByElem = function(elem, callback) {
+	yueqianTab.prototype.delCurrentTabByElem = function(elem, callback) {
 		var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title .layui-this");
 		if (currentTab.find("span").is(".able-close")) {
 			var currentId = currentTab.attr("lay-id");
@@ -187,7 +187,7 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	// 通过过滤 filter 标识, 新增标签页
-	pearTab.prototype.addTabOnlyByElem = function(elem, opt, time) {
+	yueqianTab.prototype.addTabOnlyByElem = function(elem, opt, time) {
 		var title = '';
 		if (opt.close) {
 			title += '<span class="yueqian-tab-active"></span><span class="able-close">' + opt.title +
@@ -206,12 +206,12 @@ layui.define(['jquery', 'element'], function(exports) {
 					'</div>' +
 					'</div>'
 				$("#" + elem).find(".yueqian-tab").append(load);
-				var pearLoad = $("#" + elem).find("#yueqian-tab-loading" + index);
-				pearLoad.css({
+				var yueqianLoad = $("#" + elem).find("#yueqian-tab-loading" + index);
+				yueqianLoad.css({
 					display: "block"
 				});
 				setTimeout(function() {
-					pearLoad.fadeOut(500);
+					yueqianLoad.fadeOut(500);
 				}, time);
 				index++;
 			}
@@ -240,12 +240,12 @@ layui.define(['jquery', 'element'], function(exports) {
 						'</div>'
 
 					$("#" + elem).find(".yueqian-tab").append(load);
-					var pearLoad = $("#" + elem).find("#yueqian-tab-loading" + index);
-					pearLoad.css({
+					var yueqianLoad = $("#" + elem).find("#yueqian-tab-loading" + index);
+					yueqianLoad.css({
 						display: "block"
 					});
 					setTimeout(function() {
-						pearLoad.fadeOut(500);
+						yueqianLoad.fadeOut(500);
 					}, time);
 					index++;
 				}
@@ -265,7 +265,7 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	/** 添 加 唯 一 选 项 卡 */
-	pearTab.prototype.addTabOnly = function(opt, time) {
+	yueqianTab.prototype.addTabOnly = function(opt, time) {
 		var title = '';
 		if (opt.close) {
 			title += '<span class="yueqian-tab-active"></span><span class="able-close">' + opt.title +
@@ -282,12 +282,12 @@ layui.define(['jquery', 'element'], function(exports) {
 					'</div>' +
 					'</div>';
 				$("#" + this.option.elem).find(".yueqian-tab").append(load);
-				var pearLoad = $("#" + this.option.elem).find("#yueqian-tab-loading" + index);
-				pearLoad.css({
+				var yueqianLoad = $("#" + this.option.elem).find("#yueqian-tab-loading" + index);
+				yueqianLoad.css({
 					display: "block"
 				});
 				setTimeout(function() {
-					pearLoad.fadeOut(500);
+					yueqianLoad.fadeOut(500);
 				}, time);
 				index++;
 			}
@@ -325,12 +325,12 @@ layui.define(['jquery', 'element'], function(exports) {
 						'</div>'
 
 					$("#" + this.option.elem).find(".yueqian-tab").append(load);
-					var pearLoad = $("#" + this.option.elem).find("#yueqian-tab-loading" + index);
-					pearLoad.css({
+					var yueqianLoad = $("#" + this.option.elem).find("#yueqian-tab-loading" + index);
+					yueqianLoad.css({
 						display: "block"
 					});
 					setTimeout(function() {
-						pearLoad.fadeOut(500);
+						yueqianLoad.fadeOut(500);
 					}, time);
 					index++;
 				}
@@ -350,7 +350,7 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	// 刷 新 指 定 的 选 项 卡
-	pearTab.prototype.refresh = function(time) {
+	yueqianTab.prototype.refresh = function(time) {
 		// 刷 新 指 定 的 选 项 卡
 		if (time != false && time != 0) {
 			var load = '<div id="yueqian-tab-loading' + index + '" class="yueqian-tab-loading">' +
@@ -361,14 +361,14 @@ layui.define(['jquery', 'element'], function(exports) {
 
 			var elem = this.option.elem;
 			$("#" + this.option.elem).find(".yueqian-tab").append(load);
-			var pearLoad = $("#" + this.option.elem).find("#yueqian-tab-loading" + index);
-			pearLoad.css({
+			var yueqianLoad = $("#" + this.option.elem).find("#yueqian-tab-loading" + index);
+			yueqianLoad.css({
 				display: "block"
 			});
 			index++;
 			setTimeout(function() {
-				pearLoad.fadeOut(500, function() {
-					pearLoad.remove();
+				yueqianLoad.fadeOut(500, function() {
+					yueqianLoad.remove();
 				});
 			}, time);
 			$(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
@@ -600,5 +600,5 @@ layui.define(['jquery', 'element'], function(exports) {
 		})
 	}
 
-	exports(MOD_NAME, new pearTab());
+	exports(MOD_NAME, new yueqianTab());
 })

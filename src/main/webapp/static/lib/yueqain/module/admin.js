@@ -2,28 +2,28 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 	function(exports) {
 		"use strict";
 
-		const $ = layui.jquery,
+		var $ = layui.jquery,
 			form = layui.form,
 			yaml = layui.yaml,
 			message = layui.message,
-			pearTab = layui.tab,
-			pearMenu = layui.menu,
-			pearFrame = layui.frame,
-			pearTheme = layui.theme;
+			yueqianTab = layui.tab,
+			yueqianMenu = layui.menu,
+			yueqianFrame = layui.frame,
+			yueqianTheme = layui.theme;
 
-		let bodyFrame;
-		let sideMenu;
-		let bodyTab;
-		let config;
-		const body = $('body');
-		let logout = function() {};
-		let msgInstance;
+		var bodyFrame;
+		var sideMenu;
+		var bodyTab;
+		var config;
+		var body = $('body');
+		var logout = function() {};
+		var msgInstance;
 
-		const yueqianAdmin = new function() {
+		var yueqianAdmin = new function() {
 
 			// 默认配置
-			let configType = 'yml';
-			let configPath = 'yueqian.config.yml';
+			var configType = 'yml';
+			var configPath = 'yueqian.config.yml';
 
 			this.setConfigPath = function(path) {
 				configPath = path;
@@ -52,7 +52,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 				}
 				else
 				{
-					let data;
+					var data;
 					$.ajax({
 						url:configPath,
 						type:'get',
@@ -72,7 +72,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 			}
 
 			this.menuRender = function(param) {
-				sideMenu = pearMenu.render({
+				sideMenu = yueqianMenu.render({
 					elem: 'sideMenu',
 					async: param.menu.async !== undefined ? param.menu.async : true,
 					theme: "dark-theme",
@@ -94,7 +94,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 
 			this.bodyRender = function(param) {
 				body.on("click", ".refresh", function() {
-					const refreshA = $(".refresh a");
+					var refreshA = $(".refresh a");
 					refreshA.removeClass("layui-icon-refresh-1");
 					refreshA.addClass("layui-anim");
 					refreshA.addClass("layui-anim-rotate");
@@ -110,7 +110,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 					}, 600)
 				})
 				if (param.tab.muiltTab) {
-					bodyTab = pearTab.render({
+					bodyTab = yueqianTab.render({
 						elem: 'content',
 						roll: true,
 						tool: true,
@@ -157,7 +157,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 						compatible();
 					})
 				} else {
-					bodyFrame = pearFrame.render({
+					bodyFrame = yueqianFrame.render({
 						elem: 'content',
 						title: '首页',
 						url: param.tab.index.href,
@@ -183,12 +183,12 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 				if (option.theme.allowCustom === false) {
 					$(".setting").remove();
 				}
-				const colorId = localStorage.getItem("theme-color");
-				const currentColor = getColorById(colorId);
+				var colorId = localStorage.getItem("theme-color");
+				var currentColor = getColorById(colorId);
 				localStorage.setItem("theme-color", currentColor.id);
 				localStorage.setItem("theme-color-context", currentColor.color);
-				pearTheme.changeTheme(window, option.other.autoHead);
-				let menu = localStorage.getItem("theme-menu");
+				yueqianTheme.changeTheme(window, option.other.autoHead);
+				var menu = localStorage.getItem("theme-menu");
 				if (menu === "null") {
 					menu = option.theme.defaultMenu;
 				} else {
@@ -201,7 +201,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 			}
 
 			this.menuSkin = function(theme) {
-				const yueqianAdmin = $(".yueqian-admin");
+				var yueqianAdmin = $(".yueqian-admin");
 				yueqianAdmin.removeClass("light-theme");
 				yueqianAdmin.removeClass("dark-theme");
 				yueqianAdmin.addClass(theme);
@@ -245,9 +245,9 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 
 		function collaspe() {
 			sideMenu.collaspe();
-			const admin = $(".yueqian-admin");
-			const left = $(".layui-icon-spread-left")
-			const right = $(".layui-icon-shrink-right")
+			var admin = $(".yueqian-admin");
+			var left = $(".layui-icon-spread-left")
+			var right = $(".layui-icon-shrink-right")
 			if (admin.is(".yueqian-mini")) {
 				left.addClass("layui-icon-shrink-right")
 				left.removeClass("layui-icon-spread-left")
@@ -261,7 +261,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 
 		body.on("click", ".logout", function() {
 			// 回调
-			let result = logout();
+			var result = logout();
 
 			if (result) {
 				// 清空缓存
@@ -302,7 +302,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 
 		body.on("click", ".setting", function() {
 
-			let bgColorHtml =
+			var bgColorHtml =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -318,8 +318,8 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 				'</a>' +
 				'</li>';
 
-			const html =
-				'<div class="pearone-color">\n' +
+			var html =
+				'<div class="yueqianone-color">\n' +
 				'<div class="color-title">整体风格</div>\n' +
 				'<div class="color-content">\n' +
 				'<ul>\n' + bgColorHtml + '</ul>\n' +
@@ -341,8 +341,8 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 				success: function(layero, index) {
 					form.render();
 
-					const color = localStorage.getItem("theme-color");
-					const menu = localStorage.getItem("theme-menu");
+					var color = localStorage.getItem("theme-color");
+					var menu = localStorage.getItem("theme-menu");
 
 					if (color !== "null") {
 						$(".select-color-item").removeClass("layui-icon")
@@ -355,7 +355,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 						$("[data-select-bgcolor='" + menu + "']").addClass("layui-this");
 					}
 					$('#layui-layer-shade' + index).click(function() {
-						const $layero = $('#layui-layer' + index);
+						var $layero = $('#layui-layer' + index);
 						$layero.animate({
 							left: $layero.offset().left + $layero.width()
 						}, 200, function() {
@@ -364,7 +364,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 					})
 
 					$('#closeTheme').click(function() {
-						const $layero = $('#layui-layer' + index);
+						var $layero = $('#layui-layer' + index);
 						$layero.animate({
 							left: $layero.offset().left + $layero.width()
 						}, 200, function() {
@@ -380,7 +380,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 		}
 
 		body.on('click', '[data-select-bgcolor]', function() {
-			const theme = $(this).attr('data-select-bgcolor');
+			var theme = $(this).attr('data-select-bgcolor');
 			$('[data-select-bgcolor]').removeClass("layui-this");
 			$(this).addClass("layui-this");
 			localStorage.setItem("theme-menu", theme);
@@ -390,11 +390,11 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 		body.on('click', '.select-color-item', function() {
 			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
-			const colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
-			const currentColor = getColorById(colorId);
+			var colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
+			var currentColor = getColorById(colorId);
 			localStorage.setItem("theme-color", currentColor.id);
 			localStorage.setItem("theme-color-context", currentColor.color);
-			pearTheme.changeTheme(window, config.other.autoHead);
+			yueqianTheme.changeTheme(window, config.other.autoHead);
 		});
 
 		function applyConfig(param) {
@@ -410,8 +410,8 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 		}
 
 		function getColorById(id) {
-			let color;
-			let flag = false;
+			var color;
+			var flag = false;
 			$.each(config.colors, function(i, value) {
 				if (value.id === id) {
 					color = value;
@@ -429,7 +429,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 		}
 
 		function buildLinkHtml() {
-			let links = "";
+			var links = "";
 			$.each(config.links, function(i, value) {
 				links += '<a class="more-menu-item" href="' + value.href + '" target="_blank">' +
 					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.title +
@@ -439,7 +439,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 		}
 
 		function buildColorHtml() {
-			let colors = "";
+			var colors = "";
 			$.each(config.colors, function(i, value) {
 				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color +
 					";'></span>";
@@ -457,7 +457,7 @@ layui.define(['message','jquery', 'yaml','form', 'tab', 'menu', 'frame', 'theme'
 		function screenFun(num) {
 			num = num || 1;
 			num = num * 1;
-			const docElm = document.documentElement;
+			var docElm = document.documentElement;
 			switch (num) {
 				case 1:
 					if (docElm.requestFullscreen) {

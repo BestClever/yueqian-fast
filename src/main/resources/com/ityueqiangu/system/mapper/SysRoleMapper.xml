@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.system.mapper.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="com.ityueqiangu.system.domain.SysRole">
+        <result column="id" property="id" />
+        <result column="role_name" property="roleName" />
+        <result column="role_code" property="roleCode" />
+        <result column="role_description" property="roleDescription" />
+        <result column="is_available" property="isAvailable" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="remark" property="remark" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_user_name" property="createUserName" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user_id" property="updateUserId" />
+        <result column="update_user_name" property="updateUserName" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.role_name
+    , t.role_code
+    , t.role_description
+    , t.is_available
+    , t.is_deleted
+    , t.remark
+    , t.create_user_id
+    , t.create_user_name
+    , t.create_time
+    , t.update_user_id
+    , t.update_user_name
+    , t.update_time
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSysRoleList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysRole">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null  and id != ''" >
+                and t.id= #{id}
+            </if>
+            <if test="roleName != null  and roleName != ''" >
+                and t.role_name= #{roleName}
+            </if>
+            <if test="roleCode != null  and roleCode != ''" >
+                and t.role_code= #{roleCode}
+            </if>
+            <if test="roleDescription != null  and roleDescription != ''" >
+                and t.role_description= #{roleDescription}
+            </if>
+            <if test="isAvailable != null  and isAvailable != ''" >
+                and t.is_available= #{isAvailable}
+            </if>
+            <if test="isDeleted != null  and isDeleted != ''" >
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="remark != null  and remark != ''" >
+                and t.remark= #{remark}
+            </if>
+            <if test="createUserId != null  and createUserId != ''" >
+                and t.create_user_id= #{createUserId}
+            </if>
+            <if test="createUserName != null  and createUserName != ''" >
+                and t.create_user_name= #{createUserName}
+            </if>
+            <if test="createTime != null  and createTime != ''" >
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateUserId != null  and updateUserId != ''" >
+                and t.update_user_id= #{updateUserId}
+            </if>
+            <if test="updateUserName != null  and updateUserName != ''" >
+                and t.update_user_name= #{updateUserName}
+            </if>
+            <if test="updateTime != null  and updateTime != ''" >
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="selectSysRoleById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+        WHERE t.id = #{id}
+    </select>
+
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysRole" parameterType="com.ityueqiangu.system.domain.SysRole"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="roleCode != null">
+                role_code,
+            </if>
+            <if test="roleDescription != null">
+                role_description,
+            </if>
+            <if test="isAvailable != null">
+                is_available,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createUserName != null">
+                create_user_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateUserId != null">
+                update_user_id,
+            </if>
+            <if test="updateUserName != null">
+                update_user_name,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="roleName != null" >
+                #{roleName},
+            </if>
+            <if test="roleCode != null" >
+                #{roleCode},
+            </if>
+            <if test="roleDescription != null" >
+                #{roleDescription},
+            </if>
+            <if test="isAvailable != null" >
+                #{isAvailable},
+            </if>
+            <if test="isDeleted != null" >
+                #{isDeleted},
+            </if>
+            <if test="remark != null" >
+                #{remark},
+            </if>
+            <if test="createUserId != null" >
+                #{createUserId},
+            </if>
+            <if test="createUserName != null" >
+                #{createUserName},
+            </if>
+            <if test="createTime != null" >
+                #{createTime},
+            </if>
+            <if test="updateUserId != null" >
+                #{updateUserId},
+            </if>
+            <if test="updateUserName != null" >
+                #{updateUserName},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysRole" parameterType="com.ityueqiangu.system.domain.SysRole">
+        UPDATE sys_role
+        <set>
+            <if test="roleName != null" >
+                role_name=#{roleName},
+            </if>
+            <if test="roleCode != null" >
+                role_code=#{roleCode},
+            </if>
+            <if test="roleDescription != null" >
+                role_description=#{roleDescription},
+            </if>
+            <if test="isAvailable != null" >
+                is_available=#{isAvailable},
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted=#{isDeleted},
+            </if>
+            <if test="remark != null" >
+                remark=#{remark},
+            </if>
+            <if test="createUserId != null" >
+                create_user_id=#{createUserId},
+            </if>
+            <if test="createUserName != null" >
+                create_user_name=#{createUserName},
+            </if>
+            <if test="createTime != null" >
+                create_time=#{createTime},
+            </if>
+            <if test="updateUserId != null" >
+                update_user_id=#{updateUserId},
+            </if>
+            <if test="updateUserName != null" >
+                update_user_name=#{updateUserName},
+            </if>
+            <if test="updateTime != null" >
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据主键删除记录 -->
+    <delete id="deleteSysRoleById" parameterType="Integer">
+        delete from sys_role where id = #{id}
+	</delete>
+
+    <select id="getOne" resultMap="BaseResultMap" parameterType="com.ityueqiangu.system.domain.SysRole">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="roleName != null  and roleName != ''" >
+                and t.role_name= #{roleName}
+            </if>
+            <if test="roleCode != null  and roleCode != ''" >
+                and t.role_code= #{roleCode}
+            </if>
+        </trim>
+    </select>
+
+</mapper>

@@ -104,8 +104,6 @@
 <script type="text/javascript" src="${baseurl}/static/lib/yueqain/yueqian.all.js"></script>
 <!-- Jqarticle Js -->
 <script type="text/javascript" src="${baseurl}/static/lib/assembly/jqarticle/jparticle.min.js"></script>
-<!-- loginVerificationCode Js-->
-<script type="text/javascript" src="${baseurl}/static/lib/assembly/loginVerificationCode/loginVerificationCode.js"></script>
 <script>
     layui.use(['carousel', 'form', 'common','popup','element'], function () {
         var carousel = layui.carousel;

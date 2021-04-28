@@ -1,4 +1,4 @@
-/** Button 默认*/
+/** Buttom 默认*/
 .yueqian-btn {
 	display: inline-block;
 	line-height: 38px;
@@ -12,31 +12,23 @@
 	padding: 0 18px;
 	height: 38px;
 	font-size: 14px;
-	color: #2f495e;
 	background-color: white;
-	border-radius: 4px;
 	border: 1px solid #dcdfe6;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .04);
-	margin-left: 2px;
-	margin-right: 2px;
+	border-radius: 4px;
+	margin-left: 1.5px;
+	margin-right: 1.5px;
 }
 
 .yueqian-btn i {
 	font-size: 13px;
 }
 
-.yueqian-btn:hover {
-	opacity: .8;
-	filter: alpha(opacity=80);
-	border-color: #d9d9d9;
-	background-color: white;
-}
-
 .yueqian-btn-danger,
 .yueqian-btn-warming,
 .yueqian-btn-success,
 .yueqian-btn-primary {
-	color: #fff !important
+	color: #fff !important;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
 /** Button 主题 */
 .yueqian-btn-primary {
@@ -62,13 +54,13 @@
 
 .yueqian-btn-primary[plain] {
 	color: #409eff !important;
-	background: #ecf5ff !important;
+	background: #ecf5ff 10% !important;
 	border-color: #b3d8ff !important;
 }
 
 .yueqian-btn-primary[plain]:hover {
 	color: #fff !important;
-	background-color: #2d8cf0 !important
+	background-color: #2d8cf0!important
 }
 
 .yueqian-btn-success[plain] {

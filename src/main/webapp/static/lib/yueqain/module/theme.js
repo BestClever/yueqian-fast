@@ -7,7 +7,7 @@ layui.define(["jquery","layer"], function (exports) {
 
 	theme.changeTheme = function (target, autoHead) {
 		this.autoHead = autoHead;
-		const color = localStorage.getItem("theme-color-context");
+		var color = localStorage.getItem("theme-color-context");
 		this.colorSet(color);
 		if (target.frames.length == 0) return;
 		for (var i = 0; i < target.frames.length; i++) {
@@ -23,7 +23,7 @@ layui.define(["jquery","layer"], function (exports) {
 
 	theme.colorSet = function(color) {
 		
-		let style = '';
+		var style = '';
 		style += '.light-theme .yueqian-nav-tree .layui-this a:hover,.light-theme .yueqian-nav-tree .layui-this,.light-theme .yueqian-nav-tree .layui-this a,.yueqian-nav-tree .layui-this a,.yueqian-nav-tree .layui-this{background-color: ' +color + '!important;}';
 		style += '.yueqian-admin .layui-logo .title{color:' + color + '!important;}';
 		style += '.yueqian-frame-title .dot,.yueqian-tab .layui-this .yueqian-tab-active{background-color: ' + color +'!important;}';
@@ -32,7 +32,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.ball-loader>span,.signal-loader>span {background-color: ' + color + '!important;}';
 		style += '.layui-header .layui-nav-child .layui-this a{background-color:' + color +'!important;color:white!important;}';
 		style += '#preloader{background-color:' + color + '!important;}';
-		style += '.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +color + ' 3px solid!important;}';
+		style += '.yueqianone-color .color-content li.layui-this:after, .yueqianone-color .color-content li:hover:after {border: ' +color + ' 3px solid!important;}';
 		style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color + '!important}';	
 		style += '.yueqian-social-entrance {background-color:' + color + '!important}';
 		style += '.yueqian-admin .pe-collaspe {background-color:' + color + '!important}';
@@ -70,7 +70,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.layui-form-checkbox[lay-skin=primary]:hover i{border-color:'+color+'!important}'
 		style += '.yueqian-tab-menu .item:hover{background-color:'+color+'!important}'
 
-		let colorPane = $("#yueqian-admin-color");
+		var colorPane = $("#yueqian-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);
 		}else{
