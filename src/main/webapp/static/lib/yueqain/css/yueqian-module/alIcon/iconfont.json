@@ -6,6 +6,27 @@
   "description": "layui扩展",
   "glyphs": [
     {
+      "icon_id": "2468160",
+      "name": "系统管理",
+      "font_class": "xitongguanli",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "3702626",
+      "name": "系统管理",
+      "font_class": "navicon-xtgl",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "5434072",
+      "name": "菜单管理",
+      "font_class": "caidanguanli",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
       "icon_id": "4143531",
       "name": "授权",
       "font_class": "shouquan",

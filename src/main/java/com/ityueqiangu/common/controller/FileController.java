@@ -71,7 +71,7 @@ public class FileController {
         HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("title", fileName);
         resultMap.put("src", url);
-        return ResultDataUtil.createSuccess(CommonEnum.FILE_UPLOAD_SUCCESS_LAYUI).setData(resultMap);
+        return ResultDataUtil.createSuccess(CommonEnum.LAYUI_SUCCESS).setData(resultMap);
     }
 
 

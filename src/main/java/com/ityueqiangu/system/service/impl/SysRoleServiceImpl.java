@@ -1,7 +1,9 @@
 package com.ityueqiangu.system.service.impl;
 
+import com.ityueqiangu.core.exception.BizException;
 import com.ityueqiangu.system.domain.SysRole;
 import com.ityueqiangu.system.mapper.SysRoleMapper;
+import com.ityueqiangu.system.service.ISysRolePermissionService;
 import com.ityueqiangu.system.service.ISysRoleService;
 import com.ityueqiangu.core.util.StringUtils;
 import com.ityueqiangu.core.enums.CommonEnum;
@@ -21,6 +23,9 @@ public class SysRoleServiceImpl implements ISysRoleService{
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
+    @Autowired
+    private ISysRolePermissionService sysRolePermissionService;
 
     /**
      * 查询分页记录

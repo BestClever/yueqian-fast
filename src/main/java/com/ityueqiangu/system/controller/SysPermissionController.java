@@ -1,19 +1,21 @@
 package com.ityueqiangu.system.controller;
 
 
-import com.ityueqiangu.core.web.controller.BaseController;
 import com.ityueqiangu.core.constant.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import com.ityueqiangu.core.enums.CommonEnum;
+import com.ityueqiangu.core.web.controller.BaseController;
 import com.ityueqiangu.core.web.result.DataGridResultInfo;
 import com.ityueqiangu.core.web.result.ResultDataUtil;
 import com.ityueqiangu.core.web.result.ResultInfo;
-import org.springframework.stereotype.Controller;
-import com.ityueqiangu.core.enums.CommonEnum;
-import java.util.List;
 import com.ityueqiangu.system.domain.SysPermission;
 import com.ityueqiangu.system.service.ISysPermissionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Clever、xia
@@ -23,51 +25,78 @@ import com.ityueqiangu.system.service.ISysPermissionService;
  */
 @Controller
 @RequestMapping(value = "/sysPermission")
-public class SysPermissionController extends BaseController{
+public class SysPermissionController extends BaseController {
 
     @Autowired
     private ISysPermissionService sysPermissionService;
-	/*访问路径前缀*/
+    /*访问路径前缀*/
     private final String PATH_PREFIX = "system/permission/";
 
-	 /**
+    /**
      * 访问主页
+     *
      * @return
      */
     @RequestMapping(value = "/index")
-    public String index(){
-        return PATH_PREFIX+"index";
+    public String index() {
+        return PATH_PREFIX + "index";
     }
 
     /**
      * 新增
+     *
      * @return
      */
     @RequestMapping(value = "/add")
-    public String add(){
-        return PATH_PREFIX+"add";
+    public String add() {
+        return PATH_PREFIX + "add";
     }
 
     /**
      * 修改
+     *
      * @return
      */
     @RequestMapping(value = "/edit")
-    public String edit(){
-        return PATH_PREFIX+"edit";
+    public String edit() {
+        return PATH_PREFIX + "edit";
     }
-	
+
+    /**
+     * 权限选择
+     *
+     * @return
+     */
+    @RequestMapping(value = "/permissionselect")
+    public String permissionselect() {
+        return PATH_PREFIX + "permissionselect";
+    }
+
     /**
      * 分页列表查询
+     *
      * @param sysPermission
      * @return 返回DataGridResultInfo
      */
     @RequestMapping("/list")
     @ResponseBody
     public DataGridResultInfo list(SysPermission sysPermission) {
-    	startPage();
+        startPage();
         List<SysPermission> list = sysPermissionService.selectSysPermissionList(sysPermission);
         return getDataTable(list);
+    }
+
+    /**
+     * 分页列表查询
+     *
+     * @param sysPermission
+     * @return 返回DataGridResultInfo
+     */
+    @RequestMapping("/selectParent")
+    @ResponseBody
+    public ResultInfo selectParent(SysPermission sysPermission) {
+        List<SysPermission> list = sysPermissionService.selectSysPermissionList(sysPermission);
+        return ResultDataUtil.createSuccess(CommonEnum.LAYUI_SUCCESS).setData(list);
     }
 
 
@@ -80,10 +109,10 @@ public class SysPermissionController extends BaseController{
     @RequestMapping("/selectSysPermissionById")
     @ResponseBody
     public ResultInfo selectSysPermissionById(SysPermission sysPermission) {
-    	SysPermission sysPermissionResult = sysPermissionService.selectSysPermissionById(sysPermission.getId());
+        SysPermission sysPermissionResult = sysPermissionService.selectSysPermissionById(sysPermission.getId());
         return ResultDataUtil.createSuccess(CommonEnum.SELECT_SUCCESS).setData(sysPermissionResult);
     }
-    
+
     /**
      * 新增
      *
@@ -94,13 +123,13 @@ public class SysPermissionController extends BaseController{
     @ResponseBody
     public ResultInfo save(SysPermission sysPermission) {
         Integer result = sysPermissionService.insertSysPermission(sysPermission);
-        if (result< Constants.ONE) {
+        if (result < Constants.ONE) {
             ResultDataUtil.createFail(CommonEnum.SAVE_FAILURE);
         }
         return ResultDataUtil.createSuccess(CommonEnum.SAVE_SUCCESS);
     }
-    
-    
+
+
     /**
      * 修改，
      *
@@ -110,13 +139,13 @@ public class SysPermissionController extends BaseController{
     @RequestMapping("/update")
     @ResponseBody
     public ResultInfo update(SysPermission sysPermission) {
-    	Integer result = sysPermissionService.updateSysPermission(sysPermission);
-        if (result< Constants.ONE) {
+        Integer result = sysPermissionService.updateSysPermission(sysPermission);
+        if (result < Constants.ONE) {
             ResultDataUtil.createFail(CommonEnum.UPDATE_FAILURE);
         }
         return ResultDataUtil.createSuccess(CommonEnum.UPDATE_SUCCESS);
     }
-    
+
     /**
      * 删除
      *
@@ -126,10 +155,10 @@ public class SysPermissionController extends BaseController{
     @RequestMapping("/remove")
     @ResponseBody
     public ResultInfo remove(SysPermission sysPermission) {
-    	Integer result = sysPermissionService.deleteSysPermissionById(sysPermission.getId());
-        if (result< Constants.ONE) {
+        Integer result = sysPermissionService.deleteSysPermissionById(sysPermission.getId());
+        if (result < Constants.ONE) {
             ResultDataUtil.createFail(CommonEnum.DELETE_FAILURE);
         }
         return ResultDataUtil.createSuccess(CommonEnum.DELETE_SUCCESS);
-    } 
+    }
 }

@@ -182,6 +182,14 @@ public class IndexController {
         jsgl.setParentId(1);
         yhglChildren.add(jsgl);
 
+        Menu cdgl = new Menu();
+        cdgl.setId(14);
+        cdgl.setTitle("菜单管理");
+        cdgl.setHref("sysPermission/index");
+        cdgl.setIcon("layui-icon-ali-caidanguanli");
+        cdgl.setSpread(false);
+        cdgl.setParentId(1);
+        yhglChildren.add(cdgl);
 
         yhgl.setId(1);
         yhgl.setTitle("用户管理");

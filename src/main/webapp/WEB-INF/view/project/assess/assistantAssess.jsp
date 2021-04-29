@@ -186,7 +186,7 @@
                 assessContent:data.assessContent,
                 assessScore:value
             };
-            debugger
+
             var url =BaseUrl+ "assessResulitem/saveItme";
             $.post(url,params,function (result) {
                 if (result.success) {

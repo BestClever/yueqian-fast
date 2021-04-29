@@ -113,19 +113,18 @@
 
         var DTree = dtree.render({
             elem: "#organizationTree",
+            url: BaseUrl + "sysDept/tree",
+            skin:"laySimple",
             //data: data,
-            initLevel: "2", //默认展开层级为1
+            // initLevel: "2", //默认展开层级为1
             line: true, // 有线树
-            ficon: ["1", "-1"], // 设定一级图标样式。0表示方形加减图标，8表示小圆点图标
-            icon: ["0", "2"], // 设定二级图标样式。0表示文件夹图标，5表示叶子图标
+            // ficon: ["1", "-1"], // 设定一级图标样式。0表示方形加减图标，8表示小圆点图标
+            // icon: ["0", "2"], // 设定二级图标样式。0表示文件夹图标，5表示叶子图标
             method: 'get',
             dataStyle: "layuiStyle",
-            url: BaseUrl + "sysDept/tree",
             response: {
                 message: "msg",
                 statusCode: 0,
-                treeId: "id", //节点ID（必填）
-                parentId: "parentId", //父节点ID（必填）
                 title: "deptName"
             }
         });

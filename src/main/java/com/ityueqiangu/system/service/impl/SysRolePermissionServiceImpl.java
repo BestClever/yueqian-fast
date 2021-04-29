@@ -73,5 +73,12 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService{
     public Integer deleteSysRolePermissionById(Integer id) {
     	return sysRolePermissionMapper.deleteSysRolePermissionById(id);
     }
-	
+
+    @Override
+    public void saveRelationship(SysRolePermission sysRolePermission) {
+        if (StringUtils.isBlank(sysRolePermission.getIds())) {
+
+        }
+    }
+
 }

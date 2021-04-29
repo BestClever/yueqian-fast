@@ -101,10 +101,10 @@
                         var index = parent.layer.getFrameIndex(window.name);
                         //关闭弹出框
                         parent.layer.close(index);
-                        debugger
 
 
-                        debugger
+
+
                     })
                 } else {
                     layer.msg(result.msg)

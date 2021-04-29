@@ -26,12 +26,30 @@ public class DTree implements Serializable {
 	private Object basicData;
 	
 	/** 复选框集合*/
-	private List<CheckArr> checkArr = new ArrayList<CheckArr>();
+//	private List<CheckArr> checkArr = new ArrayList<CheckArr>();
+	private String checkArr = "0";
+
 	
 	/** 子节点集合*/
 	private List<DTree> children = new ArrayList<DTree>();
 
 	public DTree() {}
+
+	public DTree(String id, String parentId, String title) {
+		super();
+		this.id = id;
+		this.parentId = parentId;
+		this.title = title;
+		this.isLast = isLast;
+	}
+
+	public DTree(String id, String parentId, String title, String checkArr) {
+		super();
+		this.id = id;
+		this.parentId = parentId;
+		this.title = title;
+		this.checkArr = checkArr;
+	}
 	
 	public DTree(String id, String parentId, String title, Boolean isLast) {
 		super();
@@ -42,7 +60,7 @@ public class DTree implements Serializable {
 	}
 
 	public DTree(String id, String parentId, String title, String iconClass,
-                 Object basicData, List<CheckArr> checkArr) {
+                 Object basicData, String checkArr) {
 		this.id = id;
 		this.parentId = parentId;
 		this.title = title;
@@ -53,7 +71,7 @@ public class DTree implements Serializable {
 
 	public DTree(String id, String parentId, String title,
                  Boolean isLast, String iconClass, Object basicData,
-                 List<CheckArr> checkArr, List<DTree> children) {
+				 String checkArr, List<DTree> children) {
 		this.id = id;
 		this.parentId = parentId;
 		this.title = title;
@@ -112,11 +130,11 @@ public class DTree implements Serializable {
 		this.basicData = basicData;
 	}
 
-	public List<CheckArr> getCheckArr() {
+	public String getCheckArr() {
 		return checkArr;
 	}
 
-	public void setCheckArr(List<CheckArr> checkArr) {
+	public void setCheckArr(String checkArr) {
 		this.checkArr = checkArr;
 	}
 

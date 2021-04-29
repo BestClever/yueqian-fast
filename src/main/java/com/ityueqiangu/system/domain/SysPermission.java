@@ -38,4 +38,11 @@ public class SysPermission extends BaseEntity{
 	private String isSpread;
 	/** 是否可用 */
 	private String isAvailable;
+	/*父节点名称*/
+	private String parentName;
+
+	/**
+	 * 计算列 提供给前端组件
+	 * */
+	private String checkArr = "0";
 }

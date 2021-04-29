@@ -5220,7 +5220,7 @@ layui.define(['jquery','layer','form'], function(exports) {
             $("div[dtree-id='" + rootId + "'][dtree-select='"+_this.selectDiv+"']").on("click", function(event){
                 event.stopPropagation();
                 var dl = $(this).find('dl');
-                //debugger;
+                //;
                 $(this).toggleClass("layui-form-selected");
                 
                 var $card = $("div[dtree-id='" + rootId + "'][dtree-card='"+_this.selectCardDiv+"']");

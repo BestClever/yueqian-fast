@@ -20,4 +20,7 @@ public class SysRolePermission extends BaseEntity{
 	private Integer roleId;
 	/** 资源id */
 	private Integer permissionId;
+
+	/*多个权限的选择*/
+	private String ids;
 }

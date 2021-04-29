@@ -84,7 +84,7 @@ public class SysDeptController extends BaseController{
     @RequestMapping(value = "tree")
     @ResponseBody
     public ResultInfo tree(){
-        return ResultDataUtil.createSuccess(CommonEnum.FILE_UPLOAD_SUCCESS_LAYUI).setData(sysDeptService.buildTree());
+        return ResultDataUtil.createSuccess(CommonEnum.LAYUI_SUCCESS).setData(sysDeptService.buildTree());
     }
 
 

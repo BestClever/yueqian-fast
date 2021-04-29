@@ -131,5 +131,12 @@ public class SysRolePermissionController extends BaseController{
             ResultDataUtil.createFail(CommonEnum.DELETE_FAILURE);
         }
         return ResultDataUtil.createSuccess(CommonEnum.DELETE_SUCCESS);
-    } 
+    }
+
+    @RequestMapping(value = "/saveRelationship")
+    @ResponseBody
+    public ResultInfo saveRelationship(SysRolePermission sysRolePermission) {
+        sysRolePermissionService.saveRelationship(sysRolePermission);
+        return ResultDataUtil.createSuccess(CommonEnum.SAVE_SUCCESS);
+    }
 }

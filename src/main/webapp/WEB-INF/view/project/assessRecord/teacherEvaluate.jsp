@@ -136,7 +136,7 @@
                 dataType: "json",
                 success: function (result) {
                    if (result.success) {
-                       debugger
+
                        $("#classeName").val(result.data.classeName);
                        $("#classeTeacherName").val(result.data.classeTeacherName);
                        if (!common.isEmpty(result.data.assistant)) {
@@ -157,7 +157,7 @@
 
 
         $('#LAY-down').on('click', function () {
-            debugger
+
             window.open(BaseUrl +"assessResulitem/download");
         });
     });

@@ -47,7 +47,7 @@
 
 <!--操作-->
 <script type="text/html" id="tableTool">
-    <a class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="update">
+    <a class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="authorization">
         <i class="iconfont layui-icon-ali-shouquan"></i>
         授权
     </a>
@@ -115,8 +115,8 @@
                 case "del":
                     del(data);
                     break;
-                case "viewClass":
-                    viewClass(data);
+                case "authorization":
+                    authorization(data);
                     break;
             }
         });
@@ -166,6 +166,11 @@
                     }
                 })
             })
+        }
+
+        function authorization(data) {
+            layerCustom.open("权限选择", BaseUrl + 'sysRole/authorization?id='+data.id, "400px", "80%", function (layero, index) {
+            });
         }
     });
 </script>

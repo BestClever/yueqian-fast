@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/view/common/tag.jsp" %>
 <html>
 <head>
-    <title>部门选择</title>
+    <title>权限选择</title>
 
     <link rel="stylesheet" href="${baseurl}/static/lib/yueqain/css/yueqian.all.css" media="all">
 </head>
@@ -18,7 +18,7 @@
                     <div class="layui-input-inline">
                         <button class="layui-btn layui-btn-normal" id="search_btn">查询</button>
                     </div>
-                    <ul id="dept-tree" class="dtree" data-id="0"></ul>
+                    <ul id="permission-tree" class="dtree" data-id="0"></ul>
                 </div>
             </div>
         </div>
@@ -52,21 +52,23 @@
             form = layui.form;
 
         var DTree = dtree.render({
-            elem: "#dept-tree",
-            url: BaseUrl + "sysDept/list",
-            selectInputName: {nodeId: "id", context: "deptName"},
+            elem: "#permission-tree",
+            url: BaseUrl + "sysPermission/selectParent",
+            selectInputName: {nodeId: "id", context: "permissionName"},
+            skin:"laySimple",
             dataStyle: "layuiStyle",
             dataFormat: "list",
+            selectInitVal: "0",
             response: {
                 message: "msg",
                 statusCode: 0,
                 treeId: "id", //节点ID（必填）
                 parentId: "parentId", //父节点ID（必填）
-                title: "deptName"
+                title: "permissionName"
             },
             done: function (data, obj, first) {  //使用异步加载回调
                 var reportId = $("#parentId").val();
-                dtree.dataInit("dept-tree", reportId); // 初始化值
+                dtree.dataInit("permission-tree", reportId); // 初始化值
                 $("#search_btn").unbind("click");
                 $("#search_btn").click(function () {
                     var value = $("#searchInput").val();
@@ -85,7 +87,7 @@
 
 
         // 绑定节点的双击
-        dtree.on("nodedblclick('dept-tree')", function (obj) {
+        dtree.on("nodedblclick('permission-tree')", function (obj) {
             //先得到当前iframe层的索引
             var index = parent.layer.getFrameIndex(window.name);
             parent.layui.$("#parentId").val(obj.param.nodeId);
@@ -109,7 +111,7 @@
         function confirm() {
             // 先得到当前iframe层的索引
             var index = parent.layer.getFrameIndex(window.name);
-            var param = dtree.getNowParam("dept-tree"); // 获取当前选中节点
+            var param = dtree.getNowParam("permission-tree"); // 获取当前选中节点
             parent.layui.$("#parentId").val(param.nodeId);
             parent.layui.$("#parentName").val(param.context);
             //关闭弹出框

@@ -96,21 +96,22 @@
 <div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
 <div class="site-mobile-shade"></div>
 <script type="text/javascript" src="${baseurl}/static/lib/layui/layui.js"></script>
+<script src="${baseurl}/static/lib/yueqain/yueqian.all.js" charset="utf-8"></script>
 
 
 <script type="text/javascript">
-    var $, tab, dataStr, layer;
-    layui.config({
-        base: BaseUrl + "static/js/"
-    }).extend({
-        "bodyTab": "bodyTab"
-    })
+    // var $, tab, dataStr, layer;
+    // layui.config({
+    //     base: BaseUrl + "static/js/"
+    // }).extend({
+    //     "bodyTab": "bodyTab"
+    // })
     layui.use(['bodyTab', 'form', 'element', 'layer', 'jquery'], function () {
         var form = layui.form,
             element = layui.element;
-        $ = layui.$;
-        layer = parent.layer === undefined ? layui.layer : top.layer;
-        tab = layui.bodyTab({
+        var $ = layui.$;
+        var layer = parent.layer === undefined ? layui.layer : top.layer;
+        var tab = layui.bodyTab({
             openTabNum: "50",  //最大可打开窗口数量
             url: BaseUrl + "nav"//获取菜单json地址
         });
@@ -190,7 +191,8 @@
         $("body").on("click", ".layui-nav .layui-nav-item a:not('.mobileTopLevelMenus .layui-nav-item a')", function () {
             //如果不存在子级
             if ($(this).siblings().length == 0) {
-                addTab($(this));
+                // addTab($(this));
+                tab.tabAdd($(this));
                 $('body').removeClass('site-mobile');  //移动端点击菜单关闭菜单层
             }
             $(this).parent("li").siblings().removeClass("layui-nav-itemed");
@@ -239,12 +241,12 @@
             window.sessionStorage.removeItem("curmenu");
         }
 
-    })
+    });
 
     //打开新窗口
-    function addTab(_this) {
-        tab.tabAdd(_this);
-    }
+    // function addTab(_this) {
+    //     tab.tabAdd(_this);
+    // }
 
 </script>
 

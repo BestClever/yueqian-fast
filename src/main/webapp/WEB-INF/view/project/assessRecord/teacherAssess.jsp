@@ -164,7 +164,7 @@
 
 
         $('#LAY-down').on('click', function () {
-            debugger
+
             window.open(BaseUrl +"assessResulitem/download");
         });
     });

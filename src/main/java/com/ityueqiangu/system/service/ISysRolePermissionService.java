@@ -51,5 +51,6 @@ public interface ISysRolePermissionService {
      * @return 返回ResultInfo
      */
     Integer deleteSysRolePermissionById(Integer id);
-	
+
+    void saveRelationship(SysRolePermission sysRolePermission);
 }

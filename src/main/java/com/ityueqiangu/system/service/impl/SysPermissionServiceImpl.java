@@ -1,5 +1,6 @@
 package com.ityueqiangu.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.ityueqiangu.system.domain.SysPermission;
 import com.ityueqiangu.system.mapper.SysPermissionMapper;
 import com.ityueqiangu.system.service.ISysPermissionService;
@@ -9,6 +10,8 @@ import com.ityueqiangu.core.web.result.ResultDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Clever、xia
@@ -28,7 +31,17 @@ public class SysPermissionServiceImpl implements ISysPermissionService{
      * @return 返回集合，没有返回空List
      */
      public List<SysPermission> selectSysPermissionList(SysPermission sysPermission) {
-       return sysPermissionMapper.selectSysPermissionList(sysPermission);
+         List<SysPermission> sysPermissions = sysPermissionMapper.selectSysPermissionList(sysPermission);
+         Map<Integer, SysPermission> sysPermissionMap = sysPermissions.stream().collect(Collectors.toMap(SysPermission::getId, permission -> permission));
+         sysPermissions.stream().forEach(permission -> {
+             SysPermission permissionResult = sysPermissionMap.get(permission.getParentId());
+             if (ObjectUtil.isNotNull(permissionResult)) {
+                 permission.setParentName(permissionResult.getPermissionName());
+             }else {
+                 permission.setParentName("无");
+             }
+         });
+         return sysPermissions;
     }
 
 

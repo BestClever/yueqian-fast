@@ -14,6 +14,7 @@ public enum CommonEnum implements BaseInfoInterface {
     // 数据操作错误定义
     SUCCESS(200, "操作成功!"),
     FAILURE(201, "操作失败!"),
+    LAYUI_SUCCESS(0, ""),
     BODY_NOT_MATCH(400, "请求的数据格式不符!"),
     SIGNATURE_NOT_MATCH(401, "请求的数字签名不匹配!"),
     NOT_FOUND(404, "未找到该资源!"),
@@ -27,7 +28,7 @@ public enum CommonEnum implements BaseInfoInterface {
     /*系统通用类*/
     FILE_UPLOAD_SUCCESS(2001, "文件上传成功！"),
     FILE_UPLOAD_FAILURE(2051, "文件上传失败！"),
-    FILE_UPLOAD_SUCCESS_LAYUI(0, ""),
+    FILE_UPLOAD_LAYUI_SUCCESS(0, ""),
     FILE_UPLOAD_FAILURE_LAYUI(2051, "文件上传失败！"),
 
 
