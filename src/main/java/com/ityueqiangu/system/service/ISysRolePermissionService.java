@@ -1,6 +1,8 @@
 package com.ityueqiangu.system.service;
 
 import java.util.List;
+
+import com.ityueqiangu.system.domain.SysPermission;
 import com.ityueqiangu.system.domain.SysRolePermission;
 
 /**
@@ -52,5 +54,16 @@ public interface ISysRolePermissionService {
      */
     Integer deleteSysRolePermissionById(Integer id);
 
+    /**
+     * 保存 角色和权限的关系
+     * @param sysRolePermission
+     */
     void saveRelationship(SysRolePermission sysRolePermission);
+
+    /**
+     * 获取角色和权限的关系
+     * @param sysRolePermission
+     * @return
+     */
+    List<SysPermission> getRolePermission(SysRolePermission sysRolePermission);
 }

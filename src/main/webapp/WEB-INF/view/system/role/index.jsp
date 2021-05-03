@@ -93,7 +93,7 @@
                 {field: 'roleDescription', title: '角色描述'},
                 {field: 'isAvailable', title: '是否可用',templet: '#isAvailableTps'},
                 {field: 'remark', title: '备注'},
-                {title: '操作', templet: '#tableTool', width: 250, align: 'center'}
+                {title: '操作', templet: '#tableTool',fixed: 'right', width: 250, align: 'center'}
             ]]
             , page: true
         });

@@ -81,4 +81,9 @@
         delete from sys_role_permission where id = #{id}
 	</delete>
 
+    <!--根据角色删除 角色和权限的关系-->
+    <delete id="deleteSysRolePermissionByRoleId" parameterType="Integer">
+        delete from sys_role_permission where role_id = #{roleId}
+    </delete>
+
 </mapper>

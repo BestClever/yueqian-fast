@@ -1,7 +1,11 @@
 package com.ityueqiangu.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.core.exception.BizException;
+import com.ityueqiangu.system.domain.SysPermission;
 import com.ityueqiangu.system.domain.SysRolePermission;
 import com.ityueqiangu.system.mapper.SysRolePermissionMapper;
+import com.ityueqiangu.system.service.ISysPermissionService;
 import com.ityueqiangu.system.service.ISysRolePermissionService;
 import com.ityueqiangu.core.util.StringUtils;
 import com.ityueqiangu.core.enums.CommonEnum;
@@ -21,6 +25,9 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService{
 
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;
+
+    @Autowired
+    private ISysPermissionService sysPermissionService;
 
     /**
      * 查询分页记录
@@ -76,9 +83,31 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService{
 
     @Override
     public void saveRelationship(SysRolePermission sysRolePermission) {
-        if (StringUtils.isBlank(sysRolePermission.getIds())) {
-
+        if (ObjectUtil.isNull(sysRolePermission.getIds())) {
+            throw new BizException("传入的权限id不能为空");
         }
+        //删除 该角色的所有权限关系
+        sysRolePermissionMapper.deleteSysRolePermissionByRoleId(sysRolePermission.getRoleId());
+        for (String str : sysRolePermission.getIds()) {
+            sysRolePermission.setPermissionId(Integer.valueOf(str));
+            sysRolePermissionMapper.insertSysRolePermission(sysRolePermission);
+        }
+    }
+
+    @Override
+    public List<SysPermission> getRolePermission(SysRolePermission sysRolePermission) {
+        List<SysPermission> sysPermissions = sysPermissionService.selectSysPermissionList(null);
+        SysRolePermission param = new SysRolePermission();
+        param.setRoleId(sysRolePermission.getRoleId());
+        List<SysRolePermission> sysRolePermissions = sysRolePermissionMapper.selectSysRolePermissionList(param);
+        sysPermissions.stream().forEach(sysPermission -> {
+            sysRolePermissions.stream().forEach(rolePermission->{
+                if (ObjectUtil.equal(sysPermission.getId(),rolePermission.getPermissionId())) {
+                    sysPermission.setCheckArr("1");
+                }
+            });
+        });
+        return sysPermissions;
     }
 
 }

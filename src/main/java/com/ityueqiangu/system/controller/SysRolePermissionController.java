@@ -3,6 +3,7 @@ package com.ityueqiangu.system.controller;
 
 import com.ityueqiangu.core.web.controller.BaseController;
 import com.ityueqiangu.core.constant.Constants;
+import com.ityueqiangu.system.domain.SysPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -133,10 +134,29 @@ public class SysRolePermissionController extends BaseController{
         return ResultDataUtil.createSuccess(CommonEnum.DELETE_SUCCESS);
     }
 
+    /**
+     * 查询角色和权限表的数据
+     * @param sysRolePermission
+     * @return
+     */
+    @RequestMapping(value = "/getRolePermission")
+    @ResponseBody
+    public ResultInfo getRolePermission(SysRolePermission sysRolePermission){
+        List<SysPermission> sysPermission = sysRolePermissionService.getRolePermission(sysRolePermission);
+        return ResultDataUtil.createSuccess(CommonEnum.LAYUI_SUCCESS).setData(sysPermission);
+    }
+
+    /**
+     * 保存 角色 和权限表数据
+     * @param sysRolePermission
+     * @return
+     */
     @RequestMapping(value = "/saveRelationship")
     @ResponseBody
     public ResultInfo saveRelationship(SysRolePermission sysRolePermission) {
         sysRolePermissionService.saveRelationship(sysRolePermission);
         return ResultDataUtil.createSuccess(CommonEnum.SAVE_SUCCESS);
     }
+
+
 }

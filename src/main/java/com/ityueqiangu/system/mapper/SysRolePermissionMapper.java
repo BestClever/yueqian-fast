@@ -54,5 +54,9 @@ public interface SysRolePermissionMapper {
      * @return 返回影响行数
      */
 	Integer deleteSysRolePermissionById(Integer id);
+
+
+	Integer deleteSysRolePermissionByRoleId(Integer roleId);
+
 	
 }

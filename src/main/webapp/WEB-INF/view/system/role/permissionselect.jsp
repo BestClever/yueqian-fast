@@ -53,7 +53,7 @@
 
         var DTree = dtree.render({
             elem: "#permission-tree",
-            url: BaseUrl + "sysPermission/list",
+            url: BaseUrl + "sysRolePermission/getRolePermission",
             selectInputName: {nodeId: "id", context: "permissionName"},
             skin:"laySimple",
             checkbar: true,
@@ -109,10 +109,24 @@
 
             var url =BaseUrl + "sysRolePermission/saveRelationship";
             var param={
-                ids:ids,
+                ids:ids.toString(),
                 roleId:"${roleId}"
-            }
-            alert(JSON.stringify(param));
+            };
+            common.ajax.post(url,param,function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        //刷新父页面的表格
+                        // parent.$(".layui-laypage-btn")[0].click();
+                        parent.layui.table.reload('tableId')
+                        //先得到当前iframe层的索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭弹出框
+                        parent.layer.close(index);
+                    })
+                }else {
+                    layerCustom.redCryMsg(result.msg)
+                }
+            })
         }
 
         function close() {
