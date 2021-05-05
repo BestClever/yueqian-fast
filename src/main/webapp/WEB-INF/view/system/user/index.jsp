@@ -141,7 +141,8 @@
                 , {field: 'loginName', title: '登录名称'}
                 , {field: 'deptName', title: '部门'}
                 , {field: 'sex', title: '性别', templet: "#sexTpl"}
-                , {field: 'email', title: '邮箱'}
+                , {field: 'contactInformation', title: '联系方式'}
+                , {field: 'isAvailable', title: '是否有效'}
                 , {title: '操作', toolbar: '#tableTool', fixed: "right", width: 250}
             ]]
             , page: true
@@ -196,7 +197,7 @@
                 //给子页面赋值
                 var body = layer.getChildFrame('body', index);
                 //初始化学院选择下拉框
-                var url = BaseUrl + "college/list";
+                var url = BaseUrl + "sysRole/list";
                 var param = {
                     limit: 9999,
                     page: 0
@@ -208,11 +209,13 @@
                     data: param,
                     dataType: "json",
                     success: function (result) {
-                        body.find("#collegeNameSelect").append("<option  value=>请选择学院</option>");
                         for (var i = 0; i < result.data.length; i++) {
                             var item = result.data[i];
-                            body.find("#collegeNameSelect").append("<option  value=" + item.id + ">" + item.collegeName + "</option>");
+                            body.find("#roleDiv").append("<input type='checkbox' value='"+item.id+"' name='roleIds' title='"+item.roleName+"'>");
                         }
+                        //刷新子页面的
+                        var iframeWin = window[layero.find("iframe")[0]["name"]];
+                        iframeWin.formRender();
                     }
                 });
             })

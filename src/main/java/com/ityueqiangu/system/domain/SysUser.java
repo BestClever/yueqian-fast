@@ -50,4 +50,6 @@ public class SysUser extends BaseEntity {
 	private String salt;
 	/** 是否有效 */
 	private String isAvailable;
+
+	private String roleIds;
 }

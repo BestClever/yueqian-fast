@@ -90,8 +90,8 @@
         dtree.on("nodedblclick('dept-tree')", function (obj) {
             //先得到当前iframe层的索引
             var index = parent.layer.getFrameIndex(window.name);
-            parent.layui.$("#deptId").val(obj.param.nodeId);
-            parent.layui.$("#deptName").val(obj.param.context);
+            parent.layui.$("#parentId").val(obj.param.nodeId);
+            parent.layui.$("#parentName").val(obj.param.context);
             //关闭弹出框
             parent.layer.close(index);
         });
@@ -112,8 +112,8 @@
             // 先得到当前iframe层的索引
             var index = parent.layer.getFrameIndex(window.name);
             var param = dtree.getNowParam("dept-tree"); // 获取当前选中节点
-            parent.layui.$("#deptId").val(param.nodeId);
-            parent.layui.$("#deptName").val(param.context);
+            parent.layui.$("#parentId").val(param.nodeId);
+            parent.layui.$("#parentName").val(param.context);
             //关闭弹出框
             parent.layer.close(index);
         }

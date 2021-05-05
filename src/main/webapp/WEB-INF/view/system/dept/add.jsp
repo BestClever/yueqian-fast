@@ -136,7 +136,7 @@
 
         //部门选择
         $("#parentName").click(function () {
-            layerCustom.open("部门选择", BaseUrl + 'common/deptselect', "400px", "80%", function (layero, index) {
+            layerCustom.open("部门选择", BaseUrl + 'sysDept/deptselect', "400px", "80%", function (layero, index) {
             });
         });
     });

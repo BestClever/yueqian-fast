@@ -61,6 +61,15 @@ public class SysDeptController extends BaseController{
     public String edit(){
         return PATH_PREFIX+"dept/edit";
     }
+
+    /**
+     * 部门选择
+     * @return
+     */
+    @RequestMapping(value = "/deptselect")
+    public String deptselect(){
+        return PATH_PREFIX+"dept/deptselect";
+    }
 	
     /**
      * 分页列表查询

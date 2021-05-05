@@ -12,60 +12,58 @@
         <div class="main-container">
             <div class="main-container">
                 <div class="layui-form-item">
-                    <label class="layui-form-label layui-required">登录名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="loginName"  autocomplete="off" placeholder="请输入登录名称" class="layui-input"  lay-verify="required|loginName">
-                    </div>
-                </div>
-                <div class="layui-form-item">
                     <label class="layui-form-label layui-required">用户名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="userName"  autocomplete="off" placeholder="请输入用户名称" class="layui-input"  lay-verify="required">
+                    <div class="layui-input-inline">
+                        <input type="text" name="userName" autocomplete="off" placeholder="请输入用户名称" class="layui-input"
+                               lay-verify="required">
+                    </div>
+                    <label class="layui-form-label layui-required">登录名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="loginName" autocomplete="off" placeholder="请输入登录名称" class="layui-input"
+                               lay-verify="required|loginName">
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label layui-required">部门名称</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="deptId">
+                        <input type="text" name="deptName" id="deptName" autocomplete="off" placeholder="请输入部门名称" class="layui-input"
+                               lay-verify="required">
+                    </div>
                     <label class="layui-form-label layui-required">密码</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="password" id="password"  autocomplete="off" placeholder="请输入密码" class="layui-input"  lay-verify="required">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-required">确认密码</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="confirmPassword"  autocomplete="off" placeholder="请输入密码" class="layui-input"  lay-verify="required|confirmPassword">
+                    <div class="layui-input-inline">
+                        <input type="text" name="password" id="password" autocomplete="off" placeholder="请输入密码"
+                               class="layui-input" lay-verify="required">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
+                    <div class="layui-input-inline">
                         <input type="radio" name="sex" value="1" title="男" checked>
                         <input type="radio" name="sex" value="2" title="女">
-                        <input type="radio" name="sex" value="3" title="未知">
+                    </div>
+                    <label class="layui-form-label">联系方式</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="contactInformation" id="contactInformation" autocomplete="off" placeholder="请输入联系方式"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label layui-required">角色</label>
-                    <div class="layui-input-block">
-                        <select name="userType" lay-verify="required" lay-filter="LAY-select" id="role" placeholder="请输入用户类型">
-                            <option value="1">管理员</option>
-                            <option value="2">老师</option>
-                            <option value="3">辅导员</option>
-                            <option value="4">学生</option>
-                        </select>
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="sortNum" autocomplete="off" placeholder="请输入排序" class="layui-input" >
                     </div>
-                </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-block">
-                        <input type="text" placeholder="请输入邮箱" lay-verify="email"  name="email" class="layui-input">
+                    <label class="layui-form-label">是否有效</label>
+                    <div class="layui-input-inline">
+                        <input type="checkbox" checked="" value="0" name="isAvailable" lay-skin="switch" lay-filter="switchTest" lay-text="有效|无效">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">学院名称</label>
-                    <div class="layui-input-block">
-                        <input type="hidden" name="collegeName" id="collegeName">
-                        <select name="collegeId" lay-verify="required" lay-filter="LAY-Select-collegeName" id="collegeNameSelect">
-                        </select>
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-block" id="roleDiv">
+                        <%--<input type="checkbox" name="roleIds" title="写作">--%>
+                        <%--<input type="checkbox" name="roleIds" title="阅读">--%>
+                        <%--<input type="checkbox" name="roleIds" title="游戏">--%>
                     </div>
                 </div>
             </div>
@@ -99,12 +97,16 @@
             common = layui.common,
             form = layui.form;
 
+        window.formRender = function(){
+            form.render('checkbox');
+        };
+
 
         /*表单验证*/
         form.verify({
-            confirmPassword:function (value, item) {
+            confirmPassword: function (value, item) {
                 var password = $("#password").val();
-                if (!common.equals(value,password)){
+                if (!common.equals(value, password)) {
                     return '两次密码输入不一致';
                 }
             },
@@ -135,32 +137,55 @@
         /*表单提交*/
         form.on('submit(add)', function (data) {
             var url = BaseUrl + 'sysUser/save';
+            var roleIdList = [];
+            $('input[type=checkbox]:checked').each(function () {
+                roleIdList.push($(this).val());
+            });
+            roleIds = roleIdList.join(",");
+            data.field.roleIds = roleIds;
+            //设置 是否有效
+            var available = data.field.isAvailable;
+            if (common.isEmpty(available)) {
+                available = data.field.isAvailable = '1';
+            }else {
+                available = '0';
+            }
+
+            data.field.isAvailable = available;
+            alert(JSON.stringify(data.field));
+
             //保存接口
-            $.post(url, data.field, function (result) {
-                if (result.success) {
-                    layerCustom.greenLaughMsg(result.msg, function () {
-                        //先得到当前iframe层的索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        //关闭弹出框
-                        parent.layer.close(index);
-                        //刷新父页面的表格
-                        parent.$(".layui-laypage-btn")[0].click();
-                    })
-                } else {
-                    layer.msg(result.msg)
-                    return;
-                }
-            }, 'json');
+            // $.post(url, data.field, function (result) {
+            //     if (result.success) {
+            //         layerCustom.greenLaughMsg(result.msg, function () {
+            //             //先得到当前iframe层的索引
+            //             var index = parent.layer.getFrameIndex(window.name);
+            //             //关闭弹出框
+            //             parent.layer.close(index);
+            //             //刷新父页面的表格
+            //             parent.$(".layui-laypage-btn")[0].click();
+            //         })
+            //     } else {
+            //         layer.msg(result.msg)
+            //         return;
+            //     }
+            // }, 'json');
 
             return false;
         });
 
-        form.on('select(LAY-Select)', function(data){
-           var text = data.elem[data.elem.selectedIndex].text;
-           $("#roleName").val(text);
+        //部门选择
+        $("#deptName").click(function () {
+            layerCustom.open("部门选择", BaseUrl + 'common/deptselect', "400px", "80%", function (layero, index) {
+            });
         });
 
-        form.on('select(LAY-Select-collegeName)', function(data){
+        form.on('select(LAY-Select)', function (data) {
+            var text = data.elem[data.elem.selectedIndex].text;
+            $("#roleName").val(text);
+        });
+
+        form.on('select(LAY-Select-collegeName)', function (data) {
             var text = data.elem[data.elem.selectedIndex].text;
             $("#collegeName").val(text);
         });
