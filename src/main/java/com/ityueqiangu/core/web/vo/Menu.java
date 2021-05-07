@@ -1,5 +1,10 @@
 package com.ityueqiangu.core.web.vo;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.core.exception.BizException;
+import com.ityueqiangu.core.util.StringUtils;
+import com.ityueqiangu.system.domain.SysPermission;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -33,5 +38,25 @@ public class Menu {
     private String checkArr;
     /*父节点id*/
     private Integer parentId;
+
+
+    public static ArrayList<Menu> adapterMenu(List<SysPermission> sysPermissions){
+        ArrayList<Menu> menus = new ArrayList<>();
+        if (CollectionUtil.isEmpty(sysPermissions)) {
+            throw new BizException("参数为空");
+        }
+        sysPermissions.stream().forEach(sysPermission -> {
+            Menu menu = new Menu();
+            menu.setId(sysPermission.getId());
+            menu.setParentId(sysPermission.getParentId());
+            menu.setHref(sysPermission.getPermissionUrl());
+            menu.setIcon(sysPermission.getIcon());
+            menu.setTitle(sysPermission.getPermissionName());
+            menu.setSpread(StringUtils.equals("0",sysPermission.getIsSpread())?false:true);
+            menu.setCheckArr(sysPermission.getCheckArr());
+            menus.add(menu);
+        });
+        return menus;
+    }
 
 }

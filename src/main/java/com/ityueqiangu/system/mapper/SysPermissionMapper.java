@@ -54,5 +54,12 @@ public interface SysPermissionMapper {
      * @return 返回影响行数
      */
 	Integer deleteSysPermissionById(Integer id);
+
+	/**
+	 * 根据用户id查询菜单
+	 * @param userId
+	 * @return
+	 */
+	List<SysPermission> selectPermissionByUserId(Integer userId);
 	
 }

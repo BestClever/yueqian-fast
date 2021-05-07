@@ -10,55 +10,56 @@
 <form class="layui-form" action="" lay-filter="dataForm">
     <div class="mainBox">
         <div class="main-container">
-            <div class="main-container">
-                <div class="layui-form-item">
-                    <input type="hidden" name="id">
-                    <label class="layui-form-label">登录名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="loginName" autocomplete="off" placeholder="请输入登录名称" class="layui-input"
-                               lay-verify="required|loginName" disabled>
-                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required">用户名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" autocomplete="off" placeholder="请输入用户名称" class="layui-input"
+                           lay-verify="required">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="userName" autocomplete="off" placeholder="请输入用户名称" class="layui-input"
-                               lay-verify="required">
-                    </div>
+                <label class="layui-form-label layui-required">登录名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="loginName" autocomplete="off" placeholder="请输入登录名称" class="layui-input"
+                           lay-verify="required|loginName">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="1" title="男" checked>
-                        <input type="radio" name="sex" value="2" title="女">
-                        <input type="radio" name="sex" value="3" title="未知">
-                    </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required">部门名称</label>
+                <div class="layui-input-inline">
+                    <input type="hidden" name="deptId" id="deptId">
+                    <input type="text" name="deptName" id="deptName" autocomplete="off" placeholder="请输入部门名称" class="layui-input"
+                           lay-verify="required">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户类型</label>
-                    <div class="layui-input-block">
-                        <select name="userType" lay-verify="required" lay-filter="LAY-select" id="userType"
-                                placeholder="请输入用户类型">
-                            <option value="1">管理员</option>
-                            <option value="2">老师</option>
-                            <option value="3">辅导员</option>
-                            <option value="4">学生</option>
-                        </select>
-                    </div>
+                <label class="layui-form-label layui-required">密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" id="password" autocomplete="off" placeholder="请输入密码"
+                           class="layui-input" lay-verify="required">
                 </div>
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-block">
-                        <input type="text" placeholder="请输入邮箱" lay-verify="email" name="email" class="layui-input">
-                    </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="1" title="男" checked>
+                    <input type="radio" name="sex" value="2" title="女">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">学院名称</label>
-                    <div class="layui-input-block">
-                        <input type="hidden" name="collegeName" id="collegeName">
-                        <select name="collegeId" lay-verify="required" lay-filter="LAY-Select-collegeName" id="collegeNameSelect">
-                        </select>
-                    </div>
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="contactInformation" id="contactInformation" autocomplete="off" placeholder="请输入联系方式"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="sortNum" autocomplete="off" placeholder="请输入排序" class="layui-input" >
+                </div>
+                <label class="layui-form-label">是否有效</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" checked="" value="0" name="isAvailable" id="isAvailable" lay-skin="switch" lay-filter="switchTest" lay-text="有效|无效">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-block" id="roleDiv">
                 </div>
             </div>
         </div>
@@ -101,6 +102,11 @@
         window.setFormVal = function(initData){
             form.val("dataForm", initData);
         }
+
+        window.formRender = function(){
+            form.render('checkbox');
+        };
+
         /*表单验证*/
         form.verify({});
 

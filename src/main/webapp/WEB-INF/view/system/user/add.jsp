@@ -10,61 +10,59 @@
 <form class="layui-form" action="">
     <div class="mainBox">
         <div class="main-container">
-            <div class="main-container">
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-required">用户名称</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="userName" autocomplete="off" placeholder="请输入用户名称" class="layui-input"
-                               lay-verify="required">
-                    </div>
-                    <label class="layui-form-label layui-required">登录名称</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="loginName" autocomplete="off" placeholder="请输入登录名称" class="layui-input"
-                               lay-verify="required|loginName">
-                    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required">用户名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" autocomplete="off" placeholder="请输入用户名称" class="layui-input"
+                           lay-verify="required">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-required">部门名称</label>
-                    <div class="layui-input-inline">
-                        <input type="hidden" name="deptId">
-                        <input type="text" name="deptName" id="deptName" autocomplete="off" placeholder="请输入部门名称" class="layui-input"
-                               lay-verify="required">
-                    </div>
-                    <label class="layui-form-label layui-required">密码</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="password" id="password" autocomplete="off" placeholder="请输入密码"
-                               class="layui-input" lay-verify="required">
-                    </div>
+                <label class="layui-form-label layui-required">登录名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="loginName" autocomplete="off" placeholder="请输入登录名称" class="layui-input"
+                           lay-verify="required|loginName">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-inline">
-                        <input type="radio" name="sex" value="1" title="男" checked>
-                        <input type="radio" name="sex" value="2" title="女">
-                    </div>
-                    <label class="layui-form-label">联系方式</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="contactInformation" id="contactInformation" autocomplete="off" placeholder="请输入联系方式"
-                               class="layui-input">
-                    </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required">部门名称</label>
+                <div class="layui-input-inline">
+                    <input type="hidden" name="deptId" id="deptId">
+                    <input type="text" name="deptName" id="deptName" autocomplete="off" placeholder="请输入部门名称" class="layui-input"
+                           lay-verify="required">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">排序</label>
-                    <div class="layui-input-inline">
-                        <input type="number" name="sortNum" autocomplete="off" placeholder="请输入排序" class="layui-input" >
-                    </div>
-                    <label class="layui-form-label">是否有效</label>
-                    <div class="layui-input-inline">
-                        <input type="checkbox" checked="" value="0" name="isAvailable" lay-skin="switch" lay-filter="switchTest" lay-text="有效|无效">
-                    </div>
+                <label class="layui-form-label layui-required">密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" id="password" autocomplete="off" placeholder="请输入密码"
+                           class="layui-input" lay-verify="required">
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">角色</label>
-                    <div class="layui-input-block" id="roleDiv">
-                        <%--<input type="checkbox" name="roleIds" title="写作">--%>
-                        <%--<input type="checkbox" name="roleIds" title="阅读">--%>
-                        <%--<input type="checkbox" name="roleIds" title="游戏">--%>
-                    </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="1" title="男" checked>
+                    <input type="radio" name="sex" value="2" title="女">
+                </div>
+                <label class="layui-form-label">联系方式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="contactInformation" id="contactInformation" autocomplete="off" placeholder="请输入联系方式"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="sortNum" autocomplete="off" placeholder="请输入排序" class="layui-input" >
+                </div>
+                <label class="layui-form-label">是否有效</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" checked="" value="0" name="isAvailable" lay-skin="switch" lay-filter="switchTest" lay-text="有效|无效">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色</label>
+                <div class="layui-input-block" id="roleDiv">
+                    <%--<input type="checkbox" name="roleIds" title="写作">--%>
+                    <%--<input type="checkbox" name="roleIds" title="阅读">--%>
+                    <%--<input type="checkbox" name="roleIds" title="游戏">--%>
                 </div>
             </div>
         </div>
@@ -136,9 +134,9 @@
 
         /*表单提交*/
         form.on('submit(add)', function (data) {
-            var url = BaseUrl + 'sysUser/save';
+            var url = BaseUrl + 'sysUser/saveUserInfo';
             var roleIdList = [];
-            $('input[type=checkbox]:checked').each(function () {
+            $('input[name=roleIds]:checked').each(function () {
                 roleIdList.push($(this).val());
             });
             roleIds = roleIdList.join(",");
@@ -152,24 +150,22 @@
             }
 
             data.field.isAvailable = available;
-            alert(JSON.stringify(data.field));
-
             //保存接口
-            // $.post(url, data.field, function (result) {
-            //     if (result.success) {
-            //         layerCustom.greenLaughMsg(result.msg, function () {
-            //             //先得到当前iframe层的索引
-            //             var index = parent.layer.getFrameIndex(window.name);
-            //             //关闭弹出框
-            //             parent.layer.close(index);
-            //             //刷新父页面的表格
-            //             parent.$(".layui-laypage-btn")[0].click();
-            //         })
-            //     } else {
-            //         layer.msg(result.msg)
-            //         return;
-            //     }
-            // }, 'json');
+            $.post(url, data.field, function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        //先得到当前iframe层的索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭弹出框
+                        parent.layer.close(index);
+                        //刷新父页面的表格
+                        parent.$(".layui-laypage-btn")[0].click();
+                    })
+                } else {
+                    layer.msg(result.msg)
+                    return;
+                }
+            }, 'json');
 
             return false;
         });

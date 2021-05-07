@@ -63,5 +63,4 @@ public interface SysUserMapper {
 	 */
     SysUser getOne(SysUser sysUser);
 
-    List<SysUser> notEvaluateList(SysUser sysUser);
 }

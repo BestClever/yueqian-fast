@@ -53,4 +53,6 @@ public interface ISysRoleService {
     Integer deleteSysRoleById(Integer id);
 
     SysRole existRole(SysRole sysRole);
+
+    List<SysRole> listRole(Integer userId);
 }

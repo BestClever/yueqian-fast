@@ -27,4 +27,7 @@ public class SysRole extends BaseEntity{
 	private String roleDescription;
 	/** 是否可用 */
 	private String isAvailable;
+
+
+	private boolean checked = false;
 }

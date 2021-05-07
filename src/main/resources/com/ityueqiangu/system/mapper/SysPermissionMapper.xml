@@ -119,7 +119,7 @@
 		FROM sys_permission t
 		WHERE t.id = #{id}
 	</select>
-    
+
     <!-- 插入不为NULL的字段 -->
     <insert id="insertSysPermission" parameterType="com.ityueqiangu.system.domain.SysPermission"
         keyProperty="id" keyColumn="id" useGeneratedKeys="true">
@@ -304,5 +304,14 @@
 	<delete id="deleteSysPermissionById" parameterType="Integer">
         delete from sys_permission where id = #{id}
 	</delete>
+
+    <!--根据 用户id 查询权限-->
+    <select id="selectPermissionByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT sp.* FROM sys_permission sp
+        LEFT JOIN sys_role_permission srp ON sp.id = srp.permission_id
+        LEFT JOIN sys_role sr ON srp.role_id = sr.id
+        LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
+        WHERE sur.user_id = #{userId} AND sp.permission_type in ('0','1')
+    </select>
 
 </mapper>

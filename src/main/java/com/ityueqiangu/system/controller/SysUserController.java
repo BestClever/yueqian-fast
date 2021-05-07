@@ -101,6 +101,21 @@ public class SysUserController extends BaseController {
         }
         return ResultDataUtil.createSuccess(CommonEnum.SAVE_SUCCESS);
     }
+
+    /**
+     * 新增用户信息
+     * @param sysUser
+     * @return
+     */
+    @RequestMapping("/saveUserInfo")
+    @ResponseBody
+    public ResultInfo saveUserInfo(SysUser sysUser) {
+        Integer result = sysUserService.saveUserInfo(sysUser);
+        if (result< Constants.ONE) {
+            ResultDataUtil.createFail(CommonEnum.SAVE_FAILURE);
+        }
+        return ResultDataUtil.createSuccess(CommonEnum.SAVE_SUCCESS);
+    }
     
     
     /**

@@ -1,6 +1,8 @@
 package com.ityueqiangu.system.service;
 
 import java.util.List;
+
+import com.ityueqiangu.core.web.vo.Menu;
 import com.ityueqiangu.system.domain.SysPermission;
 
 /**
@@ -51,5 +53,12 @@ public interface ISysPermissionService {
      * @return 返回ResultInfo
      */
     Integer deleteSysPermissionById(Integer id);
+
+    /**
+     * 根据 用户id 生成菜单树
+     * @param userId
+     * @return
+     */
+    List<Menu> generateMenu(Integer userId);
 	
 }

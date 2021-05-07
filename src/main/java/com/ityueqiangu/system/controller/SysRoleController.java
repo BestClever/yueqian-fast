@@ -13,6 +13,7 @@ import com.ityueqiangu.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -87,6 +88,15 @@ public class SysRoleController extends BaseController {
         List<SysRole> list = sysRoleService.selectSysRoleList(sysRole);
         return getDataTable(list);
     }
+
+    @RequestMapping("/listRole")
+    @ResponseBody
+    public ResultInfo listRole(Integer userId) {
+        List<SysRole> list = sysRoleService.listRole(userId);
+        return ResultDataUtil.createSuccess(CommonEnum.LAYUI_SUCCESS).setData(list);
+    }
+
+
 
 
     /**

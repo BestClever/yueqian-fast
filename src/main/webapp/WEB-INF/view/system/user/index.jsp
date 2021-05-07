@@ -67,7 +67,7 @@
     </a>
     <a class="yueqian-btn yueqian-btn-success yueqian-btn-md" lay-event="restPwd">
         <i class="iconfont layui-icon-ali-add"></i>
-        新增
+        重置密码
     </a>
     <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
         <i class="iconfont layui-icon-ali-shanchu1"></i>
@@ -76,15 +76,11 @@
 </script>
 
 <%--用户类别--%>
-<script type="text/html" id="userTypeTpl">
-    {{#if (d.userType == 1) { }}
-    <span class="layui-blue">管理员</span>
-    {{# }else if(d.userType == 2){ }}
-    <span class="layui-green">老师</span>
-    {{# }else if(d.userType == 3){ }}
-    <span class="layui-orange">辅导员</span>
-    {{# }else if(d.userType == 4){ }}
-    <span>学生</span>
+<script type="text/html" id="isAvailableTps">
+    {{# if(d.isAvailable=='0'){ }}
+    <span class="layui-bg-green yueqian-span">正常</span>
+    {{# }else if(d.isAvailable=='1'){ }}
+    <span class="layui-bg-orange yueqian-span">停用</span>
     {{# } }}
 </script>
 <%--性别--%>
@@ -142,7 +138,7 @@
                 , {field: 'deptName', title: '部门'}
                 , {field: 'sex', title: '性别', templet: "#sexTpl"}
                 , {field: 'contactInformation', title: '联系方式'}
-                , {field: 'isAvailable', title: '是否有效'}
+                , {field: 'isAvailable', title: '是否有效', templet: "#isAvailableTps"}
                 , {title: '操作', toolbar: '#tableTool', fixed: "right", width: 250}
             ]]
             , page: true
@@ -154,7 +150,7 @@
             //刷新右边表格
             myTalbe.reload({
                 where: {
-                    deptId:obj.param.nodeId
+                    deptId:obj.param.nodeId=='1'?'':obj.param.nodeId
                 },
                 page: {curr: 1}
             });
@@ -201,7 +197,7 @@
                 var param = {
                     limit: 9999,
                     page: 0
-                }
+                };
                 $.ajax({
                     url: url,
                     type: "get",
@@ -222,15 +218,16 @@
         }
 
         function update(data) {
-            layerCustom.open("修改用户信息", BaseUrl + 'sysUser/edit', "700px", "450px", function (layero, index) {
+            layerCustom.open("修改用户信息", BaseUrl + 'sysUser/edit', "700px", "550px", function (layero, index) {
                 //给子页面赋值
                 var body = layer.getChildFrame('body', index);
-                //初始化学院选择下拉框
-                var url = BaseUrl + "college/list";
+
+                var iframeWin = window[layero.find("iframe")[0]["name"]];
+                //给子页面赋值
+                iframeWin.initForm(data);
+                var url = BaseUrl + "sysRole/listRole?userId="+data.id;
                 var param = {
-                    limit: 9999,
-                    page: 0
-                }
+                };
                 $.ajax({
                     url: url,
                     type: "get",
@@ -238,16 +235,23 @@
                     data: param,
                     dataType: "json",
                     success: function (result) {
-                        body.find("#collegeNameSelect").append("<option  value=>请选择学院</option>");
                         for (var i = 0; i < result.data.length; i++) {
                             var item = result.data[i];
-                            body.find("#collegeNameSelect").append("<option  value=" + item.id + ">" + item.collegeName + "</option>");
+                           if (item.checked) {
+                               body.find("#roleDiv").append("<input type='checkbox' value='"+item.id+"' name='roleIds' title='"+item.roleName+"' checked=''>");
+                           }else {
+                               body.find("#roleDiv").append("<input type='checkbox' value='"+item.id+"' name='roleIds' title='"+item.roleName+"'>");
+                           }
+
                         }
+                        if(data.isAvailable=='1'){
+                            body.find("#isAvailable").prop("checked", false);
+                        }
+                        //刷新子页面的
+                        iframeWin.formRender();
                     }
                 });
-                //给子页面赋值
-                var iframeWin = window[layero.find("iframe")[0]["name"]];
-                iframeWin.initForm(data);
+
             })
         }
 

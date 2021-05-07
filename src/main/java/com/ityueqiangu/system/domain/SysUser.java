@@ -52,4 +52,6 @@ public class SysUser extends BaseEntity {
 	private String isAvailable;
 
 	private String roleIds;
+
+	private String deptName;
 }

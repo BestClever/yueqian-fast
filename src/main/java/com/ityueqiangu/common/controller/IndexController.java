@@ -13,7 +13,9 @@ import com.ityueqiangu.core.web.result.ResultInfo;
 import com.ityueqiangu.core.web.vo.ActiverUser;
 import com.ityueqiangu.core.web.vo.Menu;
 import com.ityueqiangu.system.enums.UserTypeEnums;
+import com.ityueqiangu.system.service.ISysPermissionService;
 import com.ityueqiangu.system.service.IUserService;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,9 @@ public class IndexController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ISysPermissionService sysPermissionService;
 
 
     /**
@@ -142,13 +147,26 @@ public class IndexController {
     }
 
     /**
-     * 获取菜单
+     * 获取菜单 从数据库获取菜单
      */
     @RequestMapping(value = "/nav")
     @ResponseBody
-    public List<Menu> getNav(HttpServletRequest request) {
+    public List<Menu> getNav() {
         ActiverUser currentUser = UserUtil.getCurrentUser();
-        ArrayList<Menu> list = Lists.newArrayList();
+        List<Menu> list = sysPermissionService.generateMenu(currentUser.getId());
+        return list;
+    }
+
+
+    /**
+     * 静态获取菜单 一般用于菜单不存入数据库
+     * @return
+     */
+    @RequestMapping(value = "/staticNav")
+    @ResponseBody
+    public List<Menu> staticNav() {
+        ActiverUser currentUser = UserUtil.getCurrentUser();
+        List<Menu> list =Lists.newArrayList();
 
         /**
          * 用户管理 模块
@@ -201,6 +219,8 @@ public class IndexController {
 
         return list;
     }
+
+
 
     /**
      * 登录方法

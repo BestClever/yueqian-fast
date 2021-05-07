@@ -12,6 +12,7 @@
         <div class="main-container">
             <div class="main-container">
                 <div class="layui-form-item">
+                    <input type="hidden" name="id">
                     <label class="layui-form-label layui-required">上级菜单</label>
                     <div class="layui-input-block">
                         <input type="hidden" name="parentId" id="parentId">

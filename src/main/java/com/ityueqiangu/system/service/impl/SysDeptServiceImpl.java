@@ -101,10 +101,13 @@ public class SysDeptServiceImpl implements ISysDeptService{
         return sysDeptMapper.getOne(sysDept);
     }
 
+    /**
+     * 构建 部门树
+     * @return
+     */
     @Override
     public List<SysDept> buildTree() {
         ArrayList<SysDept> resultDepts = new ArrayList<>();
-        ArrayList<SysDept> parentDepts = new ArrayList<>();
         List<SysDept> sysDepts = sysDeptMapper.selectSysDeptList(null);
         Map<Integer, SysDept> sysDeptMap = sysDepts.stream().collect(Collectors.toMap(SysDept::getId, sysDept -> sysDept));
         for (SysDept sysDept : sysDepts) {

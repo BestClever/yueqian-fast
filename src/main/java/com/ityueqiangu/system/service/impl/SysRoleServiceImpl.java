@@ -1,13 +1,16 @@
 package com.ityueqiangu.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.ityueqiangu.core.exception.BizException;
 import com.ityueqiangu.system.domain.SysRole;
+import com.ityueqiangu.system.domain.SysUserRole;
 import com.ityueqiangu.system.mapper.SysRoleMapper;
 import com.ityueqiangu.system.service.ISysRolePermissionService;
 import com.ityueqiangu.system.service.ISysRoleService;
 import com.ityueqiangu.core.util.StringUtils;
 import com.ityueqiangu.core.enums.CommonEnum;
 import com.ityueqiangu.core.web.result.ResultDataUtil;
+import com.ityueqiangu.system.service.ISysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -26,6 +29,9 @@ public class SysRoleServiceImpl implements ISysRoleService{
 
     @Autowired
     private ISysRolePermissionService sysRolePermissionService;
+
+    @Autowired
+    private ISysUserRoleService sysUserRoleService;
 
     /**
      * 查询分页记录
@@ -82,6 +88,27 @@ public class SysRoleServiceImpl implements ISysRoleService{
     @Override
     public SysRole existRole(SysRole sysRole) {
         return sysRoleMapper.getOne(sysRole);
+    }
+
+    /**
+     * 获取 编辑时候所需要的 list
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<SysRole> listRole(Integer userId) {
+        List<SysRole> sysRoles = sysRoleMapper.selectSysRoleList(null);
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setUserId(userId);
+        List<SysUserRole> sysUserRoles = sysUserRoleService.selectSysUserRoleList(sysUserRole);
+        sysRoles.stream().forEach(sysRole -> {
+            sysUserRoles.stream().forEach(myRole -> {
+                if (ObjectUtil.equal(sysRole.getId(),myRole.getRoleId())) {
+                    sysRole.setChecked(true);
+                }
+            });
+        });
+        return sysRoles;
     }
 
 }

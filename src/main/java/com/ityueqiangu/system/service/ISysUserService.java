@@ -60,5 +60,10 @@ public interface ISysUserService {
      */
     SysUser selectSysUserByLoginName(SysUser sysUser);
 
-    List<SysUser> notEvaluateList(SysUser sysUser);
+    /**
+     * 保存用户信息
+     * @param sysUser
+     * @return
+     */
+    Integer saveUserInfo(SysUser sysUser);
 }

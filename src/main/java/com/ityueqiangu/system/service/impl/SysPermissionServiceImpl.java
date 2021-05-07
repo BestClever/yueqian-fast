@@ -1,6 +1,9 @@
 package com.ityueqiangu.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.core.constant.Constants;
+import com.ityueqiangu.core.web.vo.Menu;
+import com.ityueqiangu.system.domain.SysDept;
 import com.ityueqiangu.system.domain.SysPermission;
 import com.ityueqiangu.system.mapper.SysPermissionMapper;
 import com.ityueqiangu.system.service.ISysPermissionService;
@@ -9,6 +12,9 @@ import com.ityueqiangu.core.enums.CommonEnum;
 import com.ityueqiangu.core.web.result.ResultDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -85,6 +91,30 @@ public class SysPermissionServiceImpl implements ISysPermissionService{
      */
     public Integer deleteSysPermissionById(Integer id) {
     	return sysPermissionMapper.deleteSysPermissionById(id);
+    }
+
+    /**
+     * 生成菜单树
+     * @param userId
+     * @return
+     */
+    public List<Menu> generateMenu(Integer userId){
+        ArrayList<Menu> menuList = new ArrayList<>();
+        List<SysPermission> sysPermissions = sysPermissionMapper.selectPermissionByUserId(userId);
+        //根据排序字段进行排序
+        sysPermissions = sysPermissions.stream().sorted(Comparator.comparing(SysPermission::getSortNum)).collect(Collectors.toList());
+        ArrayList<Menu> menus = Menu.adapterMenu(sysPermissions);
+        Map<Integer, Menu> menuMap = menus.stream().collect(Collectors.toMap(Menu::getId, menu -> menu));
+        //生成 树
+        for (Menu menu : menus) {
+            if (Constants.ZERO.equals(menu.getParentId())) {
+                menuList.add(menu);
+            }else{
+                Menu menuParent = menuMap.get(menu.getParentId());
+                menuParent.getChildren().add(menu);
+            }
+        }
+        return menuList;
     }
 	
 }
