@@ -225,7 +225,7 @@
         }
 
         function update(data) {
-            layerCustom.open("修改部门信息", BaseUrl + 'sysPermission/edit', "700px", "450px", function (layero, index) {
+            layerCustom.open("修改权限信息", BaseUrl + 'sysPermission/edit', "700px", "450px", function (layero, index) {
                 //给子页面赋值
                 var iframeWin = window[layero.find("iframe")[0]["name"]];
                 iframeWin.initForm(data);

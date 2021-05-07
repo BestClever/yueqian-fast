@@ -94,6 +94,8 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return 返回
      */
     public Integer deleteSysUserById(Integer id) {
+        //删除 角色用户管理信息
+        sysUserRoleService.deleteSysUserRoleByUserId(id);
     	return sysUserMapper.deleteSysUserById(id);
     }
 

@@ -5,6 +5,7 @@ import com.ityueqiangu.core.exception.BizException;
 import com.ityueqiangu.system.domain.SysRole;
 import com.ityueqiangu.system.domain.SysUserRole;
 import com.ityueqiangu.system.mapper.SysRoleMapper;
+import com.ityueqiangu.system.mapper.SysRolePermissionMapper;
 import com.ityueqiangu.system.service.ISysRolePermissionService;
 import com.ityueqiangu.system.service.ISysRoleService;
 import com.ityueqiangu.core.util.StringUtils;
@@ -82,6 +83,8 @@ public class SysRoleServiceImpl implements ISysRoleService{
      * @return 返回
      */
     public Integer deleteSysRoleById(Integer id) {
+        //根据 角色id 删除 角色权限表
+        sysRolePermissionService.deleteSysRolePermissionByRoleId(id);
     	return sysRoleMapper.deleteSysRoleById(id);
     }
 

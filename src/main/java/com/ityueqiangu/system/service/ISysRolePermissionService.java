@@ -66,4 +66,6 @@ public interface ISysRolePermissionService {
      * @return
      */
     List<SysPermission> getRolePermission(SysRolePermission sysRolePermission);
+
+    void deleteSysRolePermissionByRoleId(Integer roleId);
 }

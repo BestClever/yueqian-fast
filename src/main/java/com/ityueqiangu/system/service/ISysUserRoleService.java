@@ -51,5 +51,12 @@ public interface ISysUserRoleService {
      * @return 返回ResultInfo
      */
     Integer deleteSysUserRoleById(Integer id);
+
+    /**
+     * 根据用户id删除角色管理信息
+     * @param userId
+     * @return
+     */
+    Integer deleteSysUserRoleByUserId(Integer userId);
 	
 }

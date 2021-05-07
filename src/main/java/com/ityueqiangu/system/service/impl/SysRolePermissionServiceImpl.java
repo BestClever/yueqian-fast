@@ -1,6 +1,7 @@
 package com.ityueqiangu.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.core.enums.SysFlagStatusEnum;
 import com.ityueqiangu.core.exception.BizException;
 import com.ityueqiangu.system.domain.SysPermission;
 import com.ityueqiangu.system.domain.SysRolePermission;
@@ -103,11 +104,20 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService{
         sysPermissions.stream().forEach(sysPermission -> {
             sysRolePermissions.stream().forEach(rolePermission->{
                 if (ObjectUtil.equal(sysPermission.getId(),rolePermission.getPermissionId())) {
-                    sysPermission.setCheckArr("1");
+                    sysPermission.setCheckArr(SysFlagStatusEnum.ONE.getKey());
                 }
             });
         });
         return sysPermissions;
+    }
+
+    /**
+     * 根据 角色id 删除 角色权限关联表
+     * @param roleId
+     */
+    @Override
+    public void deleteSysRolePermissionByRoleId(Integer roleId) {
+
     }
 
 }

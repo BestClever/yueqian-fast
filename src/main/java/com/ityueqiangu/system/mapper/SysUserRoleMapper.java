@@ -54,5 +54,11 @@ public interface SysUserRoleMapper {
      * @return 返回影响行数
      */
 	Integer deleteSysUserRoleById(Integer id);
-	
+
+	/**
+	 * 根据 userid 删除用户角色信息
+	 * @param userId
+	 * @return
+	 */
+    Integer deleteSysUserRoleByUserId(Integer userId);
 }

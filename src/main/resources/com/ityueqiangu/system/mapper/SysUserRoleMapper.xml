@@ -80,5 +80,8 @@
 	<delete id="deleteSysUserRoleById" parameterType="Integer">
         delete from sys_user_role where id = #{id}
 	</delete>
+    <delete id="deleteSysUserRoleByUserId" parameterType="Integer">
+        delete from sys_user_role where user_id=#{userId}
+    </delete>
 
 </mapper>

@@ -73,5 +73,10 @@ public class SysUserRoleServiceImpl implements ISysUserRoleService{
     public Integer deleteSysUserRoleById(Integer id) {
     	return sysUserRoleMapper.deleteSysUserRoleById(id);
     }
-	
+
+    @Override
+    public Integer deleteSysUserRoleByUserId(Integer userId) {
+        return sysUserRoleMapper.deleteSysUserRoleByUserId(userId);
+    }
+
 }

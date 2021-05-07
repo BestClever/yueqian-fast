@@ -65,6 +65,13 @@
                                class="layui-input">
                     </div>
                 </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否展开</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="isSpread" value="0" title="不展开" checked>
+                        <input type="radio" name="isSpread" value="1" title="展开">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

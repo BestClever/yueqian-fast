@@ -137,9 +137,9 @@
                 , {field: 'loginName', title: '登录名称'}
                 , {field: 'deptName', title: '部门'}
                 , {field: 'sex', title: '性别', templet: "#sexTpl"}
-                , {field: 'contactInformation', title: '联系方式'}
+                , {field: 'contactInformation', title: '联系方式',minWidth: 120}
                 , {field: 'isAvailable', title: '是否有效', templet: "#isAvailableTps"}
-                , {title: '操作', toolbar: '#tableTool', fixed: "right", width: 250}
+                , {title: '操作', toolbar: '#tableTool', fixed: "right", width: 280}
             ]]
             , page: true
 
