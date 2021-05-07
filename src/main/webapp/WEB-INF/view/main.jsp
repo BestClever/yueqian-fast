@@ -19,7 +19,7 @@
         <div class="layui-card">
 
             <div class="layui-card-body" style="margin-left: 33%;">
-                <h1>欢迎使用班主任测评管理系统</h1>
+                <h1>欢迎使用后台管理系统</h1>
             </div>
         </div>
 

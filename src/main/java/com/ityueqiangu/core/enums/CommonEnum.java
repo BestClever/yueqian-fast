@@ -42,9 +42,10 @@ public enum CommonEnum implements BaseInfoInterface {
     ACCOUNT_NOT_EXIST(9054,"账号不存在！"),
     RANDOMIMAGE_FAILURE(9055,"验证码错误！"),
     /*用户 */
-    USER_NOT_EXIST(10001,"用户不存在！"),
-    PASSWORD_ERROR(10002,"密码错误！"),
-    PASSWORD_RESET_SUCCESS(10300,"初始化密码成功！"),
+    ROLE_AUTHORIZATION_SUCCEE(10001,"授权成功！"),
+    USER_NOT_EXIST(10300,"用户不存在！"),
+    PASSWORD_ERROR(10301,"密码错误！"),
+    PASSWORD_RESET_SUCCESS(10302,"初始化密码成功！"),
     PASSWORD_RESET_FAILURE(10350,"初始化密码失败！"),
     USER_TYPE_EMPTY(10351,"用户类型为空！"),
 

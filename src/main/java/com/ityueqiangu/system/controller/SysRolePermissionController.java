@@ -155,7 +155,7 @@ public class SysRolePermissionController extends BaseController{
     @ResponseBody
     public ResultInfo saveRelationship(SysRolePermission sysRolePermission) {
         sysRolePermissionService.saveRelationship(sysRolePermission);
-        return ResultDataUtil.createSuccess(CommonEnum.SAVE_SUCCESS);
+        return ResultDataUtil.createSuccess(CommonEnum.ROLE_AUTHORIZATION_SUCCEE);
     }
 
 

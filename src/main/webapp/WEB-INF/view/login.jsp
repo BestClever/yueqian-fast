@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>班主任测评系统</title>
+    <title>后台管理系统</title>
     <link rel="stylesheet" href="${baseurl}/static/lib/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="${baseurl}/static/css/login.css" media="all"/>
     <link rel="stylesheet" href="${baseurl}/static/lib/yueqain/css/yueqian-module/alIcon/iconfont.css" media="all"/>
@@ -55,7 +55,7 @@
 <!-- LoginForm -->
 <div class="login_lofo_main">
     <fieldset class="layui-elem-field layui-field-title login_mar_02">
-        <legend>欢迎登陆 - 班主任测评系统</legend>
+        <legend>欢迎登陆 - 后台管理系统</legend>
     </fieldset>
     <div class="layui-row layui-col-space15">
         <form class="layui-form login_pad_01" action="">

@@ -53,7 +53,7 @@
 
         var DTree = dtree.render({
             elem: "#permission-tree",
-            url: BaseUrl + "sysRolePermission/getRolePermission",
+            url: BaseUrl + "sysRolePermission/getRolePermission?roleId="+"${roleId}",
             selectInputName: {nodeId: "id", context: "permissionName"},
             skin:"laySimple",
             checkbar: true,

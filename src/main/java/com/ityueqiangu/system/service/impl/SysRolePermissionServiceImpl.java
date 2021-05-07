@@ -117,7 +117,7 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService{
      */
     @Override
     public void deleteSysRolePermissionByRoleId(Integer roleId) {
-
+        sysRolePermissionMapper.deleteSysRolePermissionByRoleId(roleId);
     }
 
 }

@@ -67,5 +67,9 @@ public interface ISysRolePermissionService {
      */
     List<SysPermission> getRolePermission(SysRolePermission sysRolePermission);
 
+    /**
+     * 根据角色id 删除角色权限的关系
+     * @param roleId
+     */
     void deleteSysRolePermissionByRoleId(Integer roleId);
 }
