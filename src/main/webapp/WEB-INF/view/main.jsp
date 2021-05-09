@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>主页面</title>
-    <link rel="stylesheet" href="${baseurl}/static/lib/yueqain/css/yueqian.all.css"
+    <link rel="stylesheet" href="${baseurl}/static/lib/yueqain/css/yueqian.all.css"/>
 </head>
 <body class="yueqian-container">
 
