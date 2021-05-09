@@ -75,8 +75,8 @@
 <script>
     //JavaScript代码区域
     layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom'], function () {
-        var element = layui.element;
-        table = layui.table,
+        var element = layui.element,
+            table = layui.table,
             $ = layui.jquery,
             layerCustom = layui.layerCustom,
             layer = layui.layer,

@@ -102,13 +102,13 @@
 <script>
     //JavaScript代码区域
     layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom', 'treetable'], function () {
-        var element = layui.element;
-        $ = layui.jquery,
+        var element = layui.element,
+            $ = layui.jquery,
             layerCustom = layui.layerCustom,
             layer = layui.layer,
             table = layui.table,
-            form = layui.form;
-        treetable = layui.treetable;
+            form = layui.form,
+            treetable = layui.treetable;
 
         window.renderTreeTalbe = function(){
             treetable.render({

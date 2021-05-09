@@ -86,8 +86,8 @@
 <script>
 
     layui.use(['form', 'jquery', 'upload', 'element', 'layer', 'laydate', 'common', 'layerCustom'], function () {
-        var element = layui.element;
-        $ = layui.jquery,
+        var element = layui.element,
+            $ = layui.jquery,
             upload = layui.upload,
             layer = layui.layer,
             layerCustom = layui.layerCustom,
@@ -135,6 +135,7 @@
         /*表单提交*/
         form.on('submit(add)', function (data) {
             var url = BaseUrl + 'sysUser/saveUserInfo';
+            //获取 选中的 角色名单
             var roleIdList = [];
             $('input[name=roleIds]:checked').each(function () {
                 roleIdList.push($(this).val());

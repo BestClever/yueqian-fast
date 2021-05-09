@@ -82,6 +82,10 @@ public class SysRolePermissionServiceImpl implements ISysRolePermissionService{
     	return sysRolePermissionMapper.deleteSysRolePermissionById(id);
     }
 
+    /**
+     * 保存权限和角色的关系
+     * @param sysRolePermission
+     */
     @Override
     public void saveRelationship(SysRolePermission sysRolePermission) {
         if (ObjectUtil.isNull(sysRolePermission.getIds())) {

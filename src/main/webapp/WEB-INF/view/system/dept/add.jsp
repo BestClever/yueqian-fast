@@ -66,8 +66,8 @@
 <script>
 
     layui.use(['form', 'jquery', 'dtree', 'element', 'layer', 'laydate', 'common', 'layerCustom'], function () {
-        var element = layui.element;
-        $ = layui.jquery,
+        var element = layui.element,
+            $ = layui.jquery,
             dtree = layui.dtree,
             layer = layui.layer,
             layerCustom = layui.layerCustom,

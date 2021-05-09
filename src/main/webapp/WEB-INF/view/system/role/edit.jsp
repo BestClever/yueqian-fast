@@ -78,8 +78,8 @@
     }
 
     layui.use(['form', 'jquery', 'upload', 'element', 'layer', 'laydate', 'common', 'layerCustom'], function () {
-        var element = layui.element;
-        $ = layui.jquery,
+        var element = layui.element,
+            $ = layui.jquery,
             upload = layui.upload,
             layer = layui.layer,
             layerCustom = layui.layerCustom,

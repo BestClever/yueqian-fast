@@ -11,6 +11,7 @@
     <div class="mainBox">
         <div class="main-container">
             <div class="layui-form-item">
+                <input type="hidden" name="id">
                 <label class="layui-form-label layui-required">用户名称</label>
                 <div class="layui-input-inline">
                     <input type="text" name="userName" autocomplete="off" placeholder="请输入用户名称" class="layui-input"
@@ -89,8 +90,8 @@
     }
 
     layui.use(['form', 'jquery', 'upload', 'element', 'layer', 'laydate', 'common', 'layerCustom'], function () {
-        var element = layui.element;
-        $ = layui.jquery,
+        var element = layui.element,
+            $ = layui.jquery,
             upload = layui.upload,
             layer = layui.layer,
             layerCustom = layui.layerCustom,

@@ -5,7 +5,7 @@ window.rootPath = (function(src) {
 
 layui.config({
 	base: rootPath + "module/",
-	version: "3.6.7"
+	version: "3.8.0"
 }).extend({
 	admin: "admin",
 	menu: "menu",
@@ -24,6 +24,7 @@ layui.config({
 	iconPicker:"iconPicker",
 	treetable:"treetable",
 	dtree:"dtree",
+	tinymce:"tinymce/tinymce", // 编辑器
 	area:"area",
 	count:"count",
 	topBar: "topBar",
@@ -39,6 +40,4 @@ layui.config({
 	theme: "theme",
 	bodyTab: "bodyTab",
 	message: "message"		// 通知组件
-}).use(['layer', 'theme'], function () {
-	layui.theme.changeTheme(window, false);
 });
