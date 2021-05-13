@@ -4,6 +4,9 @@ import com.ityueqiangu.core.util.StringUtils;
 import com.ityueqiangu.system.domain.SysPermission;
 import lombok.Data;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +54,27 @@ public class Menu {
             menus.add(menu);
         });
         return menus;
+    }
+
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class<?> clazz = Class.forName("com.ityueqiangu.core.web.vo.Menu");
+        //获取 Person 类的所有方法信息
+        Method[] method = clazz.getDeclaredMethods();
+        for (Method m : method) {
+            System.out.println("所有方法信息:"+m.toString());
+        }
+        //获取 Person 类的所有成员属性信息
+        Field[] field = clazz.getDeclaredFields();
+        for (Field f : field) {
+            System.out.println("所有成员属性信息:"+f.toString());
+        }
+        //获取 Person 类的所有构造方法信息
+        Constructor[] constructor = clazz.getDeclaredConstructors();
+        for (Constructor c : constructor) {
+            System.out.println("所有构造方法信息:"+c.toString());
+        }
+        System.out.println(clazz);
     }
 
 }

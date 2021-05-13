@@ -46,13 +46,22 @@ public class BaseController {
     protected void startPage() {
         Integer pageNum = ServletUtils.getParameterToInt(Constants.PAGE_NUM);
         Integer pageSize = ServletUtils.getParameterToInt(Constants.PAGE_SIZE);
+        String orderByColumn = ServletUtils.getParameter(Constants.ORDER_BY_COLUMN);
+        String isAsc = ServletUtils.getParameter(Constants.IS_ASC);
         if (StringUtils.isNull(pageNum)) {
             pageNum = 1;
         }
         if (StringUtils.isNull(pageSize)) {
             pageSize = 10;
         }
-        PageHelper.startPage(pageNum, pageSize);
+        if (StringUtils.isBlank(isAsc)) {
+            isAsc = "asc";
+        }
+        String orderBy  = null;
+        if (StringUtils.isNotBlank(orderByColumn)) {
+            orderBy =  StringUtils.toUnderScoreCase(orderByColumn) + " " + isAsc;
+        }
+        PageHelper.startPage(pageNum, pageSize,orderBy);
     }
 
 
