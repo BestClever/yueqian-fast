@@ -11,9 +11,8 @@ import java.util.Properties;
  * 定时任务配置
  * 
  * @author Clever、xia
- *
+ * @Configuration 先注释了
  */
-@Configuration
 public class ScheduleConfig
 {
     @Bean

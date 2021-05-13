@@ -13,7 +13,7 @@
 	<link th:href="@{/ajax/libs/bootstrap-table/bootstrap-table.min.css?v=20210202}" rel="stylesheet"/>
 	<link th:href="@{/css/animate.css}" rel="stylesheet"/>
 	<link th:href="@{/css/style.css?v=20200903}" rel="stylesheet"/>
-	<link th:href="@{/ruoyi/css/ry-ui.css?v=4.6.0}" rel="stylesheet"/>
+	<link th:href="@{/ruoyi/css/ry-ui.css?v=4.6.1}" rel="stylesheet"/>
 </head>
 
 <!-- 通用JS -->
@@ -37,8 +37,8 @@
     <script th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
 	<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
 	<script th:src="@{/ajax/libs/layui/layui.js}"></script>
-	<script th:src="@{/ruoyi/js/common.js?v=4.6.0}"></script>
-	<script th:src="@{/ruoyi/js/ry-ui.js?v=4.6.0}"></script>
+	<script th:src="@{/ruoyi/js/common.js?v=4.6.1}"></script>
+	<script th:src="@{/ruoyi/js/ry-ui.js?v=4.6.1}"></script>
 </div>
 
 <!-- ztree树插件 -->
@@ -170,10 +170,16 @@
     <script th:src="@{/ajax/libs/report/sparkline/jquery.sparkline.min.js}"></script>
 </div>
 
-<!-- 表格拖拽插件 -->
+<!-- 表格行拖拽插件 -->
 <div th:fragment="bootstrap-table-reorder-js">
 	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder/bootstrap-table-reorder.js}"></script>
 	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder/jquery.tablednd.js}"></script>
+</div>
+
+<!-- 表格列拖拽插件 -->
+<div th:fragment="bootstrap-table-reorder-columns-js">
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder-columns/jquery.dragtable.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/reorder-columns/bootstrap-table-reorder.js?v=20210202}"></script>
 </div>
 
 <!-- 表格列宽拖动插件 -->

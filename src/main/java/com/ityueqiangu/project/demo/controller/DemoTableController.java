@@ -3,6 +3,10 @@ package com.ityueqiangu.project.demo.controller;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ityueqiangu.common.utils.DateUtils;
 import com.ityueqiangu.common.utils.StringUtils;
+import com.ityueqiangu.common.utils.poi.ExcelUtil;
+import com.ityueqiangu.common.utils.text.Convert;
+import com.ityueqiangu.framework.aspectj.lang.annotation.Excel;
+import com.ityueqiangu.framework.aspectj.lang.annotation.Excel.ColumnType;
 import com.ityueqiangu.framework.web.controller.BaseController;
 import com.ityueqiangu.framework.web.domain.AjaxResult;
 import com.ityueqiangu.framework.web.page.PageDomain;
@@ -99,6 +103,38 @@ public class DemoTableController extends BaseController {
     @GetMapping("/export")
     public String export() {
         return prefix + "/export";
+    }
+
+    /**
+     * 表格导出选择列
+     */
+    @GetMapping("/exportSelected")
+    public String exportSelected() {
+        return prefix + "/exportSelected";
+    }
+
+    /**
+     * 导出数据
+     */
+    @PostMapping("/exportData")
+    @ResponseBody
+    public AjaxResult exportSelected(UserTableModel userModel, String userIds) {
+        List<UserTableModel> userList = new ArrayList<UserTableModel>(Arrays.asList(new UserTableModel[users.size()]));
+        Collections.copy(userList, users);
+
+        // 条件过滤
+        if (StringUtils.isNotEmpty(userIds)) {
+            userList.clear();
+            for (Long userId : Convert.toLongArray(userIds)) {
+                for (UserTableModel user : users) {
+                    if (user.getUserId() == userId) {
+                        userList.add(user);
+                    }
+                }
+            }
+        }
+        ExcelUtil<UserTableModel> util = new ExcelUtil<UserTableModel>(UserTableModel.class);
+        return util.exportExcel(userList, "用户数据");
     }
 
     /**
@@ -199,11 +235,19 @@ public class DemoTableController extends BaseController {
     }
 
     /**
-     * 表格拖拽操作
+     * 表格行拖拽操作
      */
-    @GetMapping("/reorder")
-    public String reorder() {
-        return prefix + "/reorder";
+    @GetMapping("/reorderRows")
+    public String reorderRows() {
+        return prefix + "/reorderRows";
+    }
+
+    /**
+     * 表格列拖拽操作
+     */
+    @GetMapping("/reorderColumns")
+    public String reorderColumns() {
+        return prefix + "/reorderColumns";
     }
 
     /**
@@ -364,11 +408,13 @@ class UserTableModel {
     /**
      * 用户编号
      */
+    @Excel(name = "用户编号", cellType = ColumnType.NUMERIC)
     private String userCode;
 
     /**
      * 用户姓名
      */
+    @Excel(name = "用户姓名")
     private String userName;
 
     /**
@@ -379,16 +425,19 @@ class UserTableModel {
     /**
      * 用户手机
      */
+    @Excel(name = "用户手机")
     private String userPhone;
 
     /**
      * 用户邮箱
      */
+    @Excel(name = "用户邮箱")
     private String userEmail;
 
     /**
      * 用户余额
      */
+    @Excel(name = "用户余额", cellType = ColumnType.NUMERIC)
     private double userBalance;
 
     /**

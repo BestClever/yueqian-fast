@@ -36,7 +36,7 @@ public class JobServiceImpl implements IJobService
      * 项目启动时，初始化定时器 
      * 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
      */
-    @PostConstruct
+//    @PostConstruct
     public void init() throws SchedulerException, TaskException
     {
         scheduler.clear();

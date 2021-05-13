@@ -2,6 +2,7 @@ package com.ityueqiangu.project.system.dept.controller;
 
 import com.ityueqiangu.common.constant.UserConstants;
 import com.ityueqiangu.common.utils.StringUtils;
+import com.ityueqiangu.common.utils.security.ShiroUtils;
 import com.ityueqiangu.framework.aspectj.lang.annotation.Log;
 import com.ityueqiangu.framework.aspectj.lang.enums.BusinessType;
 import com.ityueqiangu.framework.web.controller.BaseController;
@@ -55,6 +56,10 @@ public class DeptController extends BaseController
     @GetMapping("/add/{parentId}")
     public String add(@PathVariable("parentId") Long parentId, ModelMap mmap)
     {
+        if (!ShiroUtils.getSysUser().isAdmin())
+        {
+            parentId = ShiroUtils.getSysUser().getDeptId();
+        }
         mmap.put("dept", deptService.selectDeptById(parentId));
         return prefix + "/add";
     }
@@ -147,13 +152,13 @@ public class DeptController extends BaseController
 
     /**
      * 选择部门树
-     * 
+     *
      * @param deptId 部门ID
      * @param excludeId 排除ID
      */
     @GetMapping(value = { "/selectDeptTree/{deptId}", "/selectDeptTree/{deptId}/{excludeId}" })
     public String selectDeptTree(@PathVariable("deptId") Long deptId,
-            @PathVariable(value = "excludeId", required = false) String excludeId, ModelMap mmap)
+                                 @PathVariable(value = "excludeId", required = false) String excludeId, ModelMap mmap)
     {
         mmap.put("dept", deptService.selectDeptById(deptId));
         mmap.put("excludeId", excludeId);
