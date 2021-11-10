@@ -9,7 +9,7 @@ import java.util.HashMap;
  *
  * @author Clever、xia
  */
-public class AjaxResult extends HashMap<String, Object>
+public class ResponseInfo extends HashMap<String, Object>
 {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class AjaxResult extends HashMap<String, Object>
     public enum Type
     {
         /** 成功 */
-        SUCCESS(0),
+        SUCCESS(200),
         /** 警告 */
         WARN(301),
         /** 错误 */
@@ -47,32 +47,32 @@ public class AjaxResult extends HashMap<String, Object>
     }
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
+     * 初始化一个新创建的 ResponseInfo 对象，使其表示一个空消息。
      */
-    public AjaxResult()
+    public ResponseInfo()
     {
     }
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象
+     * 初始化一个新创建的 ResponseInfo 对象
      *
      * @param type 状态类型
      * @param msg 返回内容
      */
-    public AjaxResult(Type type, String msg)
+    public ResponseInfo(Type type, String msg)
     {
         super.put(CODE_TAG, type.value);
         super.put(MSG_TAG, msg);
     }
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象
+     * 初始化一个新创建的 ResponseInfo 对象
      *
      * @param type 状态类型
      * @param msg 返回内容
      * @param data 数据对象
      */
-    public AjaxResult(Type type, String msg, Object data)
+    public ResponseInfo(Type type, String msg, Object data)
     {
         super.put(CODE_TAG, type.value);
         super.put(MSG_TAG, msg);
@@ -90,7 +90,7 @@ public class AjaxResult extends HashMap<String, Object>
      * @return 数据对象
      */
     @Override
-    public AjaxResult put(String key, Object value)
+    public ResponseInfo put(String key, Object value)
     {
         super.put(key, value);
         return this;
@@ -101,9 +101,9 @@ public class AjaxResult extends HashMap<String, Object>
      *
      * @return 成功消息
      */
-    public static AjaxResult success()
+    public static ResponseInfo success()
     {
-        return AjaxResult.success("操作成功");
+        return ResponseInfo.success("操作成功");
     }
 
     /**
@@ -111,9 +111,9 @@ public class AjaxResult extends HashMap<String, Object>
      *
      * @return 成功消息
      */
-    public static AjaxResult success(Object data)
+    public static ResponseInfo success(Object data)
     {
-        return AjaxResult.success("操作成功", data);
+        return ResponseInfo.success("操作成功", data);
     }
 
     /**
@@ -122,9 +122,9 @@ public class AjaxResult extends HashMap<String, Object>
      * @param msg 返回内容
      * @return 成功消息
      */
-    public static AjaxResult success(String msg)
+    public static ResponseInfo success(String msg)
     {
-        return AjaxResult.success(msg, null);
+        return ResponseInfo.success(msg, null);
     }
 
     /**
@@ -134,9 +134,9 @@ public class AjaxResult extends HashMap<String, Object>
      * @param data 数据对象
      * @return 成功消息
      */
-    public static AjaxResult success(String msg, Object data)
+    public static ResponseInfo success(String msg, Object data)
     {
-        return new AjaxResult(Type.SUCCESS, msg, data);
+        return new ResponseInfo(Type.SUCCESS, msg, data);
     }
 
     /**
@@ -145,9 +145,9 @@ public class AjaxResult extends HashMap<String, Object>
      * @param msg 返回内容
      * @return 警告消息
      */
-    public static AjaxResult warn(String msg)
+    public static ResponseInfo warn(String msg)
     {
-        return AjaxResult.warn(msg, null);
+        return ResponseInfo.warn(msg, null);
     }
 
     /**
@@ -157,9 +157,9 @@ public class AjaxResult extends HashMap<String, Object>
      * @param data 数据对象
      * @return 警告消息
      */
-    public static AjaxResult warn(String msg, Object data)
+    public static ResponseInfo warn(String msg, Object data)
     {
-        return new AjaxResult(Type.WARN, msg, data);
+        return new ResponseInfo(Type.WARN, msg, data);
     }
 
     /**
@@ -167,9 +167,9 @@ public class AjaxResult extends HashMap<String, Object>
      *
      * @return
      */
-    public static AjaxResult error()
+    public static ResponseInfo error()
     {
-        return AjaxResult.error("操作失败");
+        return ResponseInfo.error("操作失败");
     }
 
     /**
@@ -178,9 +178,9 @@ public class AjaxResult extends HashMap<String, Object>
      * @param msg 返回内容
      * @return 警告消息
      */
-    public static AjaxResult error(String msg)
+    public static ResponseInfo error(String msg)
     {
-        return AjaxResult.error(msg, null);
+        return ResponseInfo.error(msg, null);
     }
 
     /**
@@ -190,8 +190,8 @@ public class AjaxResult extends HashMap<String, Object>
      * @param data 数据对象
      * @return 警告消息
      */
-    public static AjaxResult error(String msg, Object data)
+    public static ResponseInfo error(String msg, Object data)
     {
-        return new AjaxResult(Type.ERROR, msg, data);
+        return new ResponseInfo(Type.ERROR, msg, data);
     }
 }

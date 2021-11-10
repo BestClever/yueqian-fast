@@ -3,7 +3,7 @@ package com.ityueqiangu.framework.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import com.ityueqiangu.common.utils.ServletUtils;
 import com.ityueqiangu.framework.interceptor.annotation.RepeatSubmit;
-import com.ityueqiangu.framework.web.domain.AjaxResult;
+import com.ityueqiangu.framework.web.domain.ResponseInfo;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -32,8 +32,8 @@ public abstract class RepeatSubmitInterceptor extends HandlerInterceptorAdapter
             {
                 if (this.isRepeatSubmit(request))
                 {
-                    AjaxResult ajaxResult = AjaxResult.error("不允许重复提交，请稍后再试");
-                    ServletUtils.renderString(response, JSONObject.toJSONString(ajaxResult));
+                    ResponseInfo responseInfo = ResponseInfo.error("不允许重复提交，请稍后再试");
+                    ServletUtils.renderString(response, JSONObject.toJSONString(responseInfo));
                     return false;
                 }
             }

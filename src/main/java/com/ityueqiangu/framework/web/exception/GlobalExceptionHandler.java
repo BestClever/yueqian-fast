@@ -3,7 +3,7 @@ package com.ityueqiangu.framework.web.exception;
 import com.ityueqiangu.common.exception.BusinessException;
 import com.ityueqiangu.common.exception.DemoModeException;
 import com.ityueqiangu.common.utils.ServletUtils;
-import com.ityueqiangu.framework.web.domain.AjaxResult;
+import com.ityueqiangu.framework.web.domain.ResponseInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler
         log.error(e.getMessage(), e);
         if (ServletUtils.isAjaxRequest(request))
         {
-            return AjaxResult.error(PermissionUtils.getMsg(e.getMessage()));
+            return ResponseInfo.error(PermissionUtils.getMsg(e.getMessage()));
         }
         else
         {
@@ -47,30 +47,30 @@ public class GlobalExceptionHandler
      * 请求方式不支持
      */
     @ExceptionHandler({ HttpRequestMethodNotSupportedException.class })
-    public AjaxResult handleException(HttpRequestMethodNotSupportedException e)
+    public ResponseInfo handleException(HttpRequestMethodNotSupportedException e)
     {
         log.error(e.getMessage(), e);
-        return AjaxResult.error("不支持' " + e.getMethod() + "'请求");
+        return ResponseInfo.error("不支持' " + e.getMethod() + "'请求");
     }
 
     /**
      * 拦截未知的运行时异常
      */
     @ExceptionHandler(RuntimeException.class)
-    public AjaxResult notFount(RuntimeException e)
+    public ResponseInfo notFount(RuntimeException e)
     {
         log.error("运行时异常:", e);
-        return AjaxResult.error("运行时异常:" + e.getMessage());
+        return ResponseInfo.error("运行时异常:" + e.getMessage());
     }
 
     /**
      * 系统异常
      */
     @ExceptionHandler(Exception.class)
-    public AjaxResult handleException(Exception e)
+    public ResponseInfo handleException(Exception e)
     {
         log.error(e.getMessage(), e);
-        return AjaxResult.error("服务器错误，请联系管理员");
+        return ResponseInfo.error("服务器错误，请联系管理员");
     }
 
     /**
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler
         log.error(e.getMessage(), e);
         if (ServletUtils.isAjaxRequest(request))
         {
-            return AjaxResult.error(e.getMessage());
+            return ResponseInfo.error(e.getMessage());
         }
         else
         {
@@ -97,19 +97,19 @@ public class GlobalExceptionHandler
      * 自定义验证异常
      */
     @ExceptionHandler(BindException.class)
-    public AjaxResult validatedBindException(BindException e)
+    public ResponseInfo validatedBindException(BindException e)
     {
         log.error(e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
-        return AjaxResult.error(message);
+        return ResponseInfo.error(message);
     }
 
     /**
      * 演示模式异常
      */
     @ExceptionHandler(DemoModeException.class)
-    public AjaxResult demoModeException(DemoModeException e)
+    public ResponseInfo demoModeException(DemoModeException e)
     {
-        return AjaxResult.error("演示模式，不允许操作");
+        return ResponseInfo.error("演示模式，不允许操作");
     }
 }

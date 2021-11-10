@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.ityueqiangu.common.utils.DateUtils;
 import com.ityueqiangu.common.utils.StringUtils;
 import com.ityueqiangu.common.utils.sql.SqlUtil;
-import com.ityueqiangu.framework.web.domain.AjaxResult;
-import com.ityueqiangu.framework.web.domain.AjaxResult.Type;
+import com.ityueqiangu.framework.web.domain.ResponseInfo;
+import com.ityueqiangu.framework.web.domain.ResponseInfo.Type;
 import com.ityueqiangu.framework.web.page.PageDomain;
 import com.ityueqiangu.framework.web.page.TableDataInfo;
 import com.ityueqiangu.framework.web.page.TableSupport;
@@ -88,7 +88,7 @@ public class BaseController
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected AjaxResult toAjax(int rows)
+    protected ResponseInfo toAjax(int rows)
     {
         return rows > 0 ? success() : error();
     }
@@ -99,7 +99,7 @@ public class BaseController
      * @param result 结果
      * @return 操作结果
      */
-    protected AjaxResult toAjax(boolean result)
+    protected ResponseInfo toAjax(boolean result)
     {
         return result ? success() : error();
     }
@@ -107,41 +107,41 @@ public class BaseController
     /**
      * 返回成功
      */
-    public AjaxResult success()
+    public ResponseInfo success()
     {
-        return AjaxResult.success();
+        return ResponseInfo.success();
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error()
+    public ResponseInfo error()
     {
-        return AjaxResult.error();
+        return ResponseInfo.error();
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult success(String message)
+    public ResponseInfo success(String message)
     {
-        return AjaxResult.success(message);
+        return ResponseInfo.success(message);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error(String message)
+    public ResponseInfo error(String message)
     {
-        return AjaxResult.error(message);
+        return ResponseInfo.error(message);
     }
 
     /**
      * 返回错误码消息
      */
-    public AjaxResult error(Type type, String message)
+    public ResponseInfo error(Type type, String message)
     {
-        return new AjaxResult(type, message);
+        return new ResponseInfo(type, message);
     }
 
     /**
