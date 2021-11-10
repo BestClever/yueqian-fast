@@ -4,14 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ityueqiangu.common.utils.DateUtils;
 import com.ityueqiangu.common.utils.StringUtils;
-import com.ityueqiangu.common.utils.security.ShiroUtils;
 import com.ityueqiangu.common.utils.sql.SqlUtil;
 import com.ityueqiangu.framework.web.domain.AjaxResult;
 import com.ityueqiangu.framework.web.domain.AjaxResult.Type;
 import com.ityueqiangu.framework.web.page.PageDomain;
 import com.ityueqiangu.framework.web.page.TableDataInfo;
 import com.ityueqiangu.framework.web.page.TableSupport;
-import com.ityueqiangu.project.system.user.domain.User;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -154,23 +152,23 @@ public class BaseController
         return StringUtils.format("redirect:{}", url);
     }
 
-    public User getSysUser()
-    {
-        return ShiroUtils.getSysUser();
-    }
-
-    public void setSysUser(User user)
-    {
-        ShiroUtils.setSysUser(user);
-    }
-
-    public Long getUserId()
-    {
-        return getSysUser().getUserId();
-    }
-
-    public String getLoginName()
-    {
-        return getSysUser().getLoginName();
-    }
+//    public User getSysUser()
+//    {
+//        return ShiroUtils.getSysUser();
+//    }
+//
+//    public void setSysUser(User user)
+//    {
+//        ShiroUtils.setSysUser(user);
+//    }
+//
+//    public Long getUserId()
+//    {
+//        return getSysUser().getUserId();
+//    }
+//
+//    public String getLoginName()
+//    {
+//        return getSysUser().getLoginName();
+//    }
 }

@@ -3,9 +3,7 @@ package com.ityueqiangu.framework.web.exception;
 import com.ityueqiangu.common.exception.BusinessException;
 import com.ityueqiangu.common.exception.DemoModeException;
 import com.ityueqiangu.common.utils.ServletUtils;
-import com.ityueqiangu.common.utils.security.PermissionUtils;
 import com.ityueqiangu.framework.web.domain.AjaxResult;
-import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
@@ -28,7 +26,7 @@ public class GlobalExceptionHandler
 
     /**
      * 权限校验失败 如果请求为ajax返回json，普通请求跳转页面
-     */
+
     @ExceptionHandler(AuthorizationException.class)
     public Object handleAuthorizationException(HttpServletRequest request, AuthorizationException e)
     {
@@ -43,7 +41,7 @@ public class GlobalExceptionHandler
             modelAndView.setViewName("error/unauth");
             return modelAndView;
         }
-    }
+    }*/
 
     /**
      * 请求方式不支持

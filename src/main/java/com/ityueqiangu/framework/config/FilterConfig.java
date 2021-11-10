@@ -1,6 +1,6 @@
 package com.ityueqiangu.framework.config;
 
-import com.google.common.collect.Maps;
+
 import com.ityueqiangu.common.utils.StringUtils;
 import com.ityueqiangu.common.xss.XssFilter;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.DispatcherType;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,7 +39,7 @@ public class FilterConfig
         registration.addUrlPatterns(StringUtils.split(urlPatterns, ","));
         registration.setName("xssFilter");
         registration.setOrder(Integer.MAX_VALUE);
-        Map<String, String> initParameters = Maps.newHashMap();
+        Map<String, String> initParameters = new HashMap();
         initParameters.put("excludes", excludes);
         initParameters.put("enabled", enabled);
         registration.setInitParameters(initParameters);
