@@ -1,5 +1,6 @@
 package com.ityueqiangu.common.utils.reflect;
 
+
 import com.ityueqiangu.common.utils.DateUtils;
 import com.ityueqiangu.common.utils.text.Convert;
 import org.apache.commons.lang3.StringUtils;
@@ -9,12 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 反射工具类. 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
- * 
- * @author Clever、xia
+ *
+ * @author halfsummer
  */
 @SuppressWarnings("rawtypes")
 public class ReflectUtils
@@ -119,7 +123,7 @@ public class ReflectUtils
      */
     @SuppressWarnings("unchecked")
     public static <E> E invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes,
-            final Object[] args)
+                                     final Object[] args)
     {
         if (obj == null || methodName == null)
         {
@@ -250,7 +254,7 @@ public class ReflectUtils
      * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
      */
     public static Method getAccessibleMethod(final Object obj, final String methodName,
-            final Class<?>... parameterTypes)
+                                             final Class<?>... parameterTypes)
     {
         // 为空不报错。直接返回 null
         if (obj == null)
@@ -402,5 +406,23 @@ public class ReflectUtils
             return new RuntimeException(msg, ((InvocationTargetException) e).getTargetException());
         }
         return new RuntimeException(msg, e);
+    }
+
+    /**
+     * 获取类的所有属性，包括父类
+     *
+     * @param object
+     * @return
+     */
+    public static Field[] getAllFields(Object object) {
+        Class<?> clazz = object.getClass();
+        List<Field> fieldList = new ArrayList<>();
+        while (clazz != null) {
+            fieldList.addAll(new ArrayList<>(Arrays.asList(clazz.getDeclaredFields())));
+            clazz = clazz.getSuperclass();
+        }
+        Field[] fields = new Field[fieldList.size()];
+        fieldList.toArray(fields);
+        return fields;
     }
 }

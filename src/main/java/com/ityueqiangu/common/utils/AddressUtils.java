@@ -3,7 +3,7 @@ package com.ityueqiangu.common.utils;
 import com.alibaba.fastjson.JSONObject;
 import com.ityueqiangu.common.constant.Constants;
 import com.ityueqiangu.common.utils.http.HttpUtils;
-import com.ityueqiangu.framework.config.FrameworkConfig;
+import com.ityueqiangu.core.config.FrameworkConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

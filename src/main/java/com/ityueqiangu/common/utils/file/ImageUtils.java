@@ -2,7 +2,7 @@ package com.ityueqiangu.common.utils.file;
 
 import com.ityueqiangu.common.constant.Constants;
 import com.ityueqiangu.common.utils.StringUtils;
-import com.ityueqiangu.framework.config.FrameworkConfig;
+import com.ityueqiangu.core.config.FrameworkConfig;
 import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

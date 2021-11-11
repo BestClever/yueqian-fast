@@ -7,7 +7,7 @@ import com.ityueqiangu.common.exception.file.InvalidExtensionException;
 import com.ityueqiangu.common.utils.DateUtils;
 import com.ityueqiangu.common.utils.StringUtils;
 import com.ityueqiangu.common.utils.uuid.IdUtils;
-import com.ityueqiangu.framework.config.FrameworkConfig;
+import com.ityueqiangu.core.config.FrameworkConfig;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
