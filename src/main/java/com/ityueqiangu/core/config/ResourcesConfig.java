@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 通用配置
  *
- * @author Clever、xia
+ * @author FlowerStone
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
@@ -34,7 +34,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     private LoginInterceptor loginInterceptor;
 
     /*需要排除的请求*/
-    private static List<String> EXCLUDE_PATH = Arrays.asList("/","/login","/register","/erro","/captcha/generate","/login.html","/index.html","/admin/**","/component/**","/favicon.ico","/pear.config.yml");
+    private static List<String> EXCLUDE_PATH = Arrays.asList("/", "/login", "/register", "/erro", "/captcha/generate", "/login.html", "/index.html", "/admin/**", "/component/**", "/favicon.ico", "/pear.config.yml");
 
     /**
      * 默认首页的设置，当输入域名是可以自动跳转到默认指定的网页

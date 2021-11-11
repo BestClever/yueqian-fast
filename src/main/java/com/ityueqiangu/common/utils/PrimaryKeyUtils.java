@@ -22,26 +22,30 @@ import java.util.stream.IntStream;
  */
 public class PrimaryKeyUtils {
 
-    /** 订单号生成 **/
+    /**
+     * 订单号生成
+     **/
     private static ZoneId ZONE_ID = ZoneId.of("Asia/Shanghai");
     private static final AtomicInteger SEQ = new AtomicInteger(1000);
     private static final DateTimeFormatter DF_FMT_PREFIX = DateTimeFormatter.ofPattern("yyMMddHHmmssSS");
-    public static String generateOrderNo(){
+
+    public static String generateOrderNo() {
         LocalDateTime dataTime = LocalDateTime.now(ZONE_ID);
-        if(SEQ.intValue()>9990){
+        if (SEQ.intValue() > 9990) {
             SEQ.getAndSet(1000);
         }
-        return  dataTime.format(DF_FMT_PREFIX)+ getLocalIpSuffix()+SEQ.getAndIncrement();
+        return dataTime.format(DF_FMT_PREFIX) + getLocalIpSuffix() + SEQ.getAndIncrement();
     }
 
     private volatile static String IP_SUFFIX = null;
-    private static String getLocalIpSuffix (){
-        if(null != IP_SUFFIX){
+
+    private static String getLocalIpSuffix() {
+        if (null != IP_SUFFIX) {
             return IP_SUFFIX;
         }
         try {
-            synchronized (PrimaryKeyUtils.class){
-                if(null != IP_SUFFIX){
+            synchronized (PrimaryKeyUtils.class) {
+                if (null != IP_SUFFIX) {
                     return IP_SUFFIX;
                 }
                 InetAddress addr = InetAddress.getLocalHost();
@@ -57,12 +61,12 @@ public class PrimaryKeyUtils {
                     IP_SUFFIX = ipSuffix.substring(ipSuffix.length() - 2);
                     return IP_SUFFIX;
                 }
-                IP_SUFFIX = RandomUtils.nextInt(10, 20) + "";
+                IP_SUFFIX = RandomUtils.nextInt(10, 20) + "" ;
                 return IP_SUFFIX;
             }
-        }catch (Exception e){
-            System.out.println("获取IP失败:"+e.getMessage());
-            IP_SUFFIX =  RandomUtils.nextInt(10,20)+"";
+        } catch (Exception e) {
+            System.out.println("获取IP失败:" + e.getMessage());
+            IP_SUFFIX = RandomUtils.nextInt(10, 20) + "" ;
             return IP_SUFFIX;
         }
     }
@@ -70,15 +74,15 @@ public class PrimaryKeyUtils {
 
     public static void main(String[] args) {
         List<String> orderNos = Collections.synchronizedList(new ArrayList<String>());
-        IntStream.range(0,8000).parallel().forEach(i->{
+        IntStream.range(0, 8000).parallel().forEach(i -> {
             orderNos.add(generateOrderNo());
         });
 
         List<String> filterOrderNos = orderNos.stream().distinct().collect(Collectors.toList());
 
-        System.out.println("订单样例："+ orderNos.get(1));
-        System.out.println("生成订单数："+orderNos.size());
-        System.out.println("过滤重复后订单数："+filterOrderNos.size());
-        System.out.println("重复订单数："+(orderNos.size()-filterOrderNos.size()));
+        System.out.println("订单样例：" + orderNos.get(1));
+        System.out.println("生成订单数：" + orderNos.size());
+        System.out.println("过滤重复后订单数：" + filterOrderNos.size());
+        System.out.println("重复订单数：" + (orderNos.size() - filterOrderNos.size()));
     }
 }

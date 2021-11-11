@@ -11,20 +11,20 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 /**
  * 拼音工具类
  *
- * @Author: Clever、xia
+ * @Author: FlowerStone
  * @Date: 2020/12/3 10:29
  */
 public class PinyinUtils {
 
     /**
-     *  返回一个拼音字符串，并且首字母大写
+     * 返回一个拼音字符串，并且首字母大写
      */
     public static String getPingYin(String inputString) {
         HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
         format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
         format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
         format.setVCharType(HanyuPinyinVCharType.WITH_V);
-        String output = "";
+        String output = "" ;
         if (inputString != null && inputString.length() > 0 && !"null".equals(inputString)) {
             char[] input = inputString.trim().toCharArray();
             try {
@@ -40,13 +40,13 @@ public class PinyinUtils {
                 e.printStackTrace();
             }
         } else {
-            return "*";
+            return "*" ;
         }
         return output;
     }
 
     public static void main(String[] args) {
-        String s = PinyinUtil.getPinyin("it跃迁谷","");
+        String s = PinyinUtil.getPinyin("it跃迁谷", "");
         System.out.println(s);
 
 

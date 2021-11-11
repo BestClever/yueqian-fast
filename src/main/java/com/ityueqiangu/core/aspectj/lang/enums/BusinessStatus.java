@@ -2,12 +2,10 @@ package com.ityueqiangu.core.aspectj.lang.enums;
 
 /**
  * 操作状态
- * 
- * @author Clever、xia
  *
+ * @author FlowerStone
  */
-public enum BusinessStatus
-{
+public enum BusinessStatus {
     /**
      * 成功
      */

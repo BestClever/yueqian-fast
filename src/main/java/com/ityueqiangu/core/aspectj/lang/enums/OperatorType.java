@@ -2,12 +2,10 @@ package com.ityueqiangu.core.aspectj.lang.enums;
 
 /**
  * 操作人类别
- * 
- * @author Clever、xia
  *
+ * @author FlowerStone
  */
-public enum OperatorType
-{
+public enum OperatorType {
     /**
      * 其它
      */

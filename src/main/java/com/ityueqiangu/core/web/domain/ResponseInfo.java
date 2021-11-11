@@ -1,8 +1,6 @@
 
 
 
-
-
 package com.ityueqiangu.core.web.domain;
 
 import com.ityueqiangu.common.utils.StringUtils;
@@ -12,7 +10,7 @@ import java.util.HashMap;
 /**
  * 操作消息提醒
  *
- * @author Clever、xia
+ * @author FlowerStone
  */
 public class ResponseInfo extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
@@ -33,7 +31,7 @@ public class ResponseInfo extends HashMap<String, Object> {
     public static final String DATA_TAG = "data" ;
 
 
-    public static final String SUCCESS_SIGN = "success";
+    public static final String SUCCESS_SIGN = "success" ;
 
     /**
      * 状态类型
@@ -82,13 +80,12 @@ public class ResponseInfo extends HashMap<String, Object> {
     /**
      * 方便链式调用
      *
-     * @param key 键
+     * @param key   键
      * @param value 值
      * @return 数据对象
      */
     @Override
-    public ResponseInfo put(String key, Object value)
-    {
+    public ResponseInfo put(String key, Object value) {
         super.put(key, value);
         return this;
     }
@@ -134,7 +131,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo success(String msg) {
         ResponseInfo responseInfo = ResponseInfo.success(msg, null);
-        responseInfo.put(SUCCESS_SIGN,true);
+        responseInfo.put(SUCCESS_SIGN, true);
         return responseInfo;
     }
 
@@ -147,7 +144,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo success(String msg, Object data) {
         ResponseInfo responseInfo = new ResponseInfo(Type.SUCCESS, msg, data);
-        responseInfo.put(SUCCESS_SIGN,true);
+        responseInfo.put(SUCCESS_SIGN, true);
         return responseInfo;
     }
 
@@ -159,7 +156,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo warn(String msg) {
         ResponseInfo responseInfo = ResponseInfo.warn(msg, null);
-        responseInfo.put(SUCCESS_SIGN,true);
+        responseInfo.put(SUCCESS_SIGN, true);
         return responseInfo;
     }
 
@@ -172,7 +169,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo warn(String msg, Object data) {
         ResponseInfo responseInfo = new ResponseInfo(Type.WARN, msg, data);
-        responseInfo.put(SUCCESS_SIGN,true);
+        responseInfo.put(SUCCESS_SIGN, true);
         return responseInfo;
     }
 
@@ -183,7 +180,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo error() {
         ResponseInfo responseInfo = ResponseInfo.error("操作失败");
-        responseInfo.put(SUCCESS_SIGN,false);
+        responseInfo.put(SUCCESS_SIGN, false);
         return responseInfo;
     }
 
@@ -195,7 +192,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo error(String msg) {
         ResponseInfo responseInfo = ResponseInfo.error(msg, null);
-        responseInfo.put(SUCCESS_SIGN,false);
+        responseInfo.put(SUCCESS_SIGN, false);
         return responseInfo;
     }
 
@@ -208,7 +205,7 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo error(String msg, Object data) {
         ResponseInfo responseInfo = new ResponseInfo(Type.ERROR, msg, data);
-        responseInfo.put(SUCCESS_SIGN,false);
+        responseInfo.put(SUCCESS_SIGN, false);
         return responseInfo;
     }
 }

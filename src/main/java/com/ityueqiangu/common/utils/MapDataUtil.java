@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 /**
  * Map通用处理方法
  *
- * @author Clever、xia
+ * @author FlowerStone
  */
 public class MapDataUtil {
     public static Map<String, Object> convertDataMap(HttpServletRequest request) {
@@ -17,19 +17,19 @@ public class MapDataUtil {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         Iterator<?> entries = properties.entrySet().iterator();
         Entry<?, ?> entry;
-        String name = "";
-        String value = "";
+        String name = "" ;
+        String value = "" ;
         while (entries.hasNext()) {
             entry = (Entry<?, ?>) entries.next();
             name = (String) entry.getKey();
             Object valueObj = entry.getValue();
             if (null == valueObj) {
-                value = "";
+                value = "" ;
             } else if (valueObj instanceof String[]) {
                 String[] values = (String[]) valueObj;
-                value = "";
+                value = "" ;
                 for (int i = 0; i < values.length; i++) {
-                    value += values[i] + ",";
+                    value += values[i] + "," ;
                 }
                 if (value.length() > 0) {
                     value = value.substring(0, value.length() - 1);

@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 /**
  * 客户端工具类
  *
- * @author Clever、xia
+ * @author FlowerStone
  */
 public class ServletUtils {
     /**
@@ -98,7 +98,8 @@ public class ServletUtils {
 
     /**
      * 将对象渲染到客户端
-     * @param response 渲染对象
+     *
+     * @param response       渲染对象
      * @param responseObject 待渲染的对象
      */
     public static void responseOutWithJson(HttpServletResponse response,

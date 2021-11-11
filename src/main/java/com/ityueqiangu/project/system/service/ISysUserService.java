@@ -6,7 +6,7 @@ import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.project.system.domain.SysUser;
 
 /**
- * @author Clever、xia
+ * @author FlowerStone
  * @title: SysUserService
  * @description:
  * @date 2021-11-10 21:46:24

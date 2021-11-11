@@ -16,13 +16,14 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- *  mybatis拦截器，自动注入创建人、创建时间、修改人、修改时间
+ * mybatis拦截器，自动注入创建人、创建时间、修改人、修改时间
+ *
  * @author FlowerStone
  * @date 2021-11-10 21:30:35
  */
 @Slf4j
 @Component
-@Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }) })
+@Intercepts({@Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})})
 public class MybatisInterceptor implements Interceptor {
 
     @Override
@@ -38,7 +39,7 @@ public class MybatisInterceptor implements Interceptor {
             return invocation.proceed();
         }
         if (SqlCommandType.INSERT == sqlCommandType) {
-            ActiverUser activerUser =  UserUtil.getCurrentUser();
+            ActiverUser activerUser = UserUtil.getCurrentUser();
             Field[] fields = ReflectUtils.getAllFields(parameter);
             for (Field field : fields) {
                 log.debug("------field.name------" + field.getName());

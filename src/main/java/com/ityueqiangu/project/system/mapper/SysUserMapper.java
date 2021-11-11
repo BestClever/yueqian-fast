@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ityueqiangu.project.system.domain.SysUser;
 
 /**
- * @author Clever、xia
+ * @author FlowerStone
  * @title: SysUserMapper
  * @description:
  * @date 2021-11-10 21:46:24

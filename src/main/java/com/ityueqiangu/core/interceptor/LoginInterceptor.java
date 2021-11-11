@@ -28,7 +28,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         long start = System.currentTimeMillis();
-        request.setAttribute("START_TIME",start);
+        request.setAttribute("START_TIME", start);
         ActiverUser activerUser = UserUtil.getCurrentUser();
         // 判断当前用户是否已经登陆
         HttpSession session = request.getSession();
@@ -48,7 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             //如果是 user 开头的请求表明是 前端用户模块 这时候需要跳转到 前端的登录界面
             if (servletPath.startsWith("/user")) {
                 response.sendRedirect(path + "/portal/login");
-            }else {
+            } else {
                 response.sendRedirect(path + "/login");
             }
             return false;
@@ -65,6 +65,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         String url = request.getRequestURI().toString();
         long start = (long) request.getAttribute("START_TIME");
         long end = System.currentTimeMillis();
-        log.debug("request finished. url:{},cost:{}",url,end-start);
+        log.debug("request finished. url:{},cost:{}", url, end - start);
     }
 }

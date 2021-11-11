@@ -7,14 +7,13 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 /**
  * 程序注解配置
  *
- * @author Clever、xia
+ * @author FlowerStone
  */
 @Configuration
 // 表示通过aop框架暴露该代理对象,AopContext能够访问
 @EnableAspectJAutoProxy(exposeProxy = true)
 // 指定要扫描的Mapper类的包的路径
 @MapperScan("com.ityueqiangu.project.**.mapper")
-public class ApplicationConfig
-{
+public class ApplicationConfig {
 
 }

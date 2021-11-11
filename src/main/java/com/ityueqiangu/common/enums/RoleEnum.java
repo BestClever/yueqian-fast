@@ -1,16 +1,16 @@
 package com.ityueqiangu.common.enums;
 
 /**
- * @author Clever、xia
+ * @author FlowerStone
  * @title: RoleEnum
  * @projectName one_cartoon
  * @description:
  * @date 2020-12-21 19:27
  */
 public enum RoleEnum {
-    NOT_CERTIFIY_USER("101","未认证用户"),
-    COMMENT_USER("100","普通用户"),
-    BUS_COMPANY_USER("2","公交公司管理员"),
+    NOT_CERTIFIY_USER("101", "未认证用户"),
+    COMMENT_USER("100", "普通用户"),
+    BUS_COMPANY_USER("2", "公交公司管理员"),
     ;
 
     private String code;

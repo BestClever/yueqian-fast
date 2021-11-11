@@ -2,14 +2,12 @@ package com.ityueqiangu.common.exception;
 
 /**
  * 演示模式异常
- * 
- * @author Clever、xia
+ *
+ * @author FlowerStone
  */
-public class DemoModeException extends RuntimeException
-{
+public class DemoModeException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public DemoModeException()
-    {
+    public DemoModeException() {
     }
 }

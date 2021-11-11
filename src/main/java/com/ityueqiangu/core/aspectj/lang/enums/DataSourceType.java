@@ -2,11 +2,10 @@ package com.ityueqiangu.core.aspectj.lang.enums;
 
 /**
  * 数据源
- * 
- * @author Clever、xia
+ *
+ * @author FlowerStone
  */
-public enum DataSourceType
-{
+public enum DataSourceType {
     /**
      * 主库
      */
