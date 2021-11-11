@@ -1,6 +1,8 @@
 package com.ityueqiangu.project.system.service;
 
 import java.util.List;
+
+import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.project.system.domain.SysUser;
 
 /**
@@ -52,4 +54,12 @@ public interface ISysUserService {
      */
     Integer deleteSysUserById(String id);
 
+    /**
+     * 查询单个系统用户对象
+     * @author FlowerStone
+     * @date 2021年11月11日 0011 15:02:25
+     * @param sysUser
+     * @return
+     */
+    SysUser getOne(SysUser sysUser);
 }

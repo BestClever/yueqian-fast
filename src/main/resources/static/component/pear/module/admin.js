@@ -239,10 +239,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 
 			this.message = function(callback) {
-				if (callback != null) {
-					msgInstance.click(callback);
-				} else {
-					msgInstance.click(messageTip);
+				if (msgInstance != null) { //判断 msgInstance 不为空 再去设置值
+					if (callback != null) {
+						msgInstance.click(callback);
+					} else {
+						msgInstance.click(messageTip);
+					}
 				}
 			}
 
@@ -336,6 +338,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 		});
 
+		/*点击设置触发的方法*/
 		body.on("click", ".setting", function() {
 
 			var bgColorHtml =
@@ -461,6 +464,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			return color;
 		}
 
+		/*构建侧边栏连接方法*/
 		function buildLinkHtml() {
 			var links = "";
 			$.each(config.links, function(i, value) {

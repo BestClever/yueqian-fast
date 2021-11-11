@@ -1,7 +1,7 @@
 ## 网站配置
 logo: 
   ## 网站名称
-  title: "Pear Admin"
+  title: "Yue Qian"
   ## 网站图标
   image: "admin/images/logo.png"
 ## 菜单配置
@@ -9,7 +9,7 @@ menu:
   ## 侧边默认折叠状态
   collaspe: false
   ## 菜单数据来源
-  data: /system/user/menu
+  data: admin/data/menu.json
   ## 是否同时只打开一个菜单目录
   accordion: true
   ## 是否开启多系统菜单模式
@@ -56,19 +56,19 @@ colors:
 - id: "5"
   color: "darkgray"
 ## 主题面板的链接列表配置
-links: 
-- icon: "layui-icon layui-icon-website"
-  title: "官方网站"
-  href: "http://www.pearadmin.com"
-- icon: "layui-icon layui-icon-read"
-  title: "开发文档"
-  href: "http://www.pearadmin.com/doc/"
-- icon: "layui-icon layui-icon-fonts-code"
-  title: "开源地址"
-  href: "https://gitee.com/pear-admin/Pear-Admin-Layui"
-- icon: "layui-icon layui-icon-survey"
-  title: "问答社区"
-  href: "http://forum.pearadmin.com/"
+#links:
+#- icon: "layui-icon layui-icon-website"
+#  title: "官方网站"
+#  href: "http://www.pearadmin.com"
+#- icon: "layui-icon layui-icon-read"
+#  title: "开发文档"
+#  href: "http://www.pearadmin.com/doc/"
+#- icon: "layui-icon layui-icon-fonts-code"
+#  title: "开源地址"
+#  href: "https://gitee.com/pear-admin/Pear-Admin-Layui"
+#- icon: "layui-icon layui-icon-survey"
+#  title: "问答社区"
+#  href: "http://forum.pearadmin.com/"
 ## 其他配置
 other: 
   ## 主页动画时长
@@ -77,4 +77,5 @@ other:
   autoHead: false
 header:
   ## 站内消息，数据来源，通过 false 设置关闭
-  message: "system/notice/notice"
+  message: false
+# message: "system/notice/notice"

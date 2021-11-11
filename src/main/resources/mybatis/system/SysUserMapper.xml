@@ -120,6 +120,17 @@
         WHERE t.id = #{id}
     </select>
 
+    <select id="getOne" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.system.domain.SysUser">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_user t
+        <where>
+            <if test="userName != null  and userName != ''" >
+                and t.user_name= #{userName}
+            </if>
+        </where>
+    </select>
+
     <!-- 插入不为NULL的字段 -->
     <insert id="insertSysUser" parameterType="com.ityueqiangu.project.system.domain.SysUser"
     >

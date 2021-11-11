@@ -5,7 +5,7 @@ import com.ityueqiangu.core.web.ActiverUser;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author xiacong
+ * @author FlowerStone
  * @date 2021-11-10 21:37:49
  */
 public class UserUtil {

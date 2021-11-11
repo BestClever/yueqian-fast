@@ -1,5 +1,6 @@
 package com.ityueqiangu.project.system.service.impl;
 
+import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.project.system.domain.SysUser;
 import com.ityueqiangu.project.system.mapper.SysUserMapper;
 import com.ityueqiangu.project.system.service.ISysUserService;
@@ -69,6 +70,18 @@ public class SysUserServiceImpl implements ISysUserService{
      */
     public Integer deleteSysUserById(String id) {
         return sysUserMapper.deleteSysUserById(id);
+    }
+
+    /**
+     * 查询单个系统用户对象
+     * @author FlowerStone
+     * @date 2021年11月11日 0011 15:02:53
+     * @param sysUser
+     * @return
+     */
+    @Override
+    public SysUser getOne(SysUser sysUser) {
+        return sysUserMapper.getOne(sysUser);
     }
 
 }

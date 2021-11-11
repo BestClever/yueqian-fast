@@ -1,9 +1,11 @@
 package com.ityueqiangu.core.web;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ityueqiangu.project.system.domain.SysUser;
 import lombok.Data;
 
 /**
- * @author xiacong
+ * @author FlowerStone
  * @date 2021-11-10 21:32:22
  */
 @Data
@@ -15,6 +17,7 @@ public class ActiverUser {
 
     private String loginName;
 
+    @JsonIgnore
     private String password;
 
     private String isDeleted;
@@ -25,7 +28,7 @@ public class ActiverUser {
 
     private String roleName;
 
-    private String verifyCode;
+    private String captcha;
 
-//    private SysUser sysUser;
+    private SysUser sysUser;
 }

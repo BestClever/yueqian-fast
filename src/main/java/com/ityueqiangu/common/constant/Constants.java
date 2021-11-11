@@ -32,6 +32,9 @@ public class Constants
      */
     public static final String LOGIN_SUCCESS = "Success";
 
+    public static final String CAPTCHA_CODE = "sessionVerifyCode";
+
+
     /**
      * 注销
      */

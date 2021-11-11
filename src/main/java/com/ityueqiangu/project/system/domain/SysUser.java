@@ -21,7 +21,7 @@ import com.ityueqiangu.core.web.domain.BaseEntity;
 @Data
 public class SysUser extends BaseEntity{
     /** 编号 */
-    private String id;
+    private Integer id;
     /** 部门编号 */
     private String deptId;
     /** 账户 */
@@ -50,8 +50,4 @@ public class SysUser extends BaseEntity{
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lastLoginTime;
-    /** 创建人 */
-    private String createBy;
-    /** 修改人 */
-    private String updateBy;
 }

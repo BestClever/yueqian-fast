@@ -54,4 +54,12 @@ public interface SysUserMapper {
      */
     Integer deleteSysUserById(String id);
 
+    /**
+     * 查询单个用户对象
+     * @author FlowerStone
+     * @date 2021年11月11日 0011 15:04:01
+     * @param sysUser
+     * @return
+     */
+    SysUser getOne(SysUser sysUser);
 }
