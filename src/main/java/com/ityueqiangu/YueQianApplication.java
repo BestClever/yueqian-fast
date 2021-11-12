@@ -7,11 +7,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 /**
  * @author FlowerStone
  * @title: YueQianApplication
- * @projectName one_cartoon
+ * @projectName
  * @description: 启动程序
  * @date 2020-12-18 14:16
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 public class YueQianApplication {
     public static void main(String[] args) {
         // System.setProperty("spring.devtools.restart.enabled", "false");

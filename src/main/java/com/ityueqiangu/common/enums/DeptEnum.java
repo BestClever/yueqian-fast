@@ -3,7 +3,7 @@ package com.ityueqiangu.common.enums;
 /**
  * @author FlowerStone
  * @title: DeptEnum
- * @projectName one_cartoon
+ * @projectName
  * @description:
  * @date 2020-12-22 14:39
  */

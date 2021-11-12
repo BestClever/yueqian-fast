@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * @author BestClever
  * @title: YueQianServletInitializer
- * @projectName one_cartoon
+ * @projectName
  * @description: web容器中进行部署
  * @date 2020-12-18 14:15
  */
