@@ -110,11 +110,16 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--阿里数据库连接池 -->
+        <!--阿里数据库连接池
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>${druid.version}</version>
+        </dependency> -->
+        <!-- 添加 HikariCP数据源 重要-->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
         </dependency>
 
         <!--常用工具类 -->
