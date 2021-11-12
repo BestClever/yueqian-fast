@@ -22,17 +22,17 @@ public class SysUserController extends BaseController{
 
     @RequestMapping(value = "/index")
     public String main(){
-        return "index";
+        return "system/user/index";
     }
 
     @RequestMapping(value = "/add")
     public String add(){
-        return "add";
+        return "system/user/add";
     }
 
     @RequestMapping(value = "/edit")
     public String edit(){
-        return "edit";
+        return "system/user/edit";
     }
 
     /**

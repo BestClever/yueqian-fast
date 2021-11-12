@@ -65,6 +65,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         String url = request.getRequestURI().toString();
         long start = (long) request.getAttribute("START_TIME");
         long end = System.currentTimeMillis();
-        log.debug("request finished. url:{},cost:{}", url, end - start);
+        log.info("======request finished. url:{},cost:{}", url, end - start);
     }
 }

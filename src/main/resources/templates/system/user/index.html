@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="include :: header('用户列表')"/>
+    <link rel="stylesheet" th:href="@{/admin/css/other/user.css}"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="user-query-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="realName" placeholder="" class="layui-input">
+                </div>
+                <label class="layui-form-label">账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tableId" lay-filter="tableFilter"></table>
+    </div>
+</div>
+
+<!--工具栏 表格上方-->
+<script type="text/html" id="tableToolBar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<!--表格操作 表格内-->
+<script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="authorization">
+        <i class="layui-icon layui-icon-vercode"></i>
+        授权
+    </a>
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="layui-icon layui-icon-edit"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </a>
+</script>
+
+<!--tps 标签展示区域-->
+<script type="text/html" id="isEnableTpl">
+    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" {{d.isEnable == '0' ? 'checked' : '' }} />
+</script>
+
+<script type="text/html" id="sexTps">
+    {{#if (d.sex == 0) { }}
+    <span>男</span>
+    {{# }else if(d.sex == 1){ }}
+    <span>女</span>
+    {{# } }}
+</script>
+
+
+<th:block th:include="include :: footer"/>
+<script th:inline="none">
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            layer = layui.layer,
+            form = layui.form;
+
+        var myTalbe = table.render({
+            elem: '#tableId'
+            , url: '/sysUser/list'
+            , skin: 'line'
+            , toolbar: '#tableToolBar'
+            , cols: [[
+                {type: 'checkbox'},
+                {title: '姓名', field: 'realName', align: 'center', width: 110},
+                {title: '账号', field: 'userName', align: 'center'},
+                {title: '性别', field: 'sex', align: 'center', templet: '#sexTps', width: 60},
+                {title: '电话', field: 'phone', align: 'center'},
+                {title: '启用', field: 'isEnable', align: 'center', templet: '#isEnableTpl', width: 120},
+                {title: '注册时间', field: 'createTime', align: 'center'},
+                {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
+            ]]
+            , page: true
+        });
+
+        form.on("submit(search)", function (data) {
+            myTalbe.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        table.on('toolbar(role-table)', function (obj) {
+            if (obj.event === 'add') {
+                add();
+            } else if (obj.event === 'refresh') {
+                refresh();
+            } else if (obj.event === 'batchRemove') {
+                batchRemove(obj);
+            }
+        });
+
+        table.on("tool(tableFilter)", function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case "update":
+                    update(data);
+                    break;
+                case "del":
+                    del(data);
+                    break;
+                case "authorization":
+                    authorization(data);
+                    break;
+            }
+        });
+
+        // $('.operateTable .yueqian-btn').on('click', function () {
+        //     var type = $(this).data('type');
+        //     switch (type) {
+        //         case "add":
+        //             add();
+        //             break;
+        //     }
+        // });
+
+        function add() {
+            layerCustom.open("添加用户", '/sysUser/add', "700px", "550px", function (layero, index) {
+            })
+        }
+
+        function update(data) {
+            layerCustom.open("修改用户信息", '/sysUser/edit', "700px", "450px", function (layero, index) {
+                //给子页面赋值
+                var iframeWin = window[layero.find("iframe")[0]["name"]];
+                iframeWin.initForm(data);
+            })
+        }
+
+        function del(data) {
+            layerCustom.confirm("是否要删除该条数据", function () {
+                var loading = layer.load();
+                var params = {
+                    id: data.id
+                }
+                $.ajax({
+                    url: "/sysUser/remove",
+                    data: params,
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layerCustom.greenLaughMsg(result.msg, function () {
+                                myTalbe.reload();
+                            });
+                        } else {
+                            layerCustom.redCryMsg(result.msg);
+                        }
+                    }
+                })
+            })
+        }
+
+        function authorization(data) {
+            layerCustom.open("权限选择", BaseUrl + 'sysRole/authorization?id=' + data.id, "400px", "80%", function (layero, index) {
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

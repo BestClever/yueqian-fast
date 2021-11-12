@@ -36,6 +36,7 @@ layui.config({
 	dictionary: 'dictionary',
 	json: 'json',
 	cropper:"cropper",
+	layerCustom:"layerCustom",
 	yaml:"yaml",
 	theme: "theme",
 	message: "message"		// 通知组件
