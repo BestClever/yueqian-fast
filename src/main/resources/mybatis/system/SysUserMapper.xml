@@ -113,7 +113,7 @@
     </select>
 
     <!-- 根据主键获取单条记录 -->
-    <select id="selectSysUserById" resultMap="BaseResultMap" parameterType="String">
+    <select id="selectSysUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
         <include refid="baseColumns" />
         FROM sys_user t
@@ -318,7 +318,7 @@
     </update>
 
     <!-- 根据主键删除记录 -->
-    <delete id="deleteSysUserById" parameterType="String">
+    <delete id="deleteSysUserById" parameterType="java.lang.Integer">
         delete from sys_user where id = #{id}
 	</delete>
 

@@ -61,3 +61,8 @@ textarea::-webkit-input-placeholder {
 .layui-form-select dl::-webkit-scrollbar-corner {
 	background: #f6f6f6;
 }
+
+.layui-form-label.layui-required:before {   /* 这种写法也可以*/
+	content: ' *  ';
+	color: red;
+}

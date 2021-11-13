@@ -27,7 +27,7 @@ public interface ISysUserService {
      * @param id 主键
      * @return 返回SysUser
      */
-    SysUser selectSysUserById(String id);
+    SysUser selectSysUserById(Integer id);
 
     /**
      * 新增
@@ -52,7 +52,7 @@ public interface ISysUserService {
      * @param id 主键
      * @return 返回ResultInfo
      */
-    Integer deleteSysUserById(String id);
+    Integer deleteSysUserById(Integer id);
 
     /**
      * 查询单个系统用户对象

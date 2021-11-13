@@ -26,7 +26,7 @@ public interface SysUserMapper {
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-    SysUser selectSysUserById(String id);
+    SysUser selectSysUserById(Integer id);
 
     /**
      * 新增，插入所有字段
@@ -52,7 +52,7 @@ public interface SysUserMapper {
      * @param id
      * @return 返回影响行数
      */
-    Integer deleteSysUserById(String id);
+    Integer deleteSysUserById(Integer id);
 
     /**
      * 查询单个用户对象

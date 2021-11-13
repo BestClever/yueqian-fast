@@ -1,5 +1,7 @@
 package com.ityueqiangu.project.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.common.exception.BusinessException;
 import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.project.system.domain.SysUser;
 import com.ityueqiangu.project.system.mapper.SysUserMapper;
@@ -36,7 +38,7 @@ public class SysUserServiceImpl implements ISysUserService{
      * @param id 主键
      * @return 返回ResultInfo
      */
-    public SysUser selectSysUserById(String id) {
+    public SysUser selectSysUserById(Integer id) {
         return sysUserMapper.selectSysUserById(id);
     }
 
@@ -47,6 +49,13 @@ public class SysUserServiceImpl implements ISysUserService{
      * @return 返回ResultInfo
      */
     public Integer insertSysUser(SysUser sysUser) {
+        SysUser param = new SysUser();
+        param.setUserName(sysUser.getUserName());
+        //判断登录名是否存在 如果存在不让新增
+        SysUser result = sysUserMapper.getOne(param);
+        if (ObjectUtil.isNotEmpty(result)) {
+            throw new BusinessException("用户存在，请换一个登录名称");
+        }
         return sysUserMapper.insertSysUser(sysUser);
     }
 
@@ -68,7 +77,7 @@ public class SysUserServiceImpl implements ISysUserService{
      * @param id 主键
      * @return 返回
      */
-    public Integer deleteSysUserById(String id) {
+    public Integer deleteSysUserById(Integer id) {
         return sysUserMapper.deleteSysUserById(id);
     }
 

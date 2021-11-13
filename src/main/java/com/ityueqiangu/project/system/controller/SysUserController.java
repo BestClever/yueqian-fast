@@ -1,8 +1,11 @@
 package com.ityueqiangu.project.system.controller;
 
 import java.util.List;
+
+import cn.hutool.core.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.ityueqiangu.core.web.controller.BaseController;
@@ -31,7 +34,9 @@ public class SysUserController extends BaseController{
     }
 
     @RequestMapping(value = "/edit")
-    public String edit(){
+    public String edit(Integer id, ModelMap mmap){
+        SysUser sysUser = sysUserService.selectSysUserById(id);
+        mmap.addAttribute("sysUser",sysUser);
         return "system/user/edit";
     }
 
@@ -40,7 +45,7 @@ public class SysUserController extends BaseController{
      *
      * @return 分页数据
      */
-    @RequestMapping("list")
+    @RequestMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysUser sysUser) {
         startPage();
@@ -55,8 +60,9 @@ public class SysUserController extends BaseController{
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-    @RequestMapping("getById")
-    public ResponseInfo getById(String id) {
+    @RequestMapping("/getById")
+    @ResponseBody
+    public ResponseInfo getById(Integer id) {
         return ResponseInfo.success(sysUserService.selectSysUserById(id));
     }
 
@@ -66,7 +72,8 @@ public class SysUserController extends BaseController{
      * @param sysUser 新增的记录
      * @return 返回影响行数
      */
-    @RequestMapping("insert")
+    @RequestMapping("/insert")
+    @ResponseBody
     public ResponseInfo insert(@RequestBody SysUser sysUser) {
         return toAjax(sysUserService.insertSysUser(sysUser));
     }
@@ -77,7 +84,8 @@ public class SysUserController extends BaseController{
      * @param sysUser 修改的记录
      * @return 返回影响行数
      */
-    @RequestMapping("update")
+    @RequestMapping("/update")
+    @ResponseBody
     public ResponseInfo update(@RequestBody SysUser sysUser) {
         return toAjax(sysUserService.updateSysUser(sysUser));
     }
@@ -88,9 +96,28 @@ public class SysUserController extends BaseController{
      * @param id
      * @return 返回影响行数
      */
-    @RequestMapping("delete")
-    public ResponseInfo delete(@RequestBody String id) {
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ResponseInfo delete(@RequestBody Integer id) {
         return toAjax(sysUserService.deleteSysUserById(id));
+    }
+
+    /**
+     * 判断用户是否存在
+     * @author FlowerStone
+     * @date 2021年11月12日 0012 21:04:07
+     * @param sysUser
+     * @return
+     */
+    @RequestMapping(value = "/existUser")
+    @ResponseBody
+    public ResponseInfo existUser(SysUser sysUser){
+        SysUser result = sysUserService.getOne(sysUser);
+        if (ObjectUtil.isEmpty(result)) {
+            return ResponseInfo.success("用户不存在");
+        }else {
+            return ResponseInfo.error("用户存在");
+        }
     }
 
 }
