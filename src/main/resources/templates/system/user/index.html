@@ -4,7 +4,7 @@
     <th:block th:include="include :: header('用户列表')"/>
     <link rel="stylesheet" th:href="@{/admin/css/other/user.css}"/>
 </head>
-<body class="pear-container">
+<body class="yueqian-container">
 <div class="layui-card">
     <div class="layui-card-body">
         <form class="layui-form" action="" lay-filter="user-query-form">
@@ -17,11 +17,11 @@
                 <div class="layui-input-inline">
                     <input type="text" name="username" placeholder="" class="layui-input">
                 </div>
-                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
+                <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="user-query">
                     <i class="layui-icon layui-icon-search"></i>
                     查询
                 </button>
-                <button type="reset" class="pear-btn pear-btn-md">
+                <button type="reset" class="yueqian-btn yueqian-btn-md">
                     <i class="layui-icon layui-icon-refresh"></i>
                     重置
                 </button>
@@ -38,7 +38,7 @@
 
 <!--工具栏 表格上方-->
 <script type="text/html" id="tableToolBar">
-    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="add">
         <i class="layui-icon layui-icon-add-1"></i>
         新增
     </button>
@@ -75,18 +75,19 @@
 </script>
 
 <script type="text/html" id="avatarTps">
-    <img style="height: 50px;width: 50px;" src="{{ d.avatar }}" />
+    <img style="height: 50px;width: 50px;" src="{{ d.avatar == null?'/admin/images/avatar.jpg':d.avatar }}"/>
 </script>
 
 
 <th:block th:include="include :: footer"/>
 <script th:inline="none">
-    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom'], function () {
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom', 'common'], function () {
         var element = layui.element,
             table = layui.table,
             $ = layui.jquery,
             layerCustom = layui.layerCustom,
             layer = layui.layer,
+            common = layui.common,
             form = layui.form;
 
         var myTalbe = table.render({
@@ -99,7 +100,7 @@
                 {title: '姓名', field: 'realName', align: 'center', width: 110},
                 {title: '账号', field: 'userName', align: 'center'},
                 {title: '性别', field: 'sex', align: 'center', templet: '#sexTps', width: 60},
-                {title: '头像', field: 'avatar', align: 'center', templet: '#avatarTps',event:'showImg', width: 120},
+                {title: '头像', field: 'avatar', align: 'center', templet: '#avatarTps', event: 'showImg', width: 120},
                 {title: '电话', field: 'phone', align: 'center'},
                 {title: '用户状态', field: 'isEnable', align: 'center', templet: '#isEnableTpl', width: 120},
                 {title: '注册时间', field: 'createTime', align: 'center'},
@@ -141,31 +142,14 @@
             }
 
             var event = obj.event;
-            if(event ==="showImg"){
-                //页面层-图片
-                var img = new Image();
-                img.src = data.avatar;
-                var height = img.height + 60; //获取图片高度
-                var width = img.width + 20; //获取图片宽度
-                // debugger
-                // var height = 500; //获取图片高度
-                // var width = 500; //获取图片宽度
-                var imgHtml = "<div style='height:95%;display:flex;justify-content: center;align-items: center;'><img src='" + data.avatar + "' /></div>";
-                //弹出层
-                layer.open({
-                    type: 1,
-                    shade: 0.8,
-                    offset: 'auto',
-                    area: [width + 'px',height+'px'],
-                    shadeClose:true,//点击外围关闭弹窗
-                    scrollbar: false,//不现实滚动条
-                    title: false, //不显示标题
-                    closeBtn: 0,
-                    content: imgHtml, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-                    cancel: function () {
-                        //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', { time: 5000, icon: 6 });
-                    }
-                });
+            if (event === "showImg") {
+                //预览图片
+                if (common.isEmpty(data.avatar)) {
+                    common.previewImg('/admin/images/avatar.jpg', 200, 300);
+                } else {
+                    common.previewImg(data.avatar);
+                }
+
             }
         });
 
@@ -175,7 +159,7 @@
         }
 
         function update(data) {
-            layerCustom.open("修改用户信息", '/sysUser/edit?id='+data.id, "750px", "600px", function (layero, index) {
+            layerCustom.open("修改用户信息", '/sysUser/edit?id=' + data.id, "750px", "600px", function (layero, index) {
                 //给子页面赋值
                 // var iframeWin = window[layero.find("iframe")[0]["name"]];
                 // iframeWin.initForm(data);
