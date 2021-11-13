@@ -46,15 +46,15 @@
 
 <!--表格操作 表格内-->
 <script type="text/html" id="tableTool">
-    <a class="pear-btn pear-btn-primary pear-btn-md" lay-event="authorization">
+    <a class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="authorization">
         <i class="layui-icon layui-icon-vercode"></i>
         授权
     </a>
-    <a class="pear-btn pear-btn-warming pear-btn-md" lay-event="update">
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
         <i class="layui-icon layui-icon-edit"></i>
         修改
     </a>
-    <a class="pear-btn pear-btn-danger pear-btn-md" lay-event="del">
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
         <i class="layui-icon layui-icon-delete"></i>
         删除
     </a>
@@ -62,7 +62,7 @@
 
 <!--tps 标签展示区域-->
 <script type="text/html" id="isEnableTpl">
-    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable"
+    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="isEnable"
            {{d.isEnable== '0' ? 'checked' : '' }} />
 </script>
 
@@ -75,7 +75,7 @@
 </script>
 
 <script type="text/html" id="avatarTps">
-    <img style="height: 50px;width: 50px;" src="{{ d.avatar == null?'/admin/images/avatar.jpg':d.avatar }}"/>
+    <img style="height: 50px;width: 50px;cursor: pointer;" src="{{ d.avatar == null?'/admin/images/avatar.jpg':d.avatar }}"/>
 </script>
 
 
@@ -115,6 +115,29 @@
                 page: {curr: 1}
             });
             return false;
+        });
+
+        form.on("switch(isEnable)",function (data) {
+            let operate;
+            if (data.elem.checked) {
+                operate = "0";
+            } else {
+                operate = "1";
+            }
+            let loading = layer.load();
+            const url = "/sysUser/updateStatus";
+            const param = {
+                id:this.value,
+                isEnable:operate
+            };
+            $.post(url,param,function (result) {
+                layer.close(loading);
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg);
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                }
+            });
         });
 
         //表格上层工具栏

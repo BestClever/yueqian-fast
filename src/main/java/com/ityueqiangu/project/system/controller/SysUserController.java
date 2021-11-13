@@ -6,6 +6,7 @@ import cn.hutool.core.util.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.ityueqiangu.core.web.controller.BaseController;
@@ -118,6 +119,13 @@ public class SysUserController extends BaseController{
         }else {
             return ResponseInfo.error("用户存在");
         }
+    }
+
+    @PostMapping(value = "/updateStatus")
+    @ResponseBody
+    public ResponseInfo updateStatus(SysUser sysUser){
+        sysUserService.updateSysUser(sysUser);
+        return ResponseInfo.success("启用成功！");
     }
 
 }
