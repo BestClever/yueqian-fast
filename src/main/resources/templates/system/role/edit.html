@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('用户修改')"/>
+    <th:block th:include="include :: header('修改')"/>
 </head>
 <body>
 <form class="layui-form">
@@ -11,69 +11,48 @@
                 <div class="layui-form-item layui-hide">
                     <label class="layui-form-label">主键</label>
                     <div class="layui-input-block">
-                        <input type="text" th:value="${sysUser.id}" name="id"
+                        <input type="text" th:value="${sysRole.id}" name="id"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
+                <!--手动输入-->
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label layui-required">账号</label>
+                        <label class="layui-form-label layui-required">角色名称</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="userName" disabled readonly th:value="${sysUser.userName}"
-                                   lay-verify="required" autocomplete="off"
+                            <input type="text" name="roleName" th:value="${sysRole.roleName}" lay-verify="required"
+                                   autocomplete="off"
                                    placeholder="请输入账号" class="layui-input"/>
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label layui-required">姓名</label>
+                        <label class="layui-form-label layui-required">角色编码</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="realName" th:value="${sysUser.realName}" lay-verify="required"
-                                   autocomplete="off"
+                            <input type="text" name="roleCode" th:value="${sysRole.roleCode}"
+                                   lay-verify="required|roleCode" autocomplete="off"
                                    placeholder="请输入姓名" class="layui-input"/>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">性别</label>
+                        <label class="layui-form-label">角色状态</label>
                         <div class="layui-input-inline">
-                            <input type="radio" th:checked="${sysUser.sex eq '0'}" name="sex" value="0" title="男">
-                            <input type="radio" th:checked="${sysUser.sex eq '1'}" name="sex" value="1" title="女">
+                            <input type="checkbox" th:checked="${sysRole.isEnable eq '0'?true:false}" name="isEnable"
+                                   th:value="${sysRole.isEnable}" lay-skin="switch" lay-text="启用|禁用"
+                                   lay-filter="isEnable"/>
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">用户状态</label>
+                        <label class="layui-form-label layui-required">角色排序</label>
                         <div class="layui-input-inline">
-                            <input type="checkbox" th:checked="${sysUser.isEnable eq '0'}" name="isEnable" value="0"
-                                   lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable"/>
+                            <input type="text" name="sort" th:value="${sysRole.sort}" lay-verify="required|number"
+                                   autocomplete="off"
+                                   placeholder="请输入排序号" class="layui-input"/>
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">邮箱</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" th:value="${sysUser.email}" lay-verify="email"
-                                   autocomplete="off" placeholder="请输入标题"
-                                   class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">电话</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="phone" th:value="${sysUser.phone}" lay-verify="phone"
-                                   autocomplete="off" placeholder="请输入标题"
-                                   class="layui-input"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">角色</label>
-                    <div class="layui-input-block">
-                        <!--                        <input th:each="sysRole:${sysRoles}" th:value="${sysRole.roleId}" th:title="${sysRole.roleName}"-->
-                        <!--                               type="checkbox" name="roleIds" lay-skin="primary">-->
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -84,7 +63,8 @@
                 <i class="layui-icon layui-icon-refresh"></i>
                 重置
             </button>
-            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit="" lay-filter="add">
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit=""
+                    lay-filter="update">
                 <i class="layui-icon layui-icon-ok"></i>
                 提交
             </button>
@@ -100,17 +80,14 @@
             layerCustom = layui.layerCustom;
 
         /*表单验证*/
-        form.verify({
+        form.verify({});
 
-        });
-
-        form.on('submit(add)', function (data) {
-            //将switch赋值
+        form.on('submit(update)', function (data) {
             if (common.isEmpty(data.isEnable)) {
                 data.field.isEnable = "1";
             }
             $.ajax({
-                url: '/sysUser/update',
+                url: '/sysRole/update',
                 data: JSON.stringify(data.field),
                 dataType: 'json',
                 contentType: 'application/json',

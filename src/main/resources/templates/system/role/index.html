@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('用户列表')"/>
+    <th:block th:include="include :: header('角色列表')"/>
     <link rel="stylesheet" th:href="@{/admin/css/other/user.css}"/>
 </head>
 <body class="yueqian-container">
 <div class="layui-card">
     <div class="layui-card-body">
-        <form class="layui-form" action="" lay-filter="user-query-form">
+        <form class="layui-form" action="" lay-filter="query-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">用户</label>
+                <!--自己手写 无法生成-->
+                <label class="layui-form-label">角色名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="realName" placeholder="" class="layui-input">
+                    <input type="text" name="roleName" placeholder="请输入角色名称" class="layui-input">
                 </div>
-                <label class="layui-form-label">账号</label>
+                <label class="layui-form-label">角色编码</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="userName" placeholder="" class="layui-input">
+                    <input type="text" name="roleCode" placeholder="请输入角色编码" class="layui-input">
                 </div>
                 <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="search">
                     <i class="layui-icon layui-icon-search"></i>
@@ -46,6 +47,10 @@
 
 <!--表格操作 表格内-->
 <script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="authorization">
+        <i class="layui-icon layui-icon-vercode"></i>
+        授权
+    </a>
     <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
         <i class="layui-icon layui-icon-edit"></i>
         修改
@@ -62,43 +67,27 @@
            {{d.isEnable== '0' ? 'checked' : '' }} />
 </script>
 
-<script type="text/html" id="sexTps">
-    {{#if (d.sex == 0) { }}
-    <span>男</span>
-    {{# }else if(d.sex == 1){ }}
-    <span>女</span>
-    {{# } }}
-</script>
-
-<script type="text/html" id="avatarTps">
-    <img style="height: 50px;width: 50px;cursor: pointer;" src="{{ d.avatar == null?'/admin/images/avatar.jpg':d.avatar }}"/>
-</script>
-
-
 <th:block th:include="include :: footer"/>
 <script th:inline="none">
-    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom', 'common'], function () {
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom'], function () {
         var element = layui.element,
             table = layui.table,
             $ = layui.jquery,
             layerCustom = layui.layerCustom,
             layer = layui.layer,
-            common = layui.common,
             form = layui.form;
 
         var myTalbe = table.render({
             elem: '#tableId'
-            , url: '/sysUser/list'
+            , url: '/sysRole/list'
             , skin: 'line'
             , toolbar: '#tableToolBar'
             , cols: [[
                 {type: 'checkbox'},
-                {title: '姓名', field: 'realName', align: 'center', width: 110},
-                {title: '账号', field: 'userName', align: 'center'},
-                {title: '性别', field: 'sex', align: 'center', templet: '#sexTps', width: 60},
-                {title: '电话', field: 'phone', align: 'center'},
-                {title: '用户状态', field: 'isEnable', align: 'center', templet: '#isEnableTpl', width: 120},
-                {title: '注册时间', field: 'createTime', align: 'center'},
+                {title: '角色名称', field: 'roleName', align: 'center'},
+                {title: '角色标识', field: 'roleCode', align: 'center'},
+                {title: '排序', field: 'sort', align: 'center'},
+                {title: '是否启用', field: 'isEnable', align: 'center', templet: '#isEnableTpl'},
                 {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
             ]]
             , page: true
@@ -120,7 +109,7 @@
                 operate = "1";
             }
             let loading = layer.load();
-            const url = "/sysUser/updateStatus";
+            const url = "/sysRole/updateStatus";
             const param = {
                 id:this.value,
                 isEnable:operate
@@ -158,29 +147,15 @@
                     authorization(data);
                     break;
             }
-
-            var event = obj.event;
-            if (event === "showImg") {
-                //预览图片
-                if (common.isEmpty(data.avatar)) {
-                    common.previewImg('/admin/images/avatar.jpg', 200, 300);
-                } else {
-                    common.previewImg(data.avatar);
-                }
-
-            }
         });
 
         function add() {
-            layerCustom.open("添加用户", '/sysUser/add', "750px", "600px", function (layero, index) {
+            layerCustom.open("添加", '/sysRole/add', "750px", "400px", function (layero, index) {
             })
         }
 
         function update(data) {
-            layerCustom.open("修改用户信息", '/sysUser/edit?id=' + data.id, "750px", "600px", function (layero, index) {
-                //给子页面赋值
-                // var iframeWin = window[layero.find("iframe")[0]["name"]];
-                // iframeWin.initForm(data);
+            layerCustom.open("修改信息", '/sysRole/edit?id=' + data.id, "750px", "400px", function (layero, index) {
             })
         }
 
@@ -191,8 +166,8 @@
                     id: data.id
                 }
                 $.ajax({
-                    url: "/sysUser/delete",
-                    data: JSON.stringify(params),
+                    url: "/sysRole/delete",
+                    data: params,
                     dataType: 'json',
                     type: 'post',
                     success: function (result) {
@@ -207,11 +182,6 @@
                     }
                 })
             })
-        }
-
-        function authorization(data) {
-            layerCustom.open("权限选择", BaseUrl + 'sysRole/authorization?id=' + data.id, "400px", "80%", function (layero, index) {
-            });
         }
     });
 </script>
