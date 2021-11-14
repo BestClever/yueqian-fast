@@ -38,6 +38,10 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public enum Type {
         /**
+         *  0
+         */
+        ZERO(0),
+        /**
          * 成功
          */
         SUCCESS(200),

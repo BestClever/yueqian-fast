@@ -20,7 +20,7 @@
         "icon": "layui-icon layui-icon-face-smile",
         "type": 1,
         "openType": "_iframe",
-        "href": "sysUser/index"
+        "href": "/sysUser/index"
       },
       {
         "id": 602,
@@ -28,7 +28,7 @@
         "icon": "layui-icon layui-icon-face-cry",
         "type": 1,
         "openType": "_iframe",
-        "href": "sysRole/index"
+        "href": "/sysRole/index"
       },
       {
         "id": 603,
@@ -36,7 +36,7 @@
         "icon": "layui-icon layui-icon-face-cry",
         "type": 1,
         "openType": "_iframe",
-        "href": "view/system/power.html"
+        "href": "/sysResource/index"
       },
       {
         "id": 604,

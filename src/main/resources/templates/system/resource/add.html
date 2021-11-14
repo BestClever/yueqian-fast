@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('资源新增')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <!--手动输入-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">父级</label>
+                    <div class="layui-input-block">
+                        <ul class="dtree" data-id="-1" id="selectParent" name="parentId"></ul>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="title" name="resourceName"
+                               placeholder="权限名称" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input lay-filter="resourceType" name="resourceType" title="目录" type="radio" value="0">
+                        <input checked lay-filter="resourceType" name="resourceType" title="菜单" type="radio" value="1">
+                        <input lay-filter="resourceType" name="resourceType" title="按钮" type="radio" value="2">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="requestUrlItem">
+                    <label class="layui-form-label">路径</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" id="requestUrl" name="requestUrl"
+                               placeholder="菜单路径" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="openTypeItem">
+                    <label class="layui-form-label">打开</label>
+                    <div class="layui-input-block">
+                        <select id="openType" name="openType">
+                            <option value=""></option>
+                            <option value="_iframe">框架</option>
+                            <option value="_blank">签页</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图标</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" id="icon" lay-filter="icon" name="icon" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="title" name="sort" placeholder="排序"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="reset" class="yueqian-btn yueqian-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form', 'jquery', 'layerCustom', 'iconPicker', 'dtree', 'dictionary'], function () {
+        let form = layui.form,
+            $ = layui.jquery,
+            iconPicker = layui.iconPicker,
+            dtree = layui.dtree,
+            dictionary = layui.dictionary,
+            layerCustom = layui.layerCustom;
+
+
+        dtree.renderSelect({
+            elem: "#selectParent",
+            url: "/sysResource/selectParent",
+            method: 'get',
+            // selectInputName: {nodeId: "parentId", context: "resourceName"},
+            dataStyle: "layuiStyle",  //使用layui风格的数据格式
+            dataFormat: "list",  //配置data的风格为list
+            response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+            // selectInitVal: "0"
+        });
+
+        /*表单验证*/
+        form.verify({
+            exist: function (value) {
+                var url = '/sysResource/exist';
+                var param = {
+                    key: value
+                }
+                var returnMsg = '';
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    async: false,
+                    data: param,
+                    dataType: "json",
+                    success: function (result) {
+                        if (!result.success) {
+                            returnMsg = result.msg;
+                        }
+                    }
+                });
+                if (returnMsg) {
+                    return returnMsg;
+                }
+            }
+        });
+
+        form.on('submit(add)', function (data) {
+            $.ajax({
+                url: '/sysResource/insert',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layerCustom.greenLaughMsg(result.msg, function () {
+                            //刷新父页面的表格
+                            parent.layui.table.reload('tableId')
+                            //先得到当前iframe层的索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭弹出框
+                            parent.layer.close(index);
+                        })
+                    } else {
+                        layer.msg(result.msg);
+                        return;
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>
