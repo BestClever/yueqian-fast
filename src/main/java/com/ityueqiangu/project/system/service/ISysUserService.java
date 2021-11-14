@@ -56,10 +56,21 @@ public interface ISysUserService {
 
     /**
      * 查询单个系统用户对象
-     * @author FlowerStone
-     * @date 2021年11月11日 0011 15:02:25
+     *
      * @param sysUser
      * @return
+     * @author FlowerStone
+     * @date 2021年11月11日 0011 15:02:25
      */
     SysUser getOne(SysUser sysUser);
+
+    /**
+     * 修改用户状态
+     *
+     * @param sysUser
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月14日 0014 9:27:08
+     */
+    Integer updateSysUserStatus(SysUser sysUser);
 }

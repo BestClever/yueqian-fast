@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.project.system.mapper.SysRoleResourceMapper">
+	<resultMap id="BaseResultMap" type="com.ityueqiangu.project.system.domain.SysRoleResource">
+        <result column="id" property="id" />
+        <result column="role_id" property="roleId" />
+        <result column="resource_id" property="resourceId" />
+	</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.role_id
+    , t.resource_id
+    </sql> 
+    
+    <!-- 分页查询 -->
+    <select id="selectSysRoleResourceList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.system.domain.SysRoleResource">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_role_resource t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="roleId != null  and roleId != ''" >
+             and t.role_id= #{roleId} 
+           </if>
+           <if test="resourceId != null  and resourceId != ''" >
+             and t.resource_id= #{resourceId} 
+           </if>
+        </trim>
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="selectSysRoleResourceById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_role_resource t
+		WHERE t.id = #{id}
+	</select>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysRoleResource" parameterType="com.ityueqiangu.project.system.domain.SysRoleResource"
+       >
+        INSERT INTO sys_role_resource    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+          <if test="id != null">
+          	id,
+          </if>
+          <if test="roleId != null">
+          	role_id,
+          </if>
+          <if test="resourceId != null">
+          	resource_id,
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+          <if test="id != null" >
+            #{id},                    
+          </if>
+          <if test="roleId != null" >
+            #{roleId},                    
+          </if>
+          <if test="resourceId != null" >
+            #{resourceId},                    
+          </if>
+        </trim>
+    </insert>    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysRoleResource" parameterType="com.ityueqiangu.project.system.domain.SysRoleResource">
+    UPDATE sys_role_resource
+    <set>
+       <if test="roleId != null" >
+         role_id=#{roleId},                 
+       </if>
+       <if test="resourceId != null" >
+         resource_id=#{resourceId},                 
+       </if>
+    </set>
+    WHERE id = #{id}
+    </update>
+
+	<!-- 根据主键删除记录 -->
+	<delete id="deleteSysRoleResourceById" parameterType="Integer">
+        delete from sys_role_resource where id = #{id}
+	</delete>
+
+</mapper>

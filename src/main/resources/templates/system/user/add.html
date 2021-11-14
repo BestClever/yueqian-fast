@@ -61,15 +61,16 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">用户状态</label>
                         <div class="layui-input-inline">
-                            <input type="checkbox" checked="" name="isEnable" value="0" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" />
+                            <input type="checkbox" checked="" name="isEnable" value="0" lay-skin="switch"
+                                   lay-text="启用|禁用" lay-filter="user-enable"/>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-block">
-                        <!--                        <input th:each="sysRole:${sysRoles}" th:value="${sysRole.roleId}" th:title="${sysRole.roleName}"-->
-                        <!--                               type="checkbox" name="roleIds" lay-skin="primary">-->
+                        <input th:each="sysRole:${sysRoles}" th:value="${sysRole.id}" th:title="${sysRole.roleName}"
+                               type="checkbox" name="roleIds" lay-skin="primary">
                     </div>
                 </div>
             </div>
@@ -91,10 +92,10 @@
 </form>
 <th:block th:include="include :: footer"/>
 <script>
-    layui.use(['form', 'jquery','layerCustom'], function () {
+    layui.use(['form', 'jquery', 'layerCustom'], function () {
         let form = layui.form,
-        $ = layui.jquery,
-        layerCustom = layui.layerCustom;
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom;
 
         /*表单验证*/
         form.verify({
@@ -123,6 +124,17 @@
         });
 
         form.on('submit(add)', function (data) {
+            //将switch赋值
+            if (common.isEmpty(data.isEnable)) {
+                data.field.isEnable = "1";
+            }
+            //将选中的checkbox补上值
+            let roleIds = [];
+            $('input[type=checkbox]:checked').each(function () {
+                roleIds.push($(this).val());
+            });
+            //拼接roleids字符串
+            data.field.roleIds = roleIds.join(",");
             $.ajax({
                 url: '/sysUser/insert',
                 data: JSON.stringify(data.field),

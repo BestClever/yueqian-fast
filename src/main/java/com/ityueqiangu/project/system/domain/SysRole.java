@@ -29,4 +29,9 @@ public class SysRole extends BaseEntity{
 	private Integer sort;
 	/** 是否启用 */
 	private String isEnable;
+
+	/**
+	 * 提供前端 显示
+	 * */
+	private boolean checked = false;
 }

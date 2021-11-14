@@ -133,7 +133,7 @@
 
     <!-- 插入不为NULL的字段 -->
     <insert id="insertSysUser" parameterType="com.ityueqiangu.project.system.domain.SysUser"
-    >
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
         INSERT INTO sys_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

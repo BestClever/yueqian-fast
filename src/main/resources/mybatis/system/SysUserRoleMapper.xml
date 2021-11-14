@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.project.system.mapper.SysUserRoleMapper">
+	<resultMap id="BaseResultMap" type="com.ityueqiangu.project.system.domain.SysUserRole">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="role_id" property="roleId" />
+	</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.user_id
+    , t.role_id
+    </sql> 
+    
+    <!-- 分页查询 -->
+    <select id="selectSysUserRoleList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.system.domain.SysUserRole">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_user_role t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="userId != null  and userId != ''" >
+             and t.user_id= #{userId} 
+           </if>
+           <if test="roleId != null  and roleId != ''" >
+             and t.role_id= #{roleId} 
+           </if>
+        </trim>
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="selectSysUserRoleById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_user_role t
+		WHERE t.id = #{id}
+	</select>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysUserRole" parameterType="com.ityueqiangu.project.system.domain.SysUserRole"
+       >
+        INSERT INTO sys_user_role    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+          <if test="id != null">
+          	id,
+          </if>
+          <if test="userId != null">
+          	user_id,
+          </if>
+          <if test="roleId != null">
+          	role_id,
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+          <if test="id != null" >
+            #{id},                    
+          </if>
+          <if test="userId != null" >
+            #{userId},                    
+          </if>
+          <if test="roleId != null" >
+            #{roleId},                    
+          </if>
+        </trim>
+    </insert>
+
+    <insert id="batchInsert" parameterType="list">
+        insert into sys_user_role
+        ( id, user_id, role_id )
+        values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.id}, #{item.userId}, #{item.roleId})
+        </foreach >
+    </insert>
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysUserRole" parameterType="com.ityueqiangu.project.system.domain.SysUserRole">
+    UPDATE sys_user_role
+    <set>
+       <if test="userId != null" >
+         user_id=#{userId},                 
+       </if>
+       <if test="roleId != null" >
+         role_id=#{roleId},                 
+       </if>
+    </set>
+    WHERE id = #{id}
+    </update>
+
+	<!-- 根据主键删除记录 -->
+	<delete id="deleteSysUserRoleById" parameterType="Integer">
+        delete from sys_user_role where id = #{id}
+	</delete>
+    <delete id="deleteSysUserRoleByCondition" parameterType="com.ityueqiangu.project.system.domain.SysUserRole">
+        delete from sys_user_role
+        <where>
+            <if test="id != null" >
+               and id = #{id}
+            </if>
+            <if test="userId != null" >
+                and user_id=#{userId}
+            </if>
+            <if test="roleId != null" >
+                and role_id=#{roleId}
+            </if>
+        </where>
+    </delete>
+
+</mapper>

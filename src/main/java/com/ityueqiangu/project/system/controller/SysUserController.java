@@ -1,8 +1,15 @@
 package com.ityueqiangu.project.system.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.common.constant.Constants;
+import com.ityueqiangu.project.system.domain.SysRole;
+import com.ityueqiangu.project.system.domain.SysUserRole;
+import com.ityueqiangu.project.system.service.ISysRoleService;
+import com.ityueqiangu.project.system.service.ISysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +30,10 @@ public class SysUserController extends BaseController{
 
     @Autowired
     private ISysUserService sysUserService;
+    @Autowired
+    private ISysRoleService sysRoleService;
+    @Autowired
+    private ISysUserRoleService sysUserRoleService;
 
     @RequestMapping(value = "/index")
     public String main(){
@@ -30,13 +41,20 @@ public class SysUserController extends BaseController{
     }
 
     @RequestMapping(value = "/add")
-    public String add(){
+    public String add(ModelMap mmap){
+        //获取有效的角色
+        SysRole sysRole = new SysRole();
+        sysRole.setIsEnable(Constants.SUCCESS);
+        List<SysRole> sysRoles = sysRoleService.selectSysRoleList(sysRole);
+        mmap.addAttribute("sysRoles",sysRoles);
         return "system/user/add";
     }
 
     @RequestMapping(value = "/edit")
     public String edit(Integer id, ModelMap mmap){
         SysUser sysUser = sysUserService.selectSysUserById(id);
+        List<SysRole> sysRoles = sysUserRoleService.getUserRole(id);
+        mmap.addAttribute("sysRoles",sysRoles.stream().sorted(Comparator.comparing(SysRole::getSort)).collect(Collectors.toList()));
         mmap.addAttribute("sysUser",sysUser);
         return "system/user/edit";
     }
@@ -124,7 +142,7 @@ public class SysUserController extends BaseController{
     @PostMapping(value = "/updateStatus")
     @ResponseBody
     public ResponseInfo updateStatus(SysUser sysUser){
-        sysUserService.updateSysUser(sysUser);
+        sysUserService.updateSysUserStatus(sysUser);
         return ResponseInfo.success("启用成功！");
     }
 

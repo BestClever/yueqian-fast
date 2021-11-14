@@ -1,4 +1,4 @@
-package com.ityueqiangu.project.system.service.impl.impl;
+package com.ityueqiangu.project.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.ityueqiangu.common.exception.BusinessException;

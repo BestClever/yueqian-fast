@@ -50,4 +50,6 @@ public class SysUser extends BaseEntity{
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date lastLoginTime;
+    /*角色id字符串*/
+    private String roleIds;
 }

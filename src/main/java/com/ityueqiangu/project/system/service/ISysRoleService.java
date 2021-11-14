@@ -26,7 +26,7 @@ public interface ISysRoleService {
      * @return 返回SysRole
      */
     SysRole selectSysRoleById(Integer id);
-	
+
     /**
      * 新增
      *
@@ -34,8 +34,8 @@ public interface ISysRoleService {
      * @return 返回ResultInfo
      */
     Integer insertSysRole(SysRole sysRole);
-	
-	
+
+
     /**
      * 修改，修改所有字段
      *
@@ -43,7 +43,7 @@ public interface ISysRoleService {
      * @return 返回ResultInfo
      */
     Integer updateSysRole(SysRole sysRole);
-	
+
     /**
      * 删除记录
      *
@@ -60,5 +60,5 @@ public interface ISysRoleService {
      * @return
      */
     SysRole getOne(SysRole sysRole);
-	
+
 }

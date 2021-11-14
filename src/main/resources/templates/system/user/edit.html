@@ -70,8 +70,9 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">角色</label>
                     <div class="layui-input-block">
-                        <!--                        <input th:each="sysRole:${sysRoles}" th:value="${sysRole.roleId}" th:title="${sysRole.roleName}"-->
-                        <!--                               type="checkbox" name="roleIds" lay-skin="primary">-->
+                        <input th:each="sysRole:${sysRoles}" th:checked="${sysRole.checked}"
+                               th:value="${sysRole.id}" th:title="${sysRole.roleName}" type="checkbox"
+                               name="roleIds" lay-skin="primary">
                     </div>
                 </div>
             </div>
@@ -109,6 +110,12 @@
             if (common.isEmpty(data.isEnable)) {
                 data.field.isEnable = "1";
             }
+            //将选中的checkbox补上值
+            let roleIds = [];
+            $('input[type=checkbox]:checked').each(function () {
+                roleIds.push($(this).val());
+            });
+            data.field.roleIds = roleIds.join(",");
             $.ajax({
                 url: '/sysUser/update',
                 data: JSON.stringify(data.field),
