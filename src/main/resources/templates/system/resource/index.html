@@ -54,8 +54,8 @@
 </script>
 
 <!--tps 标签展示区域-->
-<script type="text/html" id="">
-   
+<script type="text/html" id="iconTps">
+    <i class="layui-icon {{d.icon}}"></i>
 </script>
 
 <th:block th:include="include :: footer"/>
@@ -72,7 +72,7 @@
         window.render = function () {
             treetable.render({
                 treeColIndex: 1
-                , treeSpid: 0
+                , treeSpid: 1 //开始的父节点id
                 , treeIdName: 'id'
                 , treePidName: 'parentId'
                 , elem: '#tableId'
@@ -87,7 +87,7 @@
                     {title: '请求路径', field: 'requestUrl', align: 'center', width: 110},
                     {title: '打开方式', field: 'openType', align: 'center', width: 110},
                     {title: '资源类型', field: 'resourceType', align: 'center', width: 110},
-                    {title: '图标', field: 'icon', align: 'center', width: 110},
+                    {title: '图标', field: 'icon', align: 'center',templet:'#iconTps', width: 110},
                     {title: '排序', field: 'sort', align: 'center', width: 110},
                     {title: '是否启用', field: 'isEnable', align: 'center', width: 110},
                     {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
@@ -152,12 +152,12 @@
         });
 
         function add() {
-            layerCustom.open("添加", '/sysResource/add', "750px", "600px", function (layero, index) {
+            layerCustom.open("添加", '/sysResource/add', "450px", "550px", function (layero, index) {
             })
         }
 
         function update(data) {
-            layerCustom.open("修改信息", '/sysResource/edit?id=' + data.id, "750px", "600px", function (layero, index) {
+            layerCustom.open("修改信息", '/sysResource/edit?id=' + data.id, "450px", "550px", function (layero, index) {
             })
         }
 
@@ -166,7 +166,7 @@
                 var loading = layer.load();
                 var params = {
                     id: data.id
-                }
+                };
                 $.ajax({
                     url: "/sysResource/delete",
                     data: params,

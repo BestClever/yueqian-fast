@@ -37,5 +37,5 @@ public class Dtree implements Serializable {
     /**
      * 图标
      */
-    private String iconClass = "0";
+    private String iconClass;
 }

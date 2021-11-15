@@ -74,6 +74,11 @@ public class SysResourceController extends BaseController {
     public ResponseInfo selectParent(SysResource sysResource) {
         List<SysResource> sysResources = sysResourceService.selectSysResourceList(sysResource);
         ArrayList<Dtree> dtrees = new ArrayList<>();
+        Dtree rootTree = new Dtree();
+        rootTree.setId(1);
+        rootTree.setParentId(0);
+        rootTree.setTitle("顶级权限");
+        dtrees.add(rootTree);
         sysResources.stream().forEach(param -> {
             Dtree dtree = new Dtree();
             dtree.setId(param.getId());
@@ -81,6 +86,7 @@ public class SysResourceController extends BaseController {
             dtree.setTitle(param.getResourceName());
             dtrees.add(dtree);
         });
+
         return new ResponseInfo(ResponseInfo.Type.ZERO,"操作成功",dtrees);
     }
 
@@ -117,7 +123,7 @@ public class SysResourceController extends BaseController {
      */
     @RequestMapping("/update")
     @ResponseBody
-    public ResponseInfo update(SysResource sysResource) {
+    public ResponseInfo update(@RequestBody SysResource sysResource) {
         return toAjax(sysResourceService.updateSysResource(sysResource));
     }
 
