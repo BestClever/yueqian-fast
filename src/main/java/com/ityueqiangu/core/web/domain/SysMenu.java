@@ -55,5 +55,5 @@ public class SysMenu {
     /**
      * 用于参数传递
      */
-    private String param;
+    private String userName;
 }

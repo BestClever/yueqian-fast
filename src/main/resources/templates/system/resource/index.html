@@ -54,8 +54,31 @@
 </script>
 
 <!--tps 标签展示区域-->
-<script type="text/html" id="iconTps">
+<script type="text/html" id="iconTpl">
     <i class="layui-icon {{d.icon}}"></i>
+</script>
+
+<script type="text/html" id="openTypeTpl">
+    {{#if (d.openType == '_iframe') { }}
+    <span>框架</span>
+    {{# }else if(d.openType == '_blank'){ }}
+    <span>签页</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="resourceTypeTpl">
+    {{#if (d.resourceType == '0') { }}
+    <span>目录</span>
+    {{# }else if(d.resourceType == '1'){ }}
+    <span>菜单</span>
+    {{# }else if(d.resourceType == '2'){ }}
+    <span>按钮</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="isEnableTpl">
+    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="isEnable"
+           {{d.isEnable== '0' ? 'checked' : '' }} />
 </script>
 
 <th:block th:include="include :: footer"/>
@@ -78,18 +101,17 @@
                 , elem: '#tableId'
                 , url: '/sysResource/list'
                 , skin: 'line'
-                , treeDefaultClose: true
+                , treeDefaultClose: false
                 , toolbar: '#tableToolBar'
                 , page: false
                 , cols: [[
                     {type: 'checkbox'},
-                    {title: '资源名称', field: 'resourceName', align: 'center', width: 110},
-                    {title: '请求路径', field: 'requestUrl', align: 'center', width: 110},
-                    {title: '打开方式', field: 'openType', align: 'center', width: 110},
-                    {title: '资源类型', field: 'resourceType', align: 'center', width: 110},
-                    {title: '图标', field: 'icon', align: 'center',templet:'#iconTps', width: 110},
-                    {title: '排序', field: 'sort', align: 'center', width: 110},
-                    {title: '是否启用', field: 'isEnable', align: 'center', width: 110},
+                    {title: '资源名称', field: 'resourceName', align: 'center'},
+                    {title: '请求路径', field: 'requestUrl', align: 'center'},
+                    {title: '资源类型', field: 'resourceType', align: 'center',templet:'#resourceTypeTpl'},
+                    {title: '图标', field: 'icon', align: 'center',templet:'#iconTpl'},
+                    {title: '排序', field: 'sort', align: 'center'},
+                    {title: '是否启用', field: 'isEnable', align: 'center',templet:'#isEnableTpl'},
                     {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
                 ]]
                 , page: true
@@ -124,6 +146,29 @@
                 treetable.expandAll('#tableId');
             }
             return false;
+        });
+
+        form.on("switch(isEnable)",function (data) {
+            let operate;
+            if (data.elem.checked) {
+                operate = "0";
+            } else {
+                operate = "1";
+            }
+            let loading = layer.load();
+            const url = "/sysResource/updateStatus";
+            const param = {
+                id:this.value,
+                isEnable:operate
+            };
+            $.post(url,param,function (result) {
+                layer.close(loading);
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg);
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                }
+            });
         });
 
         //表格上层工具栏

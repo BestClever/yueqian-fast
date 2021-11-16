@@ -1,12 +1,15 @@
 package com.ityueqiangu.project.system.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ityueqiangu.common.exception.BusinessException;
 import com.ityueqiangu.core.web.ActiverUser;
+import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysUser;
 import com.ityueqiangu.project.system.domain.SysUserRole;
 import com.ityueqiangu.project.system.mapper.SysUserMapper;
+import com.ityueqiangu.project.system.service.ISysResourceService;
 import com.ityueqiangu.project.system.service.ISysUserRoleService;
 import com.ityueqiangu.project.system.service.ISysUserService;
 import lombok.val;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author FlowerStone
@@ -30,6 +34,8 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
     private ISysUserRoleService sysUserRoleService;
+    @Autowired
+    private ISysResourceService sysResourceService;
 
     /**
      * 查询分页记录
@@ -138,6 +144,50 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public Integer updateSysUserStatus(SysUser sysUser) {
         return sysUserMapper.updateSysUser(sysUser);
+    }
+
+    /**
+     * 根据用户名获取菜单
+     *
+     * @param userName
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 22:22:07
+     */
+    @Override
+    public List<SysMenu> getUserMenu(String userName) {
+        List<SysMenu> sysMenus = sysResourceService.selectMenuByUsername(userName);
+        //获取搜有的id
+        List<String> ids = sysMenus.stream().map(SysMenu::getId).collect(Collectors.toList());
+        List<SysMenu> results = sysMenus.stream()
+                .filter(item -> !CollectionUtil.contains(ids, item.getParentId()))
+                .map(item -> {
+                    //递归查询子节点
+                    item.setChildren(recursionFn(item, sysMenus));
+                    return item;
+                })
+                .collect(Collectors.toList());
+        return results;
+    }
+
+    /**
+     * 递归查询子节点
+     *
+     * @param root 根节点
+     * @param alls 递归值
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 22:26:05
+     */
+    private List<SysMenu> recursionFn(SysMenu root, List<SysMenu> alls) {
+        List<SysMenu> children = alls.stream()
+                .filter(param -> ObjectUtil.equal(param.getParentId(), root.getId()))
+                .map(item -> {
+                    item.setChildren(recursionFn(item, alls));
+                    return item;
+                })
+                .collect(Collectors.toList());
+        return children;
     }
 
 }

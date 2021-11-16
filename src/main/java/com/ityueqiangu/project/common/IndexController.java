@@ -5,17 +5,21 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.ityueqiangu.common.constant.Constants;
 import com.ityueqiangu.common.exception.BusinessException;
+import com.ityueqiangu.common.utils.UserUtil;
 import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.core.web.domain.ResponseInfo;
+import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysUser;
 import com.ityueqiangu.project.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author FlowerStone
@@ -110,5 +114,12 @@ public class IndexController {
         activerUser.setSysUser(resultSysUser);
         httpSession.setAttribute("activerUser", activerUser);
         return ResponseInfo.success("登录成功！").put("success", true);
+    }
+
+    @GetMapping(value = "/getUserMenu")
+    @ResponseBody
+    public List<SysMenu> getUserMenu(){
+        ActiverUser currentUser = UserUtil.getCurrentUser();
+        return sysUserService.getUserMenu(currentUser.getUserName());
     }
 }

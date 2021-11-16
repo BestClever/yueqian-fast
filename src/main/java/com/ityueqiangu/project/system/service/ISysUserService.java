@@ -3,6 +3,7 @@ package com.ityueqiangu.project.system.service;
 import java.util.List;
 
 import com.ityueqiangu.core.web.ActiverUser;
+import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysUser;
 
 /**
@@ -73,4 +74,14 @@ public interface ISysUserService {
      * @date 2021年11月14日 0014 9:27:08
      */
     Integer updateSysUserStatus(SysUser sysUser);
+
+    /**
+     * 获取用户菜单
+     *
+     * @param userName
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 22:04:55
+     */
+    List<SysMenu> getUserMenu(String userName);
 }

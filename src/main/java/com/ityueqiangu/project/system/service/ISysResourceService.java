@@ -1,6 +1,8 @@
 package com.ityueqiangu.project.system.service;
 
 import java.util.List;
+
+import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysResource;
 
 /**
@@ -26,7 +28,7 @@ public interface ISysResourceService {
      * @return 返回SysResource
      */
     SysResource selectSysResourceById(Integer id);
-	
+
     /**
      * 新增
      *
@@ -34,8 +36,8 @@ public interface ISysResourceService {
      * @return 返回ResultInfo
      */
     Integer insertSysResource(SysResource sysResource);
-	
-	
+
+
     /**
      * 修改，修改所有字段
      *
@@ -43,7 +45,7 @@ public interface ISysResourceService {
      * @return 返回ResultInfo
      */
     Integer updateSysResource(SysResource sysResource);
-	
+
     /**
      * 删除记录
      *
@@ -51,5 +53,24 @@ public interface ISysResourceService {
      * @return 返回ResultInfo
      */
     Integer deleteSysResourceById(Integer id);
-	
+
+    /**
+     * 修改启用状态
+     *
+     * @param sysResource
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 14:51:30
+     */
+    Integer updateStatus(SysResource sysResource);
+
+    /**
+     * 根据用户名查找菜单
+     *
+     * @param userName
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 22:10:06
+     */
+    List<SysMenu> selectMenuByUsername(String userName);
 }

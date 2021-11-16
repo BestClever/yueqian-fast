@@ -25,4 +25,6 @@ public class SysRoleResource{
 	private Integer roleId;
 	/** 资源id */
 	private Integer resourceId;
+
+	private String resourceIds;
 }

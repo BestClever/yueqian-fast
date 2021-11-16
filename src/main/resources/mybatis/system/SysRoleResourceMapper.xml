@@ -66,8 +66,17 @@
             #{resourceId},                    
           </if>
         </trim>
-    </insert>    
-    
+    </insert>
+
+    <insert id="batchInsertRoleResource" parameterType="list">
+        insert into sys_role_resource
+        ( id, role_id, resource_id )
+        values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.id}, #{item.roleId}, #{item.resourceId})
+        </foreach >
+    </insert>
+
     <!-- 更新不为NULL的字段 -->
     <update id="updateSysRoleResource" parameterType="com.ityueqiangu.project.system.domain.SysRoleResource">
     UPDATE sys_role_resource
@@ -86,5 +95,14 @@
 	<delete id="deleteSysRoleResourceById" parameterType="Integer">
         delete from sys_role_resource where id = #{id}
 	</delete>
+
+    <delete id="deleteSysRoleResourceByCondition" parameterType="com.ityueqiangu.project.system.domain.SysRoleResource">
+        delete from sys_role_resource
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="roleId != null" >
+              and role_id= #{roleId}
+            </if>
+        </trim>
+    </delete>
 
 </mapper>

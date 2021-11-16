@@ -1,6 +1,8 @@
 package com.ityueqiangu.project.system.service;
 
 import java.util.List;
+
+import com.ityueqiangu.core.web.domain.Dtree;
 import com.ityueqiangu.project.system.domain.SysRole;
 
 /**
@@ -61,4 +63,12 @@ public interface ISysRoleService {
      */
     SysRole getOne(SysRole sysRole);
 
+    /**
+     * 获取角色分配的资源
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 15:03:00
+     * @param roleId
+     * @return
+     */
+    List<Dtree> getRoleResource(Integer roleId);
 }

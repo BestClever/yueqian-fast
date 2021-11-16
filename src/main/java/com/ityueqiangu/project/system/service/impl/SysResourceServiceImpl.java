@@ -1,5 +1,9 @@
 package com.ityueqiangu.project.system.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.common.exception.BusinessException;
+import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysResource;
 import com.ityueqiangu.project.system.mapper.SysResourceMapper;
 import com.ityueqiangu.project.system.service.ISysResourceService;
@@ -69,7 +73,31 @@ public class SysResourceServiceImpl implements ISysResourceService{
      * @return 返回
      */
     public Integer deleteSysResourceById(Integer id) {
+        //判断是否存在子节点
+        SysResource paramResource = new SysResource();
+        paramResource.setParentId(id);
+        List<SysResource> sysResource = sysResourceMapper.selectSysResourceList(paramResource);
+        if (CollectionUtil.isNotEmpty(sysResource)) {
+            throw new BusinessException("存在子节点不能删除！");
+        }
     	return sysResourceMapper.deleteSysResourceById(id);
     }
-	
+
+    /**
+     * 修改启用状态
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 14:50:07
+     * @param sysResource
+     * @return
+     */
+    @Override
+    public Integer updateStatus(SysResource sysResource) {
+        return sysResourceMapper.updateSysResource(sysResource);
+    }
+
+    @Override
+    public List<SysMenu> selectMenuByUsername(String userName) {
+        return sysResourceMapper.selectMenuByUsername(userName);
+    }
+
 }

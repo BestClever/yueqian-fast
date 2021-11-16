@@ -7,10 +7,7 @@ import com.ityueqiangu.core.web.domain.Dtree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.ityueqiangu.core.web.controller.BaseController;
 import com.ityueqiangu.core.web.page.TableDataInfo;
 import com.ityueqiangu.core.web.domain.ResponseInfo;
@@ -137,6 +134,12 @@ public class SysResourceController extends BaseController {
     @ResponseBody
     public ResponseInfo delete(@RequestBody Integer id) {
         return toAjax(sysResourceService.deleteSysResourceById(id));
+    }
+
+    @PostMapping(value = "/updateStatus")
+    @ResponseBody
+    public ResponseInfo updateStatus(SysResource sysResource){
+        return toAjax(sysResourceService.updateStatus(sysResource));
     }
 
 }

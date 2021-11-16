@@ -1,6 +1,7 @@
 package com.ityueqiangu.project.system.service;
 
 import java.util.List;
+
 import com.ityueqiangu.project.system.domain.SysRoleResource;
 
 /**
@@ -26,7 +27,7 @@ public interface ISysRoleResourceService {
      * @return 返回SysRoleResource
      */
     SysRoleResource selectSysRoleResourceById(Integer id);
-	
+
     /**
      * 新增
      *
@@ -34,8 +35,8 @@ public interface ISysRoleResourceService {
      * @return 返回ResultInfo
      */
     Integer insertSysRoleResource(SysRoleResource sysRoleResource);
-	
-	
+
+
     /**
      * 修改，修改所有字段
      *
@@ -43,7 +44,7 @@ public interface ISysRoleResourceService {
      * @return 返回ResultInfo
      */
     Integer updateSysRoleResource(SysRoleResource sysRoleResource);
-	
+
     /**
      * 删除记录
      *
@@ -51,5 +52,14 @@ public interface ISysRoleResourceService {
      * @return 返回ResultInfo
      */
     Integer deleteSysRoleResourceById(Integer id);
-	
+
+    /**
+     * 保存角色资源信息
+     *
+     * @param sysRoleResource
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 20:52:19
+     */
+    void saveRoleResource(SysRoleResource sysRoleResource);
 }

@@ -71,7 +71,8 @@
 </script>
 
 <script type="text/html" id="avatarTps">
-    <img style="height: 50px;width: 50px;cursor: pointer;" src="{{ d.avatar == null?'/admin/images/avatar.jpg':d.avatar }}"/>
+    <img style="height: 50px;width: 50px;cursor: pointer;"
+         src="{{ d.avatar == null?'/admin/images/avatar.jpg':d.avatar }}"/>
 </script>
 
 
@@ -112,7 +113,7 @@
             return false;
         });
 
-        form.on("switch(isEnable)",function (data) {
+        form.on("switch(isEnable)", function (data) {
             let operate;
             if (data.elem.checked) {
                 operate = "0";
@@ -122,10 +123,10 @@
             let loading = layer.load();
             const url = "/sysUser/updateStatus";
             const param = {
-                id:this.value,
-                isEnable:operate
+                id: this.value,
+                isEnable: operate
             };
-            $.post(url,param,function (result) {
+            $.post(url, param, function (result) {
                 layer.close(loading);
                 if (result.success) {
                     layerCustom.greenLaughMsg(result.msg);
@@ -207,11 +208,6 @@
                     }
                 })
             })
-        }
-
-        function authorization(data) {
-            layerCustom.open("权限选择", BaseUrl + 'sysRole/authorization?id=' + data.id, "400px", "80%", function (layero, index) {
-            });
         }
     });
 </script>

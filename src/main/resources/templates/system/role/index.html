@@ -183,6 +183,11 @@
                 })
             })
         }
+
+        function authorization(data) {
+            layerCustom.open("权限选择", '/sysRole/authorization?id=' + data.id, "400px", "80%", function (layero, index) {
+            });
+        }
     });
 </script>
 

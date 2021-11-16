@@ -2,13 +2,19 @@ package com.ityueqiangu.project.system.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.ityueqiangu.common.exception.BusinessException;
+import com.ityueqiangu.core.web.domain.Dtree;
+import com.ityueqiangu.project.system.domain.SysResource;
 import com.ityueqiangu.project.system.domain.SysRole;
+import com.ityueqiangu.project.system.domain.SysRoleResource;
 import com.ityueqiangu.project.system.mapper.SysRoleMapper;
+import com.ityueqiangu.project.system.service.ISysResourceService;
+import com.ityueqiangu.project.system.service.ISysRoleResourceService;
 import com.ityueqiangu.project.system.service.ISysRoleService;
 import com.ityueqiangu.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +28,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
+
+    @Autowired
+    private ISysRoleResourceService sysRoleResourceService;
+
+    @Autowired
+    private ISysResourceService sysResourceService;
 
     /**
      * 查询分页记录
@@ -92,6 +104,38 @@ public class SysRoleServiceImpl implements ISysRoleService {
      */
     public SysRole getOne(SysRole sysRole) {
         return sysRoleMapper.getOne(sysRole);
+    }
+
+    /**
+     * 查询角色分配的资源
+     *
+     * @param roleId
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 15:03:36
+     */
+    @Override
+    public List<Dtree> getRoleResource(Integer roleId) {
+        ArrayList<Dtree> dtrees = new ArrayList<>();
+        SysRoleResource sysRoleResourceParam = new SysRoleResource();
+        sysRoleResourceParam.setRoleId(roleId);
+        //查询角色资源管理表
+        List<SysRoleResource> sysRoleResources = sysRoleResourceService.selectSysRoleResourceList(sysRoleResourceParam);
+        //查询所有的资源
+        List<SysResource> sysResources = sysResourceService.selectSysResourceList(null);
+        sysResources.stream().forEach(element -> {
+            Dtree dtree = new Dtree();
+            dtree.setId(element.getId());
+            dtree.setParentId(element.getParentId());
+            dtree.setTitle(element.getResourceName());
+            sysRoleResources.stream().forEach(item -> {
+                if (ObjectUtil.equal(item.getResourceId(), element.getId())) {
+                    dtree.setCheckArr("1");//"1"表示选中
+                }
+            });
+            dtrees.add(dtree);
+        });
+        return dtrees;
     }
 
 }

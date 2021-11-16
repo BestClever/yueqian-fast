@@ -3,6 +3,8 @@ package com.ityueqiangu.project.system.controller;
 import java.util.List;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.core.web.domain.Dtree;
+import com.ityueqiangu.project.system.domain.SysRoleResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +44,21 @@ public class SysRoleController extends BaseController {
         SysRole sysRole = sysRoleService.selectSysRoleById(id);
         mmap.addAttribute("sysRole", sysRole);
         return "system/role/edit";
+    }
+
+    /**
+     * 跳转到资源选中列表中
+     *
+     * @param id
+     * @param mmap
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 15:46:46
+     */
+    @RequestMapping(value = "/authorization")
+    public String authorization(Integer id, ModelMap mmap) {
+        mmap.addAttribute("roleId", id);
+        return "system/role/resource";
     }
 
     /**
@@ -140,4 +157,20 @@ public class SysRoleController extends BaseController {
         sysRoleService.updateSysRole(sysRole);
         return ResponseInfo.success("更新成功");
     }
+
+    /**
+     * 获取角色分配的资源
+     *
+     * @param roleId
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 15:00:50
+     */
+    @GetMapping(value = "/getRoleResource")
+    @ResponseBody
+    public ResponseInfo getRoleResource(Integer roleId) {
+        List<Dtree> dtrees = sysRoleService.getRoleResource(roleId);
+        return new ResponseInfo(ResponseInfo.Type.ZERO, "操作成功", dtrees);
+    }
+
 }

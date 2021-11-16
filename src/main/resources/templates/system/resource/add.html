@@ -143,6 +143,7 @@
         });
 
         form.on('submit(add)', function (data) {
+            data.field.icon = "layui-icon " + data.field.icon;
             $.ajax({
                 url: '/sysResource/insert',
                 data: JSON.stringify(data.field),

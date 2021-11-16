@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -105,5 +106,18 @@ public class SysRoleResourceController extends BaseController{
     public ResponseInfo delete(@RequestBody Integer id) {
         return toAjax(sysRoleResourceService.deleteSysRoleResourceById(id));
     }
-    
+
+    /**
+     * 保存角色资源状态
+     *
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月15日 0015 20:49:34
+     */
+    @PostMapping(value = "/saveRoleResource")
+    @ResponseBody
+    public ResponseInfo saveRoleResource(SysRoleResource sysRoleResource) {
+        sysRoleResourceService.saveRoleResource(sysRoleResource);
+        return ResponseInfo.success();
+    }
 }

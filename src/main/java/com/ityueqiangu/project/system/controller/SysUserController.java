@@ -145,5 +145,4 @@ public class SysUserController extends BaseController{
         sysUserService.updateSysUserStatus(sysUser);
         return ResponseInfo.success("启用成功！");
     }
-
 }

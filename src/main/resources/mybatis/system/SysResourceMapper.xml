@@ -19,6 +19,17 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <resultMap id="ResuMenuMap" type="com.ityueqiangu.core.web.domain.SysMenu">
+        <id column="id" property="id"></id>
+        <result column="parent_id" property="parentId"></result>
+        <result column="resource_name" property="title"></result>
+        <result column="user_name" property="userName"></result>
+        <result column="resource_type" property="type"></result>
+        <result column="icon" property="icon"></result>
+        <result column="open_type" property="openType"></result>
+        <result column="request_url" property="href"></result>
+    </resultMap>
+
     <!-- 表字段 -->
     <sql id="baseColumns">
      t.id
@@ -98,6 +109,35 @@
         <include refid="baseColumns" />
         FROM sys_resource t
         WHERE t.id = #{id}
+    </select>
+    <select id="getOne" parameterType="com.ityueqiangu.project.system.domain.SysResource" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_resource t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="resourceName != null  and resourceName != ''" >
+                and t.resource_name= #{resourceName}
+            </if>
+            <if test="requestUrl != null  and requestUrl != ''" >
+                and t.request_url= #{requestUrl}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectMenuByUsername" parameterType="string" resultMap="ResuMenuMap">
+        SELECT DISTINCT sre.* FROM sys_resource sre
+        LEFT JOIN sys_role_resource srr ON srr.resource_id = sre.id
+        LEFT JOIN sys_role sro ON srr.role_id = sro.id
+        LEFT JOIN sys_user_role sur ON sro.id = sur.user_id
+        LEFT JOIN sys_user su ON sur.user_id = su.id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="userName != null and userName!=''">
+                and user_name = #{userName}
+            </if>
+            and sre.is_enable = '0'
+            and sro.is_enable = '0'
+            and su.is_enable = '0'
+        </trim>
     </select>
 
     <!-- 插入不为NULL的字段 -->
