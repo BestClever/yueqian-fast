@@ -33,12 +33,10 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态</label>
                     <div class="layui-input-block">
-                        <input name="resourceType" title="目录" th:checked="${sysResource.resourceType eq '0'}"
+                        <input name="resourceType" lay-filter="resourceType" title="目录" th:checked="${sysResource.resourceType eq '0'}"
                                type="radio" value="0">
                         <input checked lay-filter="resourceType" name="resourceType" title="菜单"
                                th:checked="${sysResource.resourceType eq '1'}" type="radio" value="1">
-                        <input lay-filter="resourceType" name="resourceType" title="按钮"
-                               th:checked="${sysResource.resourceType eq '2'}" type="radio" value="2">
                     </div>
                 </div>
                 <div class="layui-form-item" id="requestUrlItem">
@@ -117,6 +115,18 @@
             selectInitVal: '[[${sysResource.parentId}]]'
         });
 
+        form.on("radio(resourceType)", function () {
+            if (this.value == '0') {
+                $("#requestUrlItem").hide();
+                $("#openTypeItem").hide();
+                $("#requestUrl").val("");
+                $("#openType").val("");
+            } else if (this.value == '1') {
+                $("#requestUrlItem").show();
+                $("#openTypeItem").show();
+            }
+        });
+
         form.on('submit(update)', function (data) {
             data.field.icon = "layui-icon " + data.field.icon;
             $.ajax({
@@ -157,6 +167,20 @@
         if (!common.isEmpty('[[${sysResource.icon}]]')) {
             iconPicker.checkIcon("icon",'[[${sysResource.icon}]]');
         }
+
+        window.init = function (type) {
+            if (type == '0') {
+                $("#requestUrlItem").hide();
+                $("#openTypeItem").hide();
+                $("#requestUrl").val("");
+                $("#openType").val("");
+            } else if (type == '1') {
+                $("#requestUrlItem").show();
+                $("#openTypeItem").show();
+            }
+        }
+
+        window.init('[[${sysResource.resourceType}]]');
     })
 </script>
 <script>

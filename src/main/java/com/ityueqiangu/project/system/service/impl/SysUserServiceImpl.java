@@ -167,7 +167,18 @@ public class SysUserServiceImpl implements ISysUserService {
                     return item;
                 })
                 .collect(Collectors.toList());
-        return results;
+        List<SysMenu> menus = new ArrayList<>();
+        //设置一个初始化的菜单 控制台 页面
+        SysMenu initMenu = new SysMenu();
+        initMenu.setId("9999999999");
+        initMenu.setTitle("首页");
+        initMenu.setIcon("layui-icon layui-icon-console");
+        initMenu.setType("1");
+        initMenu.setOpenType("_iframe");
+        initMenu.setHref("/console");
+        menus.add(initMenu);
+        menus.addAll(results);
+        return menus;
     }
 
     /**

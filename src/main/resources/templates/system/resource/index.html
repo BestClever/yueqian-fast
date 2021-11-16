@@ -121,7 +121,7 @@
         render();
 
         form.on('submit(search)', function (data) {
-            var keyword = data.field.resourceName;
+            var keyword = data.field.resourceName.trim();
             var $tds = $('#tableId').next('.treeTable').find('.layui-table-body tbody tr td');
             if (!keyword) {
                 $tds.css('background-color', 'transparent');

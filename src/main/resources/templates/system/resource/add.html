@@ -27,7 +27,6 @@
                     <div class="layui-input-block">
                         <input lay-filter="resourceType" name="resourceType" title="目录" type="radio" value="0">
                         <input checked lay-filter="resourceType" name="resourceType" title="菜单" type="radio" value="1">
-                        <input lay-filter="resourceType" name="resourceType" title="按钮" type="radio" value="2">
                     </div>
                 </div>
                 <div class="layui-form-item" id="requestUrlItem">
@@ -139,6 +138,18 @@
             // 点击回调
             click: function (data) {
                 console.log(data);
+            }
+        });
+
+        form.on("radio(resourceType)", function () {
+            if (this.value == '0') {
+                $("#requestUrlItem").hide();
+                $("#openTypeItem").hide();
+                $("#requestUrl").val("");
+                $("#openType").val("");
+            } else if (this.value == '1') {
+                $("#requestUrlItem").show();
+                $("#openTypeItem").show();
             }
         });
 
