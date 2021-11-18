@@ -77,7 +77,7 @@
                                 <div class="layui-form-item layui-form-text">
                                     <label class="layui-form-label">描述</label>
                                     <div class="layui-input-block">
-                                        <textarea class="layui-textarea" name="details" placeholder="请输入描述"
+                                        <textarea class="layui-textarea" name="remark" placeholder="请输入描述"
                                                   th:text="${userInfo.remark}"></textarea>
                                     </div>
                                 </div>
@@ -100,11 +100,12 @@
 </div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
-    layui.use(['element', 'jquery', 'layer', 'form', 'convert'], function () {
+    layui.use(['element', 'jquery', 'layer', 'form', 'convert','admin'], function () {
         let $ = layui.jquery;
         let layer = layui.layer;
         let form = layui.form;
         let convert = layui.convert;
+        let admin = layui.admin;
 
         $(".edit-password").click(function () {
             layer.open({
@@ -140,14 +141,16 @@
 
         form.on('submit(user-update)', function (data) {
             $.ajax({
-                url: '/system/user/updateInfo',
+                url: '/sysUser/updateInfo',
                 data: JSON.stringify(data.field),
                 dataType: 'json',
                 contentType: 'application/json',
-                type: 'put',
+                type: 'post',
                 success: function (result) {
                     if (result.success) {
                         layer.msg("修改成功", {icon: 1, time: 1000});
+                        //刷新当前页面
+                        window.location.reload();
                     } else {
                         layer.msg("修改失败", {icon: 2, time: 1000});
                     }

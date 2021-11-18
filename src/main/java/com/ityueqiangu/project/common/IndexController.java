@@ -131,7 +131,7 @@ public class IndexController {
     @GetMapping(value = "/getUserMenu")
     @ResponseBody
     public List<SysMenu> getUserMenu(){
-        ActiverUser currentUser = UserUtil.getCurrentUser();
-        return sysUserService.getUserMenu(currentUser.getUserName());
+        ActiverUser<SysUser> currentUser = UserUtil.getCurrentUser();
+        return sysUserService.getUserMenu(currentUser.getUserInfo().getUserName());
     }
 }

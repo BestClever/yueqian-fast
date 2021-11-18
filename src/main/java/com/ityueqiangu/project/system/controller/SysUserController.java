@@ -152,6 +152,27 @@ public class SysUserController extends BaseController {
     }
 
     /**
+     * 修改用户信息
+     *
+     * @param sysUser
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月18日 0018 21:36:31
+     */
+    @RequestMapping("/updateInfo")
+    @ResponseBody
+    public ResponseInfo updateInfo(@RequestBody SysUser sysUser) {
+        ActiverUser<SysUser> userInfo = UserUtil.getCurrentUser();
+        sysUser.setId(userInfo.getUserInfo().getId());
+        sysUserService.updateSysUserByCondtion(sysUser);
+        //重新刷新
+        SysUser result = sysUserService.selectSysUserById(userInfo.getUserInfo().getId());
+        userInfo.setUserInfo(result);
+        UserUtil.refreshUser(userInfo);
+        return ResponseInfo.success("更新成功！");
+    }
+
+    /**
      * 删除记录
      *
      * @param id
@@ -217,9 +238,17 @@ public class SysUserController extends BaseController {
         return ResponseInfo.success("更新成功！");
     }
 
+    /**
+     * 修改用户密码
+     *
+     * @param editPasswordReqDto
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月18日 0018 21:36:09
+     */
     @PostMapping(value = "/editPassword")
     @ResponseBody
-    public ResponseInfo updatePassword(@Validated EditPasswordReqDto editPasswordReqDto){
+    public ResponseInfo updatePassword(@Validated EditPasswordReqDto editPasswordReqDto) {
         //先验证旧密码是否 正确
         ActiverUser<SysUser> currentUser = UserUtil.getCurrentUser();
         if (!StrUtil.equals(currentUser.getUserInfo().getPassword(), SecureUtil.md5(editPasswordReqDto.getOldPassword()))) {
