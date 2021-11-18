@@ -1,0 +1,201 @@
+/* 背景图 */
+body {
+    background-image: url("/component/portal/image/login-bg.jpg");
+    /* 固定body的背景 */
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* 百度logo */
+.logo {
+    width: 200px;
+    height: 200px;
+    margin-top: 60px;
+    margin-left: 70px;
+}
+
+.logo img {
+    width: 125px;
+}
+
+/* 文字 */
+.mod-new-reg-footer{
+    position: fixed;
+    left: 70px;
+    bottom: 57px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.mod-new-reg-footer .mod-new-reg-help a{
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.mod-new-reg-line{
+    display: inline-block;
+    width: 2px;
+    height: 12px;
+    filter: alpha(opacity=78);
+    opacity: .78;
+    margin: 0 12px 0 13px;
+    background: #fff;
+    position: relative;
+    top: 1px;
+}
+
+/* 表单 */
+#form-info {
+    width: 480px;
+    height: 680px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    margin: auto;
+    top: 0px;
+    bottom: 0px;
+    right: 140px;
+}
+
+/* 欢迎注册 */
+#register {
+    width: 480px;
+    height: 50px;
+    margin-left: 40px;
+    margin-top: 55px;
+    font-size: 36px;
+    color: #000;
+    font-weight: bold;
+}
+
+/* 已有账号 */
+#old-account {
+    width: 480px;
+    height: 20px;
+    font-size: 14px;
+    color: #9B9B9B;
+    float: left;
+    margin-left: 40px;
+
+}
+
+/* 登录 */
+
+#login {
+    color: #2e58ff;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* 输入框 */
+.input {
+    height: 40px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #E0E0E0;
+    background-color: #fff;
+
+}
+
+.input1 {
+    width: 340px;
+    margin-left: -5px;
+}
+
+.input2 {
+    width: 205px;
+}
+
+.input3 {
+    width: 120px;
+    cursor: pointer;
+
+}
+
+
+
+/* 表单内容样式 */
+.form {
+    width: 480px;
+    height: 40px;
+    margin-left: 40px;
+
+
+
+}
+
+.form1 {
+    margin-top: 90px;
+}
+
+.form2 {
+    margin-top: 35px;
+
+
+
+}
+
+
+
+/* 字体 */
+label {
+    width: 58px;
+    /* 转换为块元素 */
+    display: inline-block;
+    font-size: 14px;
+    color: #333;
+    font-weight: 200;
+}
+
+.label-psw {
+    letter-spacing: 15px;
+}
+
+.gth {
+    width: 15px;
+    height: 20px;
+    position: absolute;
+    margin-left: 370px;
+    margin-top: -45px;
+
+}
+
+.gth img {
+    width: 100%;
+}
+
+/* 注册按钮 */
+.register {
+    width: 400px;
+    height: 50px;
+    background: #BDCEFC;
+    border-radius: 25px;
+    border: rgba(255, 255, 255, 0.5) 1px solid;
+    color: white;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+
+}
+
+.read {
+    width: 330px;
+    height: 10px;
+    margin-left: 80px;
+    margin-top: 30px;
+    font-size: 12px;
+    color: #666;
+
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+
+}
+
+/* input内文字颜色 */
+input::-webkit-input-placeholder {
+    color: #ccc;
+}

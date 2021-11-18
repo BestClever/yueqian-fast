@@ -18,9 +18,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/portal")
 public class PortalIndexController {
 
+    /**
+     * 登录
+     * @author FlowerStone
+     * @date 2021年11月18日 0018 10:48:25
+     * @return
+     */
     @GetMapping("/login")
     public String login(){
         return "portal/login";
+    }
+
+    /**
+     *  注册
+     * @author FlowerStone
+     * @date 2021年11月18日 0018 10:48:17
+     * @return
+     */
+    @GetMapping("/register")
+    public String register(){
+        return "portal/register";
     }
 
     @GetMapping("/index")

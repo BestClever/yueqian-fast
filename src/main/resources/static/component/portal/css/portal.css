@@ -19,7 +19,7 @@ html { height: 100%; }
 .layui-row-header>.top{ display: flex;justify-content: space-between; }
 .layui-row-header>.top p{ font-size: 10px;color: white; }
 .layui-row-header>.top>.login-info ul { height:50px; }
-.layui-row-header>.top>.login-info a {color: white }
+.layui-row-header>.top>.login-info .login-a {color: white ;margin-right: 50px}
 .layui-row-header>.top>.login-info a:hover { text-decoration: none;color:rgb(95,184,120) }
 .layui-row-header>.top>.login-info .layui-nav { margin-top: -10px; }
 .layui-row-header>.bottom { height: 80px;padding: 0px 50px 0px 100px;background-color: rgba(95,184,120,0.1);display: flex;justify-content: space-between;position: relative }

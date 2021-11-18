@@ -11,6 +11,7 @@ import com.ityueqiangu.core.web.domain.ResponseInfo;
 import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysUser;
 import com.ityueqiangu.project.system.service.ISysUserService;
+import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -99,7 +101,7 @@ public class IndexController {
     /**
      * 系统登录
      *
-     * @param httpSession
+     * @param request
      * @param activerUser
      * @return
      * @author FlowerStone
@@ -107,10 +109,9 @@ public class IndexController {
      */
     @PostMapping(value = "/login")
     @ResponseBody
-    public ResponseInfo login(HttpSession httpSession, ActiverUser<SysUser> activerUser) {
+    public ResponseInfo login(HttpServletRequest request, ActiverUser<SysUser> activerUser) {
         //判断验证码是否正确
-        String captchaCode = (String) httpSession.getAttribute(Constants.CAPTCHA_CODE);
-        if (!StrUtil.equalsAnyIgnoreCase(captchaCode, activerUser.getCaptcha())) {
+        if (!CaptchaUtil.ver(activerUser.getCaptcha(), request)) {
             throw new BusinessException("验证码错误！");
         }
         SysUser sysUser = new SysUser();
@@ -123,7 +124,7 @@ public class IndexController {
             throw new BusinessException("密码错误！");
         }
         activerUser.setUserInfo(resultSysUser);
-        httpSession.setAttribute("activerUser", activerUser);
+        request.getSession().setAttribute("activerUser", activerUser);
         return ResponseInfo.success("登录成功！").put("success", true);
     }
 

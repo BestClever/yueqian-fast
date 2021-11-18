@@ -108,7 +108,7 @@
         {{# } }}
 </script>
 
-<th:block th:include="include :: footer"/>
+<th:block th:include="portal/common/include :: footer"/>
 
 <script>
     layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl'], function () {
@@ -126,41 +126,41 @@
             //,anim: 'updown' //切换动画方式
         });
 
-        /*家教列表渲染*/
-        (function () {
-            $.post('/course/page', {page: 1, limit: 5 }, function (res) {
-                if (res.code == 0){
-                    var getTpl = document.getElementById("teacherItem").innerHTML;
-                    laytpl(getTpl).render(res.data, function (html) {
-                        document.getElementById("teacherImg").innerHTML = html;
-                    });
-                }
-            })
-        })();
-
-        /*招聘列表渲染*/
-        (function () {
-            $.post('/order/page', {page: 1, limit: 5 }, function (res) {
-                if (res.code == 0){
-                    var getTpl = document.getElementById("orderItem").innerHTML;
-                    laytpl(getTpl).render(res.data, function (html) {
-                        document.getElementById("orderList").innerHTML = html;
-                    });
-                }
-            })
-        })();
-
-        /*新闻列表渲染*/
-        (function () {
-            $.post('/news/page', {page: 1, limit: 5, isValid:'0' }, function (res) {
-                if (res.code == 0){
-                    var getTpl = document.getElementById("newsItem").innerHTML;
-                    laytpl(getTpl).render(res.data, function (html) {
-                        document.getElementById("newsList").innerHTML = html;
-                    });
-                }
-            })
-        })();
+        // /*家教列表渲染*/
+        // (function () {
+        //     $.post('/course/page', {page: 1, limit: 5 }, function (res) {
+        //         if (res.code == 0){
+        //             var getTpl = document.getElementById("teacherItem").innerHTML;
+        //             laytpl(getTpl).render(res.data, function (html) {
+        //                 document.getElementById("teacherImg").innerHTML = html;
+        //             });
+        //         }
+        //     })
+        // })();
+        //
+        // /*招聘列表渲染*/
+        // (function () {
+        //     $.post('/order/page', {page: 1, limit: 5 }, function (res) {
+        //         if (res.code == 0){
+        //             var getTpl = document.getElementById("orderItem").innerHTML;
+        //             laytpl(getTpl).render(res.data, function (html) {
+        //                 document.getElementById("orderList").innerHTML = html;
+        //             });
+        //         }
+        //     })
+        // })();
+        //
+        // /*新闻列表渲染*/
+        // (function () {
+        //     $.post('/news/page', {page: 1, limit: 5, isValid:'0' }, function (res) {
+        //         if (res.code == 0){
+        //             var getTpl = document.getElementById("newsItem").innerHTML;
+        //             laytpl(getTpl).render(res.data, function (html) {
+        //                 document.getElementById("newsList").innerHTML = html;
+        //             });
+        //         }
+        //     })
+        // })();
     });
 </script>
 </body>

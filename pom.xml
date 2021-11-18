@@ -43,6 +43,8 @@
         <velocity.version>1.7</velocity.version>
         <hutool-version>5.7.14</hutool-version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
+        <!-- 验 证 码 版 本 -->
+        <captcha.version>1.6.2</captcha.version>
     </properties>
 
     <dependencies>
@@ -198,6 +200,13 @@
                     <groupId>javax.servlet</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- 验 证 码 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>${captcha.version}</version>
         </dependency>
 
         <!-- swagger2-->

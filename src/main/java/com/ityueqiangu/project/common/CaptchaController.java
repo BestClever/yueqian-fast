@@ -1,6 +1,5 @@
 package com.ityueqiangu.project.common;
 
-import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.captcha.generator.CodeGenerator;
 import cn.hutool.captcha.generator.RandomGenerator;
@@ -8,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.ityueqiangu.common.constant.Constants;
 import com.ityueqiangu.core.web.controller.BaseController;
 import com.ityueqiangu.core.web.domain.ResponseInfo;
+import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,31 +32,8 @@ public class CaptchaController extends BaseController {
      * @param response 响应报文
      * */
     @RequestMapping("/generate")
-    public void generate(HttpServletRequest request, HttpServletResponse response){
-        RandomGenerator randomGenerator = new RandomGenerator("0123456789abcdefghklmnpqrstxyzABCDEFGHKLMNPQRSTXYZ", 4);
-        //定义图形验证码的长、宽、验证码字符数、干扰线宽度
-        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(130, 48);
-        captcha.setGenerator(randomGenerator);
-        //得到code
-        String code = captcha.getCode();
-        //放到session
-        request.getSession().setAttribute(Constants.CAPTCHA_CODE, code);
-        //输出流
-        ServletOutputStream outputStream = null;
-        try {
-            outputStream = response.getOutputStream();
-            //读写输出流
-            captcha.write(outputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            //关闭输出流
-            try {
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void generate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        CaptchaUtil.out(request, response);
     }
 
     /**
@@ -67,10 +44,10 @@ public class CaptchaController extends BaseController {
      * */
     @RequestMapping("verify")
     public ResponseInfo verify(HttpSession session, String captcha){
-//        String sessionVerifyCode = (String) session.getAttribute("sessionVerifyCode");;
-//        if (StrUtil.equalsAnyIgnoreCase(captcha, sessionVerifyCode)) {
-//
-//        }
+        String sessionVerifyCode = (String) session.getAttribute("sessionVerifyCode");;
+        if (StrUtil.equalsAnyIgnoreCase(captcha, sessionVerifyCode)) {
+
+        }
         return ResponseInfo.error();
     }
 }

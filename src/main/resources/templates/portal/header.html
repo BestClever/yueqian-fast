@@ -7,18 +7,18 @@
             <div class="login-info">
                 <div th:switch="${session.activerUser == null}">
                     <div th:case="true">
-                        <a href="/portal/login">登录</a>
+                        <a href="/portal/login" class="login-a">登录</a>
                     </div>
                     <div th:case="false">
                         <ul class="layui-nav" lay-filter="mine">
                             <li class="layui-nav-item">
                                 <a href="">
-                                    <img th:if="${not #strings.isEmpty(session.user.imgpath)}"
-                                         th:src="${'/file/showImageByPath?path='+session.user.getImgpath()}"
+                                    <img th:if="${not #strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
+                                         th:src="${session.activerUser.getUserInfo().getAvatar()}"
                                          class="layui-nav-img">
-                                    <img th:if="${#strings.isEmpty(session.user.imgpath)}"
+                                    <img th:if="${#strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
                                          src="/resources/images/head.jpg" class="layui-nav-img">
-                                    <span id="adminName" th:text="${session.user.name}"></span>
+                                    <span id="adminName" th:text="${session.activerUser.getUserInfo().getUserName()}"></span>
                                 </a>
                                 <dl class="layui-nav-child">
                                     <dd><a href="/sys/index">管理</a></dd>
