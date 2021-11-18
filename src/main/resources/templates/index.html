@@ -30,7 +30,7 @@
                 </a>
                 <!-- 功 能 菜 单 -->
                 <dl class="layui-nav-child">
-                    <dd><a user-menu-url="/system/user/center" user-menu-id="5555" user-menu-title="基本资料">基本资料</a></dd>
+                    <dd><a user-menu-url="/sysUser/center" user-menu-id="5555" user-menu-title="基本资料">基本资料</a></dd>
                     <dd><a href="javascript:void(0);" class="logout">注销登录</a></dd>
                 </dl>
             </li>
@@ -80,7 +80,9 @@
 
         admin.render();
 
-        admin.setAvatar();
+        let avatar = [[${session.activerUser.getUserInfo().avatar}]];
+        //设置头像
+        $('.layui-nav-img').attr("src","/"+avatar.substring(avatar.indexOf("profile"),avatar.length));
 
         // 注销实现
         admin.logout(function(){

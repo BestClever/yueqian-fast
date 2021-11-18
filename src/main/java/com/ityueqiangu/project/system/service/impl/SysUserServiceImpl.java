@@ -3,8 +3,8 @@ package com.ityueqiangu.project.system.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import com.ityueqiangu.common.exception.BusinessException;
-import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysUser;
 import com.ityueqiangu.project.system.domain.SysUserRole;
@@ -12,7 +12,6 @@ import com.ityueqiangu.project.system.mapper.SysUserMapper;
 import com.ityueqiangu.project.system.service.ISysResourceService;
 import com.ityueqiangu.project.system.service.ISysUserRoleService;
 import com.ityueqiangu.project.system.service.ISysUserService;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,6 +70,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (ObjectUtil.isNotEmpty(result)) {
             throw new BusinessException("用户存在，请换一个登录名称");
         }
+        //密码进行加密
+        String newPassword = SecureUtil.md5(sysUser.getPassword());
+        sysUser.setPassword(newPassword);
         //插入用户表
         sysUserMapper.insertSysUser(sysUser);
         //将用户与角色的关系插入到 用户角色表中
@@ -134,7 +136,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     /**
-     * 修改用户状态
+     * 根据条件修改 用户
      *
      * @param sysUser
      * @return
@@ -142,7 +144,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @date 2021年11月14日 0014 9:27:41
      */
     @Override
-    public Integer updateSysUserStatus(SysUser sysUser) {
+    public Integer updateSysUserByCondtion(SysUser sysUser) {
         return sysUserMapper.updateSysUser(sysUser);
     }
 

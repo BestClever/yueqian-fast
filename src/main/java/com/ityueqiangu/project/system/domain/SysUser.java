@@ -2,6 +2,7 @@ package com.ityueqiangu.project.system.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class SysUser extends BaseEntity{
     /** 账户 */
     private String userName;
     /** 密码 */
+    @JsonIgnore
     private String password;
     /** 姓名 */
     private String salt;

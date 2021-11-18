@@ -1,10 +1,9 @@
 package com.ityueqiangu.project.system.service;
 
-import java.util.List;
-
-import com.ityueqiangu.core.web.ActiverUser;
 import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysUser;
+
+import java.util.List;
 
 /**
  * @author FlowerStone
@@ -66,14 +65,14 @@ public interface ISysUserService {
     SysUser getOne(SysUser sysUser);
 
     /**
-     * 修改用户状态
+     * 根据条件修改 用户
      *
      * @param sysUser
      * @return
      * @author FlowerStone
      * @date 2021年11月14日 0014 9:27:08
      */
-    Integer updateSysUserStatus(SysUser sysUser);
+    Integer updateSysUserByCondtion(SysUser sysUser);
 
     /**
      * 获取用户菜单

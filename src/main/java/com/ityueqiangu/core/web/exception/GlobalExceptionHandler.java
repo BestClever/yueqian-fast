@@ -8,11 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 
 /**
  * 全局异常处理器
@@ -46,7 +49,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public ResponseInfo handleException(HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage(), e);
+        log.error("HttpRequestMethodNotSupportedException====>"+e.getMessage(), e);
         return ResponseInfo.error("不支持' " + e.getMethod() + "'请求");
     }
 
@@ -64,7 +67,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public ResponseInfo handleException(Exception e) {
-        log.error(e.getMessage(), e);
+        log.error("Exception====>"+e.getMessage(), e);
         return ResponseInfo.error("服务器错误，请联系管理员");
     }
 
@@ -73,13 +76,13 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public Object businessException(HttpServletRequest request, BusinessException e) {
-        log.error(e.getMessage(), e);
+        log.error("BusinessException====>"+e.getMessage(), e);
         if (ServletUtils.isAjaxRequest(request)) {
             return ResponseInfo.error(e.getMessage());
         } else {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("errorMessage", e.getMessage());
-            modelAndView.setViewName("error/business");
+            modelAndView.setViewName("/error");
             return modelAndView;
         }
     }
@@ -89,9 +92,37 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public ResponseInfo validatedBindException(BindException e) {
-        log.error(e.getMessage(), e);
+        log.error("BindException====>"+e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
         return ResponseInfo.error(message);
+    }
+
+
+    /**
+     * 方法参数校验
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseInfo handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("MethodArgumentNotValidException====>"+e.getMessage(), e);
+        return ResponseInfo.error(e.getBindingResult().getFieldError().getDefaultMessage());
+    }
+
+    /**
+     * ValidationException
+     */
+    @ExceptionHandler(ValidationException.class)
+    public ResponseInfo handleValidationException(ValidationException e) {
+        log.error("ValidationException====>"+e.getMessage(), e);
+        return ResponseInfo.error(e.getCause().getMessage());
+    }
+
+    /**
+     * ConstraintViolationException
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseInfo handleConstraintViolationException(ConstraintViolationException e) {
+        log.error(e.getMessage(), e);
+        return ResponseInfo.error(e.getMessage());
     }
 
     /**
