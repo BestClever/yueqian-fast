@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header(flag)">
+    <div class="layui-row-header">
+        <div class="top">
+            <p>您好！欢迎进入跃迁基础网站！</p>
+            <div class="login-info">
+                <div th:switch="${session.activerUser == null}">
+                    <div th:case="true">
+                        <a href="/portal/login">登录</a>
+                    </div>
+                    <div th:case="false">
+                        <ul class="layui-nav" lay-filter="mine">
+                            <li class="layui-nav-item">
+                                <a href="">
+                                    <img th:if="${not #strings.isEmpty(session.user.imgpath)}"
+                                         th:src="${'/file/showImageByPath?path='+session.user.getImgpath()}"
+                                         class="layui-nav-img">
+                                    <img th:if="${#strings.isEmpty(session.user.imgpath)}"
+                                         src="/resources/images/head.jpg" class="layui-nav-img">
+                                    <span id="adminName" th:text="${session.user.name}"></span>
+                                </a>
+                                <dl class="layui-nav-child">
+                                    <dd><a href="/sys/index">管理</a></dd>
+                                    <dd><a href="/sys/toSignOut">退出登录</a></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="title">
+                <p>跃迁基础平台</p>
+            </div>
+            <ul class="layui-nav layui-nav-header" lay-filter="nav">
+                <li class="layui-nav-item" th:class="${flag=='1'?'layui-nav-item layui-this':'layui-nav-item'}"
+                ><a href="/portal/index">首页</a></li>
+                <li class="layui-nav-item " th:class="${flag=='2'?'layui-nav-item layui-this':'layui-nav-item'}"
+                ><a href="/portal/tutors">宠物广场</a></li>
+                <li class="layui-nav-item " th:class="${flag=='3'?'layui-nav-item layui-this':'layui-nav-item'}"
+                ><a href="/portal/course">宠物日常</a></li>
+                <li class="layui-nav-item" th:class="${flag=='5'?'layui-nav-item layui-this':'layui-nav-item'}"
+                ><a href="/portal/news">新闻资讯</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</html>

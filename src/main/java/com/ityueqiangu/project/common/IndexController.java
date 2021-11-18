@@ -69,6 +69,17 @@ public class IndexController {
     }
 
     /**
+     * 跳转到错误页面
+     * @author FlowerStone
+     * @date 2021年11月17日 0017 21:21:06
+     * @return
+     */
+    @GetMapping(value = "/error")
+    public String error(){
+        return "error/404";
+    }
+
+    /**
      * 退出登录
      *
      * @param session
@@ -96,7 +107,7 @@ public class IndexController {
      */
     @PostMapping(value = "/login")
     @ResponseBody
-    public ResponseInfo login(HttpSession httpSession, ActiverUser activerUser) {
+    public ResponseInfo login(HttpSession httpSession, ActiverUser<SysUser> activerUser) {
         //判断验证码是否正确
         String captchaCode = (String) httpSession.getAttribute(Constants.CAPTCHA_CODE);
         if (!StrUtil.equalsAnyIgnoreCase(captchaCode, activerUser.getCaptcha())) {
@@ -111,7 +122,7 @@ public class IndexController {
         if (!StrUtil.equals(SecureUtil.md5(activerUser.getPassword()), resultSysUser.getPassword())) {
             throw new BusinessException("密码错误！");
         }
-        activerUser.setSysUser(resultSysUser);
+        activerUser.setUserInfo(resultSysUser);
         httpSession.setAttribute("activerUser", activerUser);
         return ResponseInfo.success("登录成功！").put("success", true);
     }

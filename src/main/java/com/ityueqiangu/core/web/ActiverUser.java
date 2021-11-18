@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2021-11-10 21:32:22
  */
 @Data
-public class ActiverUser {
+public class ActiverUser<T> {
 
     private Integer id;
 
@@ -30,5 +30,5 @@ public class ActiverUser {
 
     private String captcha;
 
-    private SysUser sysUser;
+    private T userInfo;
 }

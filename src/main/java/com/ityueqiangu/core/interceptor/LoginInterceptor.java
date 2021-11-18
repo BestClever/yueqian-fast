@@ -1,5 +1,6 @@
 package com.ityueqiangu.core.interceptor;
 
+import cn.hutool.core.util.StrUtil;
 import com.ityueqiangu.common.utils.ServletUtils;
 import com.ityueqiangu.common.utils.StringUtils;
 import com.ityueqiangu.common.utils.UserUtil;
