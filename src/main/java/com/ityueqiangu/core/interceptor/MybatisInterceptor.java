@@ -44,7 +44,7 @@ public class MybatisInterceptor implements Interceptor {
             for (Field field : fields) {
                 log.debug("------field.name------" + field.getName());
                 try {
-                    if ("createUserId".equals(field.getName())) {
+                    if ("createBy".equals(field.getName())) {
                         field.setAccessible(true);
                         Object local_createBy = field.get(parameter);
                         field.setAccessible(false);
@@ -112,7 +112,7 @@ public class MybatisInterceptor implements Interceptor {
             for (Field field : fields) {
                 log.debug("------field.name------" + field.getName());
                 try {
-                    if ("updateUserId".equals(field.getName())) {
+                    if ("updateBy".equals(field.getName())) {
                         //获取登录用户信息
                         if (sysUser != null) {
                             // 登录账号

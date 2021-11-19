@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.project.carousel.mapper.CarouselMapper">
+	<resultMap id="BaseResultMap" type="com.ityueqiangu.project.carousel.domain.Carousel">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="url" property="url" />
+        <result column="path" property="path" />
+        <result column="is_display" property="isDisplay" />
+        <result column="type" property="type" />
+        <result column="remark" property="remark" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+	</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.name
+    , t.url
+    , t.path
+    , t.is_display
+    , t.type
+    , t.remark
+    , t.is_deleted
+    , t.create_by
+    , t.create_time
+    , t.update_by
+    , t.update_time
+    </sql> 
+    
+    <!-- 分页查询 -->
+    <select id="selectCarouselList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.carousel.domain.Carousel">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM t_carousel t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="name != null  and name != ''" >
+             and t.name= #{name} 
+           </if>
+           <if test="url != null  and url != ''" >
+             and t.url= #{url} 
+           </if>
+           <if test="path != null  and path != ''" >
+             and t.path= #{path} 
+           </if>
+           <if test="isDisplay != null  and isDisplay != ''" >
+             and t.is_display= #{isDisplay} 
+           </if>
+           <if test="type != null  and type != ''" >
+             and t.type= #{type} 
+           </if>
+           <if test="remark != null  and remark != ''" >
+             and t.remark= #{remark} 
+           </if>
+           <if test="isDeleted != null  and isDeleted != ''" >
+             and t.is_deleted= #{isDeleted} 
+           </if>
+           <if test="createBy != null  and createBy != ''" >
+             and t.create_by= #{createBy} 
+           </if>
+           <if test="createTime != null  and createTime != ''" >
+             and t.create_time= #{createTime} 
+           </if>
+           <if test="updateBy != null  and updateBy != ''" >
+             and t.update_by= #{updateBy} 
+           </if>
+           <if test="updateTime != null  and updateTime != ''" >
+             and t.update_time= #{updateTime} 
+           </if>
+        </trim>
+	</select>
+ 
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="selectCarouselById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM t_carousel t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null" >
+                t.id = #{id}
+            </if>
+        </trim>
+	</select>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertCarousel" parameterType="com.ityueqiangu.project.carousel.domain.Carousel"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO t_carousel    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+          <if test="name != null">
+          	name,
+          </if>
+          <if test="url != null">
+          	url,
+          </if>
+          <if test="path != null">
+          	path,
+          </if>
+          <if test="isDisplay != null">
+          	is_display,
+          </if>
+          <if test="type != null">
+          	type,
+          </if>
+          <if test="remark != null">
+          	remark,
+          </if>
+          <if test="isDeleted != null">
+          	is_deleted,
+          </if>
+          <if test="createBy != null">
+          	create_by,
+          </if>
+          <if test="createTime != null">
+          	create_time,
+          </if>
+          <if test="updateBy != null">
+          	update_by,
+          </if>
+          <if test="updateTime != null">
+          	update_time,
+          </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+          <if test="name != null" >
+            #{name},                    
+          </if>
+          <if test="url != null" >
+            #{url},                    
+          </if>
+          <if test="path != null" >
+            #{path},                    
+          </if>
+          <if test="isDisplay != null" >
+            #{isDisplay},                    
+          </if>
+          <if test="type != null" >
+            #{type},                    
+          </if>
+          <if test="remark != null" >
+            #{remark},                    
+          </if>
+          <if test="isDeleted != null" >
+            #{isDeleted},                    
+          </if>
+          <if test="createBy != null" >
+            #{createBy},                    
+          </if>
+          <if test="createTime != null" >
+            #{createTime},                    
+          </if>
+          <if test="updateBy != null" >
+            #{updateBy},                    
+          </if>
+          <if test="updateTime != null" >
+            #{updateTime},                    
+          </if>
+        </trim>
+    </insert>    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateCarousel" parameterType="com.ityueqiangu.project.carousel.domain.Carousel">
+    UPDATE t_carousel
+    <set>
+       <if test="name != null" >
+         name=#{name},                 
+       </if>
+       <if test="url != null" >
+         url=#{url},                 
+       </if>
+       <if test="path != null" >
+         path=#{path},                 
+       </if>
+       <if test="isDisplay != null" >
+         is_display=#{isDisplay},                 
+       </if>
+       <if test="type != null" >
+         type=#{type},                 
+       </if>
+       <if test="remark != null" >
+         remark=#{remark},                 
+       </if>
+       <if test="isDeleted != null" >
+         is_deleted=#{isDeleted},                 
+       </if>
+       <if test="createBy != null" >
+         create_by=#{createBy},                 
+       </if>
+       <if test="createTime != null" >
+         create_time=#{createTime},                 
+       </if>
+       <if test="updateBy != null" >
+         update_by=#{updateBy},                 
+       </if>
+       <if test="updateTime != null" >
+         update_time=#{updateTime},                 
+       </if>
+    </set>
+    WHERE id = #{id}
+    </update>
+
+	<!-- 根据主键删除记录 -->
+	<delete id="deleteCarouselById" parameterType="Integer">
+        delete from t_carousel where id = #{id}
+	</delete>
+    
+    <!-- 根据条件删除记录 -->
+	<delete id="deleteCarouselByCondition" parameterType="com.ityueqiangu.project.carousel.domain.Carousel">
+        delete from t_carousel 
+        <trim prefix="WHERE" prefixOverrides="AND | OR">            
+           <if test="id != null  and id != ''" >
+             and t.id= #{id} 
+           </if>
+           <if test="name != null  and name != ''" >
+             and t.name= #{name} 
+           </if>
+           <if test="url != null  and url != ''" >
+             and t.url= #{url} 
+           </if>
+           <if test="path != null  and path != ''" >
+             and t.path= #{path} 
+           </if>
+           <if test="isDisplay != null  and isDisplay != ''" >
+             and t.is_display= #{isDisplay} 
+           </if>
+           <if test="type != null  and type != ''" >
+             and t.type= #{type} 
+           </if>
+           <if test="remark != null  and remark != ''" >
+             and t.remark= #{remark} 
+           </if>
+           <if test="isDeleted != null  and isDeleted != ''" >
+             and t.is_deleted= #{isDeleted} 
+           </if>
+           <if test="createBy != null  and createBy != ''" >
+             and t.create_by= #{createBy} 
+           </if>
+           <if test="createTime != null  and createTime != ''" >
+             and t.create_time= #{createTime} 
+           </if>
+           <if test="updateBy != null  and updateBy != ''" >
+             and t.update_by= #{updateBy} 
+           </if>
+           <if test="updateTime != null  and updateTime != ''" >
+             and t.update_time= #{updateTime} 
+           </if>
+        </trim>
+	</delete>
+
+</mapper>

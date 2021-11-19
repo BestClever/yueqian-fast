@@ -33,6 +33,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Autowired
     private ISysUserRoleService sysUserRoleService;
+
     @Autowired
     private ISysResourceService sysResourceService;
 

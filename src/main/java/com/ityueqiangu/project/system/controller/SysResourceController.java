@@ -28,17 +28,17 @@ public class SysResourceController extends BaseController {
     @Autowired
     private ISysResourceService sysResourceService;
 
-    @RequestMapping(value = "/index")
+    @GetMapping(value = "/index")
     public String index() {
         return "system/resource/index";
     }
 
-    @RequestMapping(value = "/add")
+    @GetMapping(value = "/add")
     public String add() {
         return "system/resource/add";
     }
 
-    @RequestMapping(value = "/edit")
+    @GetMapping(value = "/edit")
     public String edit(Integer id, ModelMap mmap) {
         SysResource sysResource = sysResourceService.selectSysResourceById(id);
         mmap.addAttribute("sysResource", sysResource);
@@ -50,7 +50,7 @@ public class SysResourceController extends BaseController {
      *
      * @return 分页数据
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     @ResponseBody
     public TableDataInfo list(SysResource sysResource) {
         startPage();
@@ -84,7 +84,7 @@ public class SysResourceController extends BaseController {
             dtrees.add(dtree);
         });
 
-        return new ResponseInfo(ResponseInfo.Type.ZERO,"操作成功",dtrees);
+        return new ResponseInfo(ResponseInfo.Type.ZERO, "操作成功", dtrees);
     }
 
 
@@ -94,7 +94,7 @@ public class SysResourceController extends BaseController {
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-    @RequestMapping("/getById")
+    @GetMapping("/getById")
     @ResponseBody
     public ResponseInfo getById(Integer id) {
         return ResponseInfo.success(sysResourceService.selectSysResourceById(id));
@@ -106,7 +106,7 @@ public class SysResourceController extends BaseController {
      * @param sysResource 新增的记录
      * @return 返回影响行数
      */
-    @RequestMapping("/insert")
+    @PostMapping("/insert")
     @ResponseBody
     public ResponseInfo insert(@RequestBody SysResource sysResource) {
         return toAjax(sysResourceService.insertSysResource(sysResource));
@@ -118,7 +118,7 @@ public class SysResourceController extends BaseController {
      * @param sysResource 修改的记录
      * @return 返回影响行数
      */
-    @RequestMapping("/update")
+    @PostMapping("/update")
     @ResponseBody
     public ResponseInfo update(@RequestBody SysResource sysResource) {
         return toAjax(sysResourceService.updateSysResource(sysResource));
@@ -130,15 +130,23 @@ public class SysResourceController extends BaseController {
      * @param id
      * @return 返回影响行数
      */
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     @ResponseBody
     public ResponseInfo delete(@RequestBody Integer id) {
         return toAjax(sysResourceService.deleteSysResourceById(id));
     }
 
+    /**
+     * 修改状态
+     *
+     * @param sysResource
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月19日 0019 15:22:04
+     */
     @PostMapping(value = "/updateStatus")
     @ResponseBody
-    public ResponseInfo updateStatus(SysResource sysResource){
+    public ResponseInfo updateStatus(SysResource sysResource) {
         return toAjax(sysResourceService.updateStatus(sysResource));
     }
 

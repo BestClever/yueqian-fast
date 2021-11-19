@@ -91,6 +91,7 @@
             elem: "#selectParent",
             url: "/sysResource/selectParent",
             method: 'get',
+            selectInputName: {nodeId: "parentId", context: "resourceName"},
             skin: "layui",
             dataStyle: "layuiStyle",  //使用layui风格的数据格式
             dataFormat: "list",  //配置data的风格为list
@@ -165,7 +166,7 @@
                     if (result.success) {
                         layerCustom.greenLaughMsg(result.msg, function () {
                             //刷新父页面的表格
-                            parent.layui.table.reload('tableId')
+                            parent.render();
                             //先得到当前iframe层的索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭弹出框

@@ -2,6 +2,7 @@ package com.ityueqiangu.project.system.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.ityueqiangu.common.constant.Constants;
 import com.ityueqiangu.common.exception.BusinessException;
 import com.ityueqiangu.core.web.domain.SysMenu;
 import com.ityueqiangu.project.system.domain.SysResource;
@@ -51,6 +52,8 @@ public class SysResourceServiceImpl implements ISysResourceService{
      * @return 返回ResultInfo
      */
     public Integer insertSysResource(SysResource sysResource) {
+        //默认启用
+        sysResource.setIsEnable(Constants.SUCCESS);
     	return sysResourceMapper.insertSysResource(sysResource);
     }
 	

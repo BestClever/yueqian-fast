@@ -21,7 +21,7 @@
                                     <span id="adminName" th:text="${session.activerUser.getUserInfo().getUserName()}"></span>
                                 </a>
                                 <dl class="layui-nav-child">
-                                    <dd><a href="/sys/index">管理</a></dd>
+                                    <dd><a href="/user/userInfo">个人中心</a></dd>
                                     <dd><a href="/sys/toSignOut">退出登录</a></dd>
                                 </dl>
                             </li>
@@ -32,7 +32,7 @@
         </div>
         <div class="bottom">
             <div class="title">
-                <p>跃迁基础平台</p>
+                <p><a href="/portal/index">跃迁基础平台</a></p>
             </div>
             <ul class="layui-nav layui-nav-header" lay-filter="nav">
                 <li class="layui-nav-item" th:class="${flag=='1'?'layui-nav-item layui-this':'layui-nav-item'}"

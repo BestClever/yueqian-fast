@@ -1,8 +1,16 @@
 package com.ityueqiangu.project.portal.contoller;
 
+import com.ityueqiangu.common.constant.Constants;
+import com.ityueqiangu.core.web.domain.ResponseInfo;
+import com.ityueqiangu.project.carousel.domain.Carousel;
+import com.ityueqiangu.project.carousel.service.ICarouselService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * @Description: 前端控制类
@@ -17,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/portal")
 public class PortalIndexController {
+
+    @Autowired
+    private ICarouselService carouselService;
 
     /**
      * 登录
@@ -40,8 +51,19 @@ public class PortalIndexController {
         return "portal/register";
     }
 
+    /**
+     * 跳转到主页
+     * @author FlowerStone
+     * @date 2021年11月19日 0019 16:15:04
+     * @return
+     */
     @GetMapping("/index")
-    public String index(){
+    public String index(ModelMap mmp){
+        Carousel carousel = new Carousel();
+        carousel.setType(Constants.FAIL);
+        carousel.setIsDisplay(Constants.SUCCESS);
+        List<Carousel> carousels = carouselService.selectCarouselList(carousel);
+        mmp.addAttribute("carouselList",carousels);
         return "portal/index";
     }
 }

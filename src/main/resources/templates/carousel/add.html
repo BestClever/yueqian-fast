@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增')"/>
+    <style>
+        .layui-upload-img {
+            width: 110px;
+            height: 110px;
+            margin: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <!--手动输入-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label layui-required">图片名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" lay-verify="required|name" name="name"
+                               placeholder="图片名称" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">跳转路径</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" name="url"
+                               placeholder="跳转路径" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block">
+                        <select name="type">
+                            <option value="">请选择</option>
+                            <option value="0">管理员端</option>
+                            <option value="1" selected="">门户</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图片</label>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn" id="filePathElem">点击上传图片</button>
+                        <input type="hidden" name="path" id="path" autocomplete="off" class="layui-input">
+                        <div class="layui-upload-list" style="margin-left: 110px">
+                            <img class="layui-upload-img" id="filePath">
+                            <p id="fileErrorText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="reset" class="yueqian-btn yueqian-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form', 'jquery', 'layerCustom','upload'], function () {
+        let form = layui.form,
+            $ = layui.jquery,
+            upload  = layui.upload ,
+            layerCustom = layui.layerCustom;
+
+        /*表单验证*/
+        form.verify({
+            name: function (value) {
+                var url = '/carousel/existName';
+                var param = {
+                    key: value
+                }
+                var returnMsg = '';
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    async: false,
+                    data: param,
+                    dataType: "json",
+                    success: function (result) {
+                        if (!result.success) {
+                            returnMsg = result.msg;
+                        }
+                    }
+                });
+                if (returnMsg) {
+                    return returnMsg;
+                }
+            }
+        });
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#filePathElem'
+            , url: '/common/upload' //文件上传接口
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#filePath').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //设置到隐藏的 input中
+                $("#path").val(res.url);
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var fileErrorText = $('#fileErrorText');
+                fileErrorText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                fileErrorText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+
+
+        form.on('submit(add)', function (data) {
+            $.ajax({
+                url: '/carousel/insert',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layerCustom.greenLaughMsg(result.msg, function () {
+                            //刷新父页面的表格
+                            parent.layui.table.reload('tableId')
+                            //先得到当前iframe层的索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭弹出框
+                            parent.layer.close(index);
+                        })
+                    } else {
+                        layer.msg(result.msg);
+                        return;
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>
