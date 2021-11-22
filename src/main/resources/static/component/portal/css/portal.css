@@ -18,6 +18,8 @@ html { height: 100%; }
 .layui-row-header .topinfo-right .no-login a:hover { text-decoration: underline; }
 .layui-row-header .topinfo-right .no-login span{ margin: 0px 20px; padding: 3px 10px; border: 1px solid white; }
 .layui-row-header .topinfo-right .layui-nav {background-color: rgb(60, 64, 76);height: 50px; margin-top: -10px;}
+.layui-nav-header {border-radius: 0px;}
+.layui-nav-header li{margin-left: 50px;}
 
 /*首页*/
 .index .main-content { padding: 30px 20px;width: 95%;height: 100%; }
