@@ -5,7 +5,7 @@
         <th:block th:include="portal/common/include :: header('首页')"/>
     </head>
 </head>
-<body style="background-color: white">
+<body>
 <div class="content index">
     <div th:replace="../templates/portal/header :: header('1')"></div>
     <div class="layui-carousel" id="carousel">
@@ -17,95 +17,80 @@
             </div>
         </div>
     </div>
-    <div class="main-info">
-<!--        <div class="teacher-show">-->
-<!--            <div>-->
-<!--                <span class="title">家教课程信息 | </span>-->
-<!--                <a class="to-more" href="/portal/course">查看更多</a>-->
-<!--            </div>-->
-<!--            <div class="teacher-list" id="teacherImg">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <hr>-->
-<!--        <div class="order-show">-->
-<!--            <div>-->
-<!--                <span class="title">招聘信息 | </span>-->
-<!--                <a class="to-more" href="/portal/order">查看更多</a>-->
-<!--            </div>-->
-<!--            <ul class="order-list" id="orderList">-->
-<!--            </ul>-->
-<!--        </div>-->
-        <hr>
-            <div class="news-show">
-            <div>
-                <span class="title">新闻资讯 | </span>
-                <a class="to-more" href="/portal/news">查看更多</a>
+    <div class="layui-row layui-col-space20 main-content">
+        <div class="layui-col-md4">
+            <div class="layui-card layui-card-new" style="position: relative">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-align-left" style="color: #D2691E"></i>
+                    <span>校园新闻</span>
+                    <span style="font-size: 12px;color: grey">/ NEWS</span>
+                </div>
+                <div class="layui-card-body" id="news_div">
+                </div>
+                <div id="news_page" class="news_page_div" style="position: absolute;bottom: 0;right: 15px">
+                </div>
             </div>
-            <ul class="news-list" id="newsList">
-            </ul>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card layui-card-notice" style="position: relative">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-speaker" style="color: #FFA500"></i>
+                    <span>最新通知</span>
+                    <span style="font-size: 12px;color: grey">/ NOTICES</span>
+                </div>
+                <div class="layui-card-body" id="notice_div">
+                </div>
+                <div id="notice_page" class="notice_page_div" style="position: absolute;bottom: 0;right: 15px">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card layui-card-wish">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-release"></i>
+                    <span>园长寄语</span>
+                </div>
+                <div class="layui-card-body">
+                    <p>亲爱的家长们：</p>
+                    <p style="text-indent:1em;">　　一所幼儿园教师的爱心、责任心、远比幼儿园的漂亮来得更重要。孩子在幼儿园学会生活、学会做人、学会求知、学会生存、学会审美，养成自信、好奇、坚毅、交往合作、关心他人的良好精神品质以及保持轻松愉快的情绪，这比机械的学这学那重要的多！</p>
+                    <p style="text-indent:1em;">　　因此，一直以来，上海市荷花池幼儿园的教师们时时牢记着自己肩负的职责，处处提醒着自己要用快乐去迎接每一天。用真情去爱每一个孩子，用心去交流，成为他们成长中的启蒙者。每天，当我们从家长手中接过孩子的那一瞬，我们深知家长对于我们的信赖，寄于我们的厚望，感谢各位家长对于我们工作的信任、理解与支持！</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <div th:replace="../templates/portal/footer :: footer"></div>
 
-<script id="teacherItem" type="text/html">
-    {{# layui.each(d, function(index, item){ }}
-    <div class="list-item">
-        <a href="/portal/courseDetail?id={{item.id}}">
-            <div class="info">
-                <img src="/file/showImageByPath?path={{item.teacher.user.imgpath }}" alt="">
-                <div class="info_txt">
-                    <div class="name">
-                        <i class="layui-icon layui-icon-rate-solid"></i>
-                        <span>最佳老师</span>
-                    </div>
-                    <p style="color: grey">
-                        <span>{{item.tutorGrade}}</span>
-                        <span>&nbsp;{{item.tutorSubjects}}</span>
-                    </p>
-                    <p>{{item.teacherName}}</p>
-                </div>
-            </div>
-            <div class="course">
-                <span class="subject">{{item.tutorType == 1?'家教上门':(item.tutorType == 2?'学生上门':'网络辅导')}}</span>
-                <span class="fee">￥{{item.tutorFee}}</span>
-            </div>
-        </a>
-    </div>
-    {{# }); }}
-    {{# if(d.length === 0){ }}
-    暂无家教信息
-    {{# } }}
-</script>
-
-<script id="orderItem" type="text/html">
-        {{# layui.each(d, function(index, item){ }}
-        <li>
-            <div>
-                <i class="layui-icon layui-icon-speaker"></i>
-                <a href="/portal/orderDetail?id={{item.id}}">{{item.orderTitle}}</a>
-            </div>
-            <p class="order-time">{{item.createTime}}</p>
-        </li>
-        {{# }); }}
-        {{# if(d.length === 0){ }}
-        暂无招聘信息
-        {{# } }}
-</script>
-
-<script id="newsItem" type="text/html">
+<script id="newsLi" type="text/html">
+    <ul id="news_ul">
         {{# layui.each(d, function(index, item){ }}
         <li>
             <a href="/portal/newsDetail?id={{item.id}}">
-                <i></i>
                 <span>{{item.newsTitle}}</span>
+                <span style="font-size: 12px; color: grey">{{item.createTime}}</span>
             </a>
-            <span style="color: grey">{{item.createTime}}</span>
         </li>
         {{# }); }}
         {{# if(d.length === 0){ }}
         暂无新闻
         {{# } }}
+    </ul>
+</script>
+
+<script id="noticeLi" type="text/html">
+    <ul id="notice_ul">
+        {{# layui.each(d, function(index, item){ }}
+        <li>
+            <a href="/portal/noticeDetail?id={{item.id}}">
+                <span>{{item.noticeTitle}}</span>
+                <span style="font-size: 12px; color: grey">{{item.createTime}}</span>
+            </a>
+        </li>
+        {{# }); }}
+        {{# if(d.length === 0){ }}
+        暂无通知
+        {{# } }}
+    </ul>
 </script>
 
 <th:block th:include="portal/common/include :: footer"/>
@@ -121,46 +106,72 @@
         carousel.render({
             elem: '#carousel'
             , width: '100%' //设置容器宽度
-            , height: '350px' //设置容器高度
+            , height: '450px' //设置容器高度
             , arrow: 'always' //始终显示箭头
             //,anim: 'updown' //切换动画方式
         });
 
-        // /*家教列表渲染*/
-        // (function () {
-        //     $.post('/course/page', {page: 1, limit: 5 }, function (res) {
-        //         if (res.code == 0){
-        //             var getTpl = document.getElementById("teacherItem").innerHTML;
-        //             laytpl(getTpl).render(res.data, function (html) {
-        //                 document.getElementById("teacherImg").innerHTML = html;
-        //             });
-        //         }
-        //     })
-        // })();
-        //
-        // /*招聘列表渲染*/
-        // (function () {
-        //     $.post('/order/page', {page: 1, limit: 5 }, function (res) {
-        //         if (res.code == 0){
-        //             var getTpl = document.getElementById("orderItem").innerHTML;
-        //             laytpl(getTpl).render(res.data, function (html) {
-        //                 document.getElementById("orderList").innerHTML = html;
-        //             });
-        //         }
-        //     })
-        // })();
-        //
-        // /*新闻列表渲染*/
-        // (function () {
-        //     $.post('/news/page', {page: 1, limit: 5, isValid:'0' }, function (res) {
-        //         if (res.code == 0){
-        //             var getTpl = document.getElementById("newsItem").innerHTML;
-        //             laytpl(getTpl).render(res.data, function (html) {
-        //                 document.getElementById("newsList").innerHTML = html;
-        //             });
-        //         }
-        //     })
-        // })();
+        /*通知列表渲染*/
+        var renderNotice = function (data) {
+            var getTpl = document.getElementById("noticeLi").innerHTML;
+            laytpl(getTpl).render(data, function (html) {
+                document.getElementById("notice_div").innerHTML = html;
+            });
+        }
+        var getNotice = function (page, limit) {
+            $.post('/ops/notice/page', {page: page, limit: limit}, function (res) {
+                renderNotice(res.data);
+            })
+        }
+        var pageNotice = function (total) {
+            laypage.render({
+                elem: 'notice_page'
+                , count: total
+                , jump: function (obj, first) {
+                    if (!first) {
+                        getNotice(obj.curr, obj.limit);
+                    }
+                }
+            });
+        };
+        (function() {
+            $.post('/ops/notice/page', {page: 1, limit: 10, isValid:'0'}, function (res) {
+                renderNotice(res.data);
+                var total = res.count;
+                pageNotice(total);
+            })
+        })();
+
+        /*新闻列表渲染*/
+        var renderNews = function (data) {
+            var getTpl = document.getElementById("newsLi").innerHTML;
+            laytpl(getTpl).render(data, function (html) {
+                document.getElementById("news_div").innerHTML = html;
+            });
+        }
+        var getNews = function (page, limit) {
+            $.post('/ops/news/page', {page: page, limit: limit}, function (res) {
+                renderNews(res.data);
+            })
+        }
+        var pageNews = function (total) {
+            laypage.render({
+                elem: 'news_page'
+                , count: total
+                , jump: function (obj, first) {
+                    if (!first) {
+                        getNews(obj.curr, obj.limit);
+                    }
+                }
+            });
+        };
+        (function() {
+            $.post('/ops/news/page', {page: 1, limit: 10, isValid:'0'}, function (res) {
+                renderNews(res.data);
+                var total = res.count;
+                pageNews(total);
+            })
+        })();
     });
 </script>
 </body>
