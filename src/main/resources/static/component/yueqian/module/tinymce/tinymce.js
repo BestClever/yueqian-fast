@@ -13,17 +13,18 @@ layui.define(['jquery'],function (exports) {
 
     var settings = {
         base_url: modPath
-        , images_upload_url: ''//图片上传接口，可在option传入，也可在这里修改，option的值优先
+        , images_upload_url: '/common/upload'//图片上传接口，可在option传入，也可在这里修改，option的值优先
         , language: 'zh_CN'//语言，可在option传入，也可在这里修改，option的值优先
         , response: {//后台返回数据格式设置
             statusName: response.statusName || 'code'//返回状态字段
             , msgName: response.msgName || 'msg'//返回消息字段
-            , dataName: response.dataName || 'data'//返回的数据
+            , dataName: response.dataName || 'url'//返回的数据
             , statusCode: response.statusCode || {
-                ok: 0//数据正常
+                ok: 200//数据正常
             }
         }
         , success: function (res, succFun, failFun) {//图片上传完成回调 根据自己需要修改
+            debugger
             if (res[this.response.statusName] == this.response.statusCode.ok) {
                 succFun(res[this.response.dataName]);
             } else {
@@ -98,7 +99,7 @@ layui.define(['jquery'],function (exports) {
 
         var form = option.form || {}
 
-        var file_field = form.name || 'edit' //文件字段名
+        var file_field = form.name || 'file' //文件字段名
 
         var form_data = form.data || {} //其他表单数据 {key:value, ...}
 
@@ -112,9 +113,9 @@ layui.define(['jquery'],function (exports) {
 
         option.quickbars_selection_toolbar = isset(option.quickbars_selection_toolbar) ? option.quickbars_selection_toolbar : 'cut copy | bold italic underline strikethrough '
 
-        option.plugins = isset(option.plugins) ? option.plugins : 'code quickbars print preview searchreplace autolink fullscreen image link media codesample table charmap hr advlist lists wordcount imagetools indent2em';
+        option.plugins = isset(option.plugins) ? option.plugins : 'code kityformula-editor quickbars print preview searchreplace autolink fullscreen image link media codesample table charmap hr advlist lists wordcount imagetools indent2em';
 
-        option.toolbar = isset(option.toolbar) ? option.toolbar : 'code undo redo | forecolor backcolor bold italic underline strikethrough | indent2em alignleft aligncenter alignright alignjustify outdent indent | link bullist numlist image table codesample | formatselect fontselect fontsizeselect';
+        option.toolbar = isset(option.toolbar) ? option.toolbar : 'code undo redo | kityformula-editor forecolor backcolor bold italic underline strikethrough | indent2em alignleft aligncenter alignright alignjustify outdent indent | link bullist numlist image table codesample | formatselect fontselect fontsizeselect';
 
         option.resize = isset(option.resize) ? option.resize : false;
 
@@ -135,7 +136,7 @@ layui.define(['jquery'],function (exports) {
             },
             table: {title: '表格', items: 'inserttable tableprops deletetable | cell row column'},
         };
-
+        //初始化时候 可以使用这个参数 设置初始值
         option.init_instance_callback =isset(option.init_instance_callback) ? option.init_instance_callback : function(inst) {
             if(typeof callback == 'function') callback(option,inst)
         };

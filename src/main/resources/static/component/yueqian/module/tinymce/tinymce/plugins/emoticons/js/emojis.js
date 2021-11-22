@@ -3150,7 +3150,7 @@ window.tinymce.Resource.add("tinymce.plugins.emoticons", {
     fitzpatrick_scale: false,
     category: "food_and_drink"
   },
-  yueqian: {
+  pear: {
     keywords: [ "fruit", "nature", "food" ],
     "char": "\ud83c\udf50",
     fitzpatrick_scale: false,
