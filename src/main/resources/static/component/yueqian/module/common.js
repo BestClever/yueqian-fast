@@ -1,7 +1,8 @@
 ;
 "use strict";
-layui.define(["layer", "jquery","table"], function (exports) {
+layui.define(["layer", "jquery","table","util"], function (exports) {
     var $ = layui.jquery;
+    var util = layui.util;
     var table = layui.table;
     var obj = {
         checkField: function(obj, field) {
@@ -241,5 +242,10 @@ layui.define(["layer", "jquery","table"], function (exports) {
             });
         }
     };
+    //固定Bar
+    util.fixbar({
+        showHeight: 60
+        ,bgcolor: '#9F9F9F'
+    });
     exports('common', obj);
 });

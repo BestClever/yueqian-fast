@@ -96,10 +96,11 @@
 <th:block th:include="portal/common/include :: footer"/>
 
 <script>
-    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl'], function () {
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl','common'], function () {
         var $ = layui.jquery;
         var carousel = layui.carousel;
         var laypage = layui.laypage;
+        var common = layui.common;
         var laytpl = layui.laytpl;
 
         //建造实例

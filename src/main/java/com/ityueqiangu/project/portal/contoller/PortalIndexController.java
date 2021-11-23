@@ -10,6 +10,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -70,27 +72,21 @@ public class PortalIndexController {
         return "portal/index";
     }
 
-    /**
-     * 个人中心
-     *
-     * @return
-     * @author FlowerStone
-     * @date 2021年11月23日 0023 9:56:12
-     */
-    @GetMapping(value = "/user")
-    public String userIndex() {
-        return "portal/user/index";
-    }
+
 
     /**
-     * 用户设置
+     * 退出登录
      * @author FlowerStone
-     * @date 2021年11月23日 0023 11:10:51
+     * @date 2021年11月23日 0023 14:01:18
+     * @param session
      * @return
      */
-    @GetMapping(value = "/userSet")
-    public String userSet(){
-        return "portal/user/set";
+    @GetMapping(value = "/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("activerUser");
+        return "redirect:index";
     }
+
+
 
 }

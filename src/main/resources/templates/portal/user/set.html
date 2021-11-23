@@ -194,11 +194,37 @@
 <th:block th:include="portal/common/include :: footer"/>
 <script>
 
-    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl'], function () {
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl', 'upload'], function () {
         let $ = layui.jquery,
             carousel = layui.carousel,
             laypage = layui.laypage,
+            upload = layui.upload,
             laytpl = layui.laytpl;
+
+
+        upload.render({
+            elem: '.upload-img'
+            , url: '/common/upload'
+            , size: 50
+            , before: function () {
+                $('.avatar-add').find('.loading').show();
+            }
+            , done: function (res) {
+                if (res.status == 0) {
+                    $.post('/user/set/', {
+                        avatar: res.url
+                    }, function (res) {
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+                $('.avatar-add').find('.loading').hide();
+            }
+            , error: function () {
+                avatarAdd.find('.loading').hide();
+            }
+        });
     })
 </script>
 
