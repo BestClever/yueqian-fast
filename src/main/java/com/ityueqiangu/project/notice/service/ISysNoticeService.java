@@ -51,5 +51,13 @@ public interface ISysNoticeService {
      * @return 返回ResultInfo
      */
     Integer deleteSysNoticeById(Integer id);
-	
+
+    /**
+     * 获取单个对象
+     * @author FlowerStone
+     * @date 2021年11月23日 0023 16:35:16
+     * @param sysNoticeParam
+     * @return
+     */
+    SysNotice getOne(SysNotice sysNoticeParam);
 }

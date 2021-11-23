@@ -23,6 +23,8 @@ public class SysNotice extends BaseEntity{
 	private Integer id;
 	/** 名称 */
 	private String name;
+	/** 咨询编码 */
+	private String infoCode;
 	/** 类型 */
 	private String type;
 	/** 内容 */

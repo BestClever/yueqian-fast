@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="portal/common/include :: header('跃迁谷服务平台咨询')"/>
+</head>
+<body style="background: #ffffff">
+<div class="content detail">
+    <div th:replace="../templates/portal/header :: header('1')"></div>
+    <div class="layui-breadcrumb-div">
+        <span class="layui-breadcrumb">
+            <i class="layui-icon layui-icon-home"></i>
+              <a href="/portal/index">首页</a>
+              <a><cite>咨询详情</cite></a>
+        </span>
+    </div>
+    <hr>
+    <div class="main">
+        <h1 th:text="${sysNotice.name}"></h1>
+        <div class="info">
+            <span style="padding: 0px 10px">时间：
+                <span th:text="${sysNotice.publishTime}"></span>
+            </span>
+        </div>
+        <p th:utext="${sysNotice.content}" class="content">
+        </p>
+    </div>
+
+</div>
+<div th:replace="../templates/portal/footer :: footer"></div>
+
+<th:block th:include="portal/common/include :: footer"/>
+
+<script>
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl', 'common'], function () {
+        var $ = layui.jquery;
+        var carousel = layui.carousel;
+        var laypage = layui.laypage;
+        var common = layui.common;
+        var laytpl = layui.laytpl;
+    })
+</script>
+
+</body>
+</html>

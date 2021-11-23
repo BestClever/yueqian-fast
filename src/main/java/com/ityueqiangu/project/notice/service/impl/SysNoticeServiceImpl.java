@@ -1,6 +1,7 @@
 package com.ityueqiangu.project.notice.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.ityueqiangu.common.utils.PrimaryKeyUtils;
 import com.ityueqiangu.common.utils.UserUtil;
 import com.ityueqiangu.project.notice.domain.SysNotice;
 import com.ityueqiangu.project.notice.mapper.SysNoticeMapper;
@@ -50,7 +51,8 @@ public class SysNoticeServiceImpl implements ISysNoticeService{
      * @return 返回ResultInfo
      */
     public Integer insertSysNotice(SysNotice sysNotice) {
-        sysNotice.setPublishBy(UserUtil.getCurrentUser().getId());
+        sysNotice.setInfoCode(PrimaryKeyUtils.generateOrderNo());
+        sysNotice.setPublishBy(UserUtil.getCurrentUser().getUserId());
         sysNotice.setPublishTime(DateUtil.date());
     	return sysNoticeMapper.insertSysNotice(sysNotice);
     }
@@ -76,5 +78,17 @@ public class SysNoticeServiceImpl implements ISysNoticeService{
     public Integer deleteSysNoticeById(Integer id) {
     	return sysNoticeMapper.deleteSysNoticeById(id);
     }
-	
+
+    /**
+     * 获取单个实体
+     * @author FlowerStone
+     * @date 2021年11月23日 0023 16:35:38
+     * @param sysNoticeParam
+     * @return
+     */
+    @Override
+    public SysNotice getOne(SysNotice sysNoticeParam) {
+        return sysNoticeMapper.getOne(sysNoticeParam);
+    }
+
 }

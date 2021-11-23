@@ -221,7 +221,7 @@
                         layer.close(loading);
                         if (result.success) {
                             layerCustom.greenLaughMsg(result.msg, function () {
-                                myTalbe.reload();
+                                render();
                             });
                         } else {
                             layerCustom.redCryMsg(result.msg);

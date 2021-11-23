@@ -60,5 +60,13 @@ public interface SysNoticeMapper {
      * @return 返回影响行数
      */
 	Integer deleteSysNoticeByCondition(SysNotice sysNotice);
-	
+
+	/**
+	 * 获取单个实体
+	 * @author FlowerStone
+	 * @date 2021年11月23日 0023 16:36:09
+	 * @param sysNoticeParam
+	 * @return
+	 */
+    SysNotice getOne(SysNotice sysNoticeParam);
 }

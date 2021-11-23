@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ityueqiangu.project.notice.mapper.SysNoticeMapper">
-	<resultMap id="BaseResultMap" type="com.ityueqiangu.project.notice.domain.SysNotice">
-        <result column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="type" property="type" />
-        <result column="content" property="content" />
-        <result column="is_publish" property="isPublish" />
-        <result column="publish_time" property="publishTime" />
-        <result column="publish_by" property="publishBy" />
-        <result column="is_enable" property="isEnable" />
-        <result column="remark" property="remark" />
-        <result column="is_deleted" property="isDeleted" />
-        <result column="create_by" property="createBy" />
-        <result column="create_time" property="createTime" />
-        <result column="update_by" property="updateBy" />
-        <result column="update_time" property="updateTime" />
+    <resultMap id="BaseResultMap" type="com.ityueqiangu.project.notice.domain.SysNotice">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="info_code" property="infoCode"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="is_publish" property="isPublish"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="publish_by" property="publishBy"/>
+        <result column="is_enable" property="isEnable"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
         <result column="publish_name" property="publishName"/>
 
-	</resultMap>  
-    
+    </resultMap>
+
     <!-- 表字段 -->
     <sql id="baseColumns">
      t.id
     , t.name
+    , t.info_code
     , t.type
     , t.content
     , t.is_publish
@@ -36,258 +38,284 @@
     , t.create_time
     , t.update_by
     , t.update_time
-    </sql> 
-    
+    </sql>
+
     <!-- 分页查询 -->
-    <select id="selectSysNoticeList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
-		SELECT         
-        	<include refid="baseColumns" />,s.user_name as publish_name
-		FROM sys_notice t left join sys_user s on t.create_by = s.id
-        <trim prefix="WHERE" prefixOverrides="AND | OR">            
-           <if test="id != null  and id != ''" >
-             and t.id= #{id} 
-           </if>
-           <if test="name != null  and name != ''" >
-             and t.name= #{name} 
-           </if>
-           <if test="type != null  and type != ''" >
-             and t.type= #{type} 
-           </if>
-           <if test="content != null  and content != ''" >
-             and t.content= #{content} 
-           </if>
-           <if test="isPublish != null  and isPublish != ''" >
-             and t.is_publish= #{isPublish} 
-           </if>
-           <if test="publishTime != null  and publishTime != ''" >
-             and t.publish_time= #{publishTime} 
-           </if>
-           <if test="publishBy != null  and publishBy != ''" >
-             and t.publish_by= #{publishBy} 
-           </if>
-           <if test="isEnable != null  and isEnable != ''" >
-             and t.is_enable= #{isEnable} 
-           </if>
-           <if test="remark != null  and remark != ''" >
-             and t.remark= #{remark} 
-           </if>
-           <if test="isDeleted != null  and isDeleted != ''" >
-             and t.is_deleted= #{isDeleted} 
-           </if>
-           <if test="createBy != null  and createBy != ''" >
-             and t.create_by= #{createBy} 
-           </if>
-           <if test="createTime != null  and createTime != ''" >
-             and t.create_time= #{createTime} 
-           </if>
-           <if test="updateBy != null  and updateBy != ''" >
-             and t.update_by= #{updateBy} 
-           </if>
-           <if test="updateTime != null  and updateTime != ''" >
-             and t.update_time= #{updateTime} 
-           </if>
+    <select id="selectSysNoticeList" resultMap="BaseResultMap"
+            parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
+        SELECT
+        <include refid="baseColumns"/>,s.user_name as publish_name
+        FROM sys_notice t left join sys_user s on t.create_by = s.id
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null  and id != ''">
+                and t.id= #{id}
+            </if>
+            <if test="name != null  and name != ''">
+                and t.name= #{name}
+            </if>
+            <if test="infoCode != null  and infoCode != ''">
+                and t.info_code= #{infoCode}
+            </if>
+            <if test="type != null  and type != ''">
+                and t.type= #{type}
+            </if>
+            <if test="content != null  and content != ''">
+                and t.content= #{content}
+            </if>
+            <if test="isPublish != null  and isPublish != ''">
+                and t.is_publish= #{isPublish}
+            </if>
+            <if test="publishTime != null  and publishTime != ''">
+                and t.publish_time= #{publishTime}
+            </if>
+            <if test="publishBy != null  and publishBy != ''">
+                and t.publish_by= #{publishBy}
+            </if>
+            <if test="isEnable != null  and isEnable != ''">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null  and remark != ''">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null  and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null  and createBy != ''">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null  and createTime != ''">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null  and updateBy != ''">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null  and updateTime != ''">
+                and t.update_time= #{updateTime}
+            </if>
         </trim>
-	</select>
- 
- 	<!-- 根据主键获取单条记录 -->
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
     <select id="selectSysNoticeById" resultMap="BaseResultMap" parameterType="Integer">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM sys_notice t
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice t
         <trim prefix="WHERE" prefixOverrides="AND|OR">
-            <if test="id != null" >
+            <if test="id != null">
                 t.id = #{id}
             </if>
         </trim>
-	</select>
-    
+    </select>
+    <select id="getOne" resultType="com.ityueqiangu.project.notice.domain.SysNotice">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="infoCode != null  and infoCode != ''">
+                and t.info_code= #{infoCode}
+            </if>
+        </trim> limit 1
+    </select>
+
     <!-- 插入不为NULL的字段 -->
     <insert id="insertSysNotice" parameterType="com.ityueqiangu.project.notice.domain.SysNotice"
-        keyProperty="id" keyColumn="id" useGeneratedKeys="true">
-        INSERT INTO sys_notice    
-        <trim prefix="(" suffix=")" suffixOverrides=",">	 
-          <if test="name != null">
-          	name,
-          </if>
-          <if test="type != null">
-          	type,
-          </if>
-          <if test="content != null">
-          	content,
-          </if>
-          <if test="isPublish != null">
-          	is_publish,
-          </if>
-          <if test="publishTime != null">
-          	publish_time,
-          </if>
-          <if test="publishBy != null">
-          	publish_by,
-          </if>
-          <if test="isEnable != null">
-          	is_enable,
-          </if>
-          <if test="remark != null">
-          	remark,
-          </if>
-          <if test="isDeleted != null">
-          	is_deleted,
-          </if>
-          <if test="createBy != null">
-          	create_by,
-          </if>
-          <if test="createTime != null">
-          	create_time,
-          </if>
-          <if test="updateBy != null">
-          	update_by,
-          </if>
-          <if test="updateTime != null">
-          	update_time,
-          </if>
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="infoCode != null">
+                info_code,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="isPublish != null">
+                is_publish,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="publishBy != null">
+                publish_by,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
         </trim>
-        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
-          <if test="name != null" >
-            #{name},                    
-          </if>
-          <if test="type != null" >
-            #{type},                    
-          </if>
-          <if test="content != null" >
-            #{content},                    
-          </if>
-          <if test="isPublish != null" >
-            #{isPublish},                    
-          </if>
-          <if test="publishTime != null" >
-            #{publishTime},                    
-          </if>
-          <if test="publishBy != null" >
-            #{publishBy},                    
-          </if>
-          <if test="isEnable != null" >
-            #{isEnable},                    
-          </if>
-          <if test="remark != null" >
-            #{remark},                    
-          </if>
-          <if test="isDeleted != null" >
-            #{isDeleted},                    
-          </if>
-          <if test="createBy != null" >
-            #{createBy},                    
-          </if>
-          <if test="createTime != null" >
-            #{createTime},                    
-          </if>
-          <if test="updateBy != null" >
-            #{updateBy},                    
-          </if>
-          <if test="updateTime != null" >
-            #{updateTime},                    
-          </if>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="infoCode != null" >
+                #{infoCode},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="isPublish != null">
+                #{isPublish},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime},
+            </if>
+            <if test="publishBy != null">
+                #{publishBy},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
         </trim>
-    </insert>    
-    
+    </insert>
+
     <!-- 更新不为NULL的字段 -->
     <update id="updateSysNotice" parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
-    UPDATE sys_notice
-    <set>
-       <if test="name != null" >
-         name=#{name},                 
-       </if>
-       <if test="type != null" >
-         type=#{type},                 
-       </if>
-       <if test="content != null" >
-         content=#{content},                 
-       </if>
-       <if test="isPublish != null" >
-         is_publish=#{isPublish},                 
-       </if>
-       <if test="publishTime != null" >
-         publish_time=#{publishTime},                 
-       </if>
-       <if test="publishBy != null" >
-         publish_by=#{publishBy},                 
-       </if>
-       <if test="isEnable != null" >
-         is_enable=#{isEnable},                 
-       </if>
-       <if test="remark != null" >
-         remark=#{remark},                 
-       </if>
-       <if test="isDeleted != null" >
-         is_deleted=#{isDeleted},                 
-       </if>
-       <if test="createBy != null" >
-         create_by=#{createBy},                 
-       </if>
-       <if test="createTime != null" >
-         create_time=#{createTime},                 
-       </if>
-       <if test="updateBy != null" >
-         update_by=#{updateBy},                 
-       </if>
-       <if test="updateTime != null" >
-         update_time=#{updateTime},                 
-       </if>
-    </set>
-    WHERE id = #{id}
+        UPDATE sys_notice
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="infoCode != null" >
+                info_code=#{infoCode},
+            </if>
+            <if test="type != null">
+                type=#{type},
+            </if>
+            <if test="content != null">
+                content=#{content},
+            </if>
+            <if test="isPublish != null">
+                is_publish=#{isPublish},
+            </if>
+            <if test="publishTime != null">
+                publish_time=#{publishTime},
+            </if>
+            <if test="publishBy != null">
+                publish_by=#{publishBy},
+            </if>
+            <if test="isEnable != null">
+                is_enable=#{isEnable},
+            </if>
+            <if test="remark != null">
+                remark=#{remark},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted=#{isDeleted},
+            </if>
+            <if test="createBy != null">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by=#{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
     </update>
 
-	<!-- 根据主键删除记录 -->
-	<delete id="deleteSysNoticeById" parameterType="Integer">
+    <!-- 根据主键删除记录 -->
+    <delete id="deleteSysNoticeById" parameterType="Integer">
         delete from sys_notice where id = #{id}
 	</delete>
-    
+
     <!-- 根据条件删除记录 -->
-	<delete id="deleteSysNoticeByCondition" parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
-        delete from sys_notice 
-        <trim prefix="WHERE" prefixOverrides="AND | OR">            
-           <if test="id != null  and id != ''" >
-             and t.id= #{id} 
-           </if>
-           <if test="name != null  and name != ''" >
-             and t.name= #{name} 
-           </if>
-           <if test="type != null  and type != ''" >
-             and t.type= #{type} 
-           </if>
-           <if test="content != null  and content != ''" >
-             and t.content= #{content} 
-           </if>
-           <if test="isPublish != null  and isPublish != ''" >
-             and t.is_publish= #{isPublish} 
-           </if>
-           <if test="publishTime != null  and publishTime != ''" >
-             and t.publish_time= #{publishTime} 
-           </if>
-           <if test="publishBy != null  and publishBy != ''" >
-             and t.publish_by= #{publishBy} 
-           </if>
-           <if test="isEnable != null  and isEnable != ''" >
-             and t.is_enable= #{isEnable} 
-           </if>
-           <if test="remark != null  and remark != ''" >
-             and t.remark= #{remark} 
-           </if>
-           <if test="isDeleted != null  and isDeleted != ''" >
-             and t.is_deleted= #{isDeleted} 
-           </if>
-           <if test="createBy != null  and createBy != ''" >
-             and t.create_by= #{createBy} 
-           </if>
-           <if test="createTime != null  and createTime != ''" >
-             and t.create_time= #{createTime} 
-           </if>
-           <if test="updateBy != null  and updateBy != ''" >
-             and t.update_by= #{updateBy} 
-           </if>
-           <if test="updateTime != null  and updateTime != ''" >
-             and t.update_time= #{updateTime} 
-           </if>
+    <delete id="deleteSysNoticeByCondition" parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
+        delete from sys_notice
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null  and id != ''">
+                and t.id= #{id}
+            </if>
+            <if test="name != null  and name != ''">
+                and t.name= #{name}
+            </if>
+            <if test="infoCode != null  and infoCode != ''" >
+                and t.info_code= #{infoCode}
+            </if>
+            <if test="type != null  and type != ''">
+                and t.type= #{type}
+            </if>
+            <if test="content != null  and content != ''">
+                and t.content= #{content}
+            </if>
+            <if test="isPublish != null  and isPublish != ''">
+                and t.is_publish= #{isPublish}
+            </if>
+            <if test="publishTime != null  and publishTime != ''">
+                and t.publish_time= #{publishTime}
+            </if>
+            <if test="publishBy != null  and publishBy != ''">
+                and t.publish_by= #{publishBy}
+            </if>
+            <if test="isEnable != null  and isEnable != ''">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null  and remark != ''">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null  and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null  and createBy != ''">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null  and createTime != ''">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null  and updateBy != ''">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null  and updateTime != ''">
+                and t.update_time= #{updateTime}
+            </if>
         </trim>
-	</delete>
+    </delete>
 
 </mapper>

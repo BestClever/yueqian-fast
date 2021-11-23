@@ -23,9 +23,9 @@
                 <ul class="layui-nav" lay-filter="mine">
                     <li class="layui-nav-item">
                         <a href="">
-                            <img th:if="${not #strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
-                                 th:src="${session.activerUser.getUserInfo().getAvatar()}" class="layui-nav-img">
-                            <img th:if="${#strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
+                            <img th:if="${not #strings.isEmpty(session.activerUser.getAvatar())}"
+                                 th:src="${session.activerUser.getAvatar()}" class="layui-nav-img">
+                            <img th:if="${#strings.isEmpty(session.activerUser.getAvatar())}"
                                  th:src="@{/component/portal/image/header.png}" class="layui-nav-img">
                             我</a>
                         <dl class="layui-nav-child">
@@ -113,11 +113,11 @@
 <th:block th:include="portal/common/include :: footer"/>
 <script>
 
-    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl','common'], function () {
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl','topbar'], function () {
         let $ = layui.jquery,
             carousel = layui.carousel,
             laypage = layui.laypage,
-            common = layui.common,
+            topbar = layui.topbar,
             laytpl = layui.laytpl;
     })
 </script>

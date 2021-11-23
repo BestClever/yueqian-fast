@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <head>
-        <th:block th:include="portal/common/include :: header('跃迁谷服务平台首页')"/>
-    </head>
+    <th:block th:include="portal/common/include :: header('跃迁谷服务平台首页')"/>
 </head>
 <body>
 <div class="content index">
@@ -38,7 +36,30 @@
                     <span>最新通知</span>
                     <span style="font-size: 12px;color: grey">/ NOTICES</span>
                 </div>
-                <div class="layui-card-body" id="notice_div">
+                <div class="layui-card-body layui-card-content" id="notice_div">
+<!--                    <a href="">-->
+<!--                        <ul>-->
+<!--                            <li>-->
+<!--                                <div class="notice-item">-->
+<!--                                    <div class="yueqian-overflow">这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻</div>-->
+<!--                                    <div>2021-11-23</div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </a>-->
+<!--                    <a>-->
+<!--                        <ul>-->
+<!--                            <li>-->
+<!--                                <div style="display: flex;justify-content: space-between">-->
+<!--                                    <div class="yueqian-overflow">这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻</div>-->
+<!--                                    <div>2021-11-23</div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </a>-->
+<!--                    <ul>-->
+<!--                        <li>fdsfasdfasd</li>-->
+<!--                    </ul>-->
                 </div>
                 <div id="notice_page" class="notice_page_div" style="position: absolute;bottom: 0;right: 15px">
                 </div>
@@ -52,13 +73,16 @@
                 </div>
                 <div class="layui-card-body">
                     <p>亲爱的家长们：</p>
-                    <p style="text-indent:1em;">　　一所幼儿园教师的爱心、责任心、远比幼儿园的漂亮来得更重要。孩子在幼儿园学会生活、学会做人、学会求知、学会生存、学会审美，养成自信、好奇、坚毅、交往合作、关心他人的良好精神品质以及保持轻松愉快的情绪，这比机械的学这学那重要的多！</p>
-                    <p style="text-indent:1em;">　　因此，一直以来，上海市荷花池幼儿园的教师们时时牢记着自己肩负的职责，处处提醒着自己要用快乐去迎接每一天。用真情去爱每一个孩子，用心去交流，成为他们成长中的启蒙者。每天，当我们从家长手中接过孩子的那一瞬，我们深知家长对于我们的信赖，寄于我们的厚望，感谢各位家长对于我们工作的信任、理解与支持！</p>
+                    <p style="text-indent:1em;">
+                        　　一所幼儿园教师的爱心、责任心、远比幼儿园的漂亮来得更重要。孩子在幼儿园学会生活、学会做人、学会求知、学会生存、学会审美，养成自信、好奇、坚毅、交往合作、关心他人的良好精神品质以及保持轻松愉快的情绪，这比机械的学这学那重要的多！</p>
+                    <p style="text-indent:1em;">
+                        　　因此，一直以来，上海市荷花池幼儿园的教师们时时牢记着自己肩负的职责，处处提醒着自己要用快乐去迎接每一天。用真情去爱每一个孩子，用心去交流，成为他们成长中的启蒙者。每天，当我们从家长手中接过孩子的那一瞬，我们深知家长对于我们的信赖，寄于我们的厚望，感谢各位家长对于我们工作的信任、理解与支持！</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div th:replace="../templates/portal/footer :: footer"></div>
 
 <script id="newsLi" type="text/html">
@@ -78,25 +102,40 @@
 </script>
 
 <script id="noticeLi" type="text/html">
-    <ul id="notice_ul">
-        {{# layui.each(d, function(index, item){ }}
-        <li>
-            <a href="/portal/noticeDetail?id={{item.id}}">
-                <span>{{item.noticeTitle}}</span>
-                <span style="font-size: 12px; color: grey">{{item.createTime}}</span>
-            </a>
-        </li>
-        {{# }); }}
-        {{# if(d.length === 0){ }}
-        暂无通知
-        {{# } }}
-    </ul>
+    {{# layui.each(d, function(index, item){ }}
+    <a href="/portal/information/detail/${item.infoCode}">
+        <ul>
+            <li>
+                <div class="notice-item">
+                    <div class="yueqian-overflow">{{item.name}}</div>
+                    <div>{{item.publishTime}}</div>
+                </div>
+            </li>
+        </ul>
+    </a>
+    {{# }); }}
+    {{# if(d.length === 0){ }}
+    暂无通知
+    {{# } }}
+<!--    <ul id="notice_ul">-->
+<!--        {{# layui.each(d, function(index, item){ }}-->
+<!--        <li>-->
+<!--            <a href="/portal/noticeDetail?id={{item.id}}">-->
+<!--                <span>{{item.noticeTitle}}</span>-->
+<!--                <span style="font-size: 12px; color: grey">{{item.createTime}}</span>-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        {{# }); }}-->
+<!--        {{# if(d.length === 0){ }}-->
+<!--        暂无通知-->
+<!--        {{# } }}-->
+<!--    </ul>-->
 </script>
 
 <th:block th:include="portal/common/include :: footer"/>
 
 <script>
-    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl','common'], function () {
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl', 'common'], function () {
         var $ = layui.jquery;
         var carousel = layui.carousel;
         var laypage = layui.laypage;
@@ -135,8 +174,8 @@
                 }
             });
         };
-        (function() {
-            $.post('/ops/notice/page', {page: 1, limit: 10, isValid:'0'}, function (res) {
+        (function () {
+            $.post('/ops/notice/page', {page: 1, limit: 10, isValid: '0'}, function (res) {
                 renderNotice(res.data);
                 var total = res.count;
                 pageNotice(total);
@@ -166,8 +205,8 @@
                 }
             });
         };
-        (function() {
-            $.post('/ops/news/page', {page: 1, limit: 10, isValid:'0'}, function (res) {
+        (function () {
+            $.post('/ops/news/page', {page: 1, limit: 10, isValid: '0'}, function (res) {
                 renderNews(res.data);
                 var total = res.count;
                 pageNews(total);

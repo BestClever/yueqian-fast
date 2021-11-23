@@ -86,13 +86,22 @@ html { height: 100%; }
 .icon-jiaoliu:before{content:"\e6b7"}
 .icon-renzheng:before{content:"\e62e"}
 
+/*辅助*/
+.yueqian-overflow{
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+a:hover{color: #2d8cf0; transition: all .3s;}
+
 /*头部*/
 .layui-row-header { padding: 10px 50px;background-color: rgb(60, 64, 76);color: rgb(127, 198, 147);display: flex;justify-content: space-between;}
 .layui-row-header .topInfo-left { display: flex }
 .layui-row-header .topInfo-left i{margin-right: 10px }
 .layui-row-header .topInfo-left p { font-size: 1.8rem;color: white;font-family: Verdana, Geneva, sans-serif;}
-.layui-row-header .topinfo-right .no-login a{ color: white }
-.layui-row-header .topinfo-right .no-login a:hover { text-decoration: underline; }
+.layui-row-header .topinfo-right .no-login a{ color: white;}
+.layui-row-header .topinfo-right .no-login a:hover { text-decoration: none;color: #2d8cf0; transition: all .3s; }
 .layui-row-header .topinfo-right .no-login span{ margin: 0px 20px; padding: 3px 10px; border: 1px solid white; }
 .layui-row-header .topinfo-right .layui-nav {background-color: rgb(60, 64, 76);height: 50px; margin-top: -10px;}
 .layui-nav-header {border-radius: 0px;}
@@ -107,6 +116,8 @@ html { height: 100%; }
 .index .main-content  ul li a { display: flex; justify-content: space-between; }
 .index .main-content  ul li a:hover { text-decoration: underline; }
 .index .main-content .layui-card-wish i{ color: rgb(62,181,237)}
+.index .main-content .layui-card-content a{cursor: pointer;font-size: 14px;}
+.index .main-content .layui-card-content .notice-item{display: flex;justify-content: space-between}
 
 
 /*用户*/

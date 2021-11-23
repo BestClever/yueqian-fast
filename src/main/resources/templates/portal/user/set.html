@@ -16,21 +16,21 @@
             <div th:case="true">
                     <span class="no-login">
                     <a href="/portal/login">登录</a>
-                    <span><a href="/sys/toRegister">注册</a></span>
+                    <span><a href="/portal/register">注册</a></span>
                 </span>
             </div>
             <div th:case="false">
                 <ul class="layui-nav" lay-filter="mine">
                     <li class="layui-nav-item">
                         <a href="">
-                            <img th:if="${not #strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
-                                 th:src="${session.activerUser.getUserInfo().getAvatar()}" class="layui-nav-img">
-                            <img th:if="${#strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
+                            <img th:if="${not #strings.isEmpty(session.activerUser.getAvatar())}"
+                                 th:src="${session.activerUser.getAvatar()}" class="layui-nav-img">
+                            <img th:if="${#strings.isEmpty(session.activerUser.getAvatar())}"
                                  th:src="@{/component/portal/image/header.png}" class="layui-nav-img">
                             我</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="/portal/user">个人中心</a></dd>
-                            <dd><a href="/sys/toSignOut">退出登录</a></dd>
+                            <dd><a href="/user/user">个人中心</a></dd>
+                            <dd><a href="/portal/logout">退出登录</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -45,13 +45,13 @@
         <div class="layui-col-md2 left-nav">
             <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
                 <li class="layui-nav-item">
-                    <a href="/portal/user">
+                    <a href="/user/user">
                         <i class="layui-icon">&#xe612;</i>
                         用户中心
                     </a>
                 </li>
                 <li class="layui-nav-item layui-this">
-                    <a href="/portal/userSet">
+                    <a href="/user/userSet">
                         <i class="layui-icon">&#xe620;</i>
                         基本设置
                     </a>

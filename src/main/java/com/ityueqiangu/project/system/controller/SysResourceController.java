@@ -132,7 +132,7 @@ public class SysResourceController extends BaseController {
      */
     @PostMapping("/delete")
     @ResponseBody
-    public ResponseInfo delete(@RequestBody Integer id) {
+    public ResponseInfo delete(Integer id) {
         return toAjax(sysResourceService.deleteSysResourceById(id));
     }
 
