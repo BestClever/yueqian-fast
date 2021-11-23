@@ -37,4 +37,6 @@ public class SysNotice extends BaseEntity{
 	private Integer publishBy;
 	/** 是否启用 */
 	private String isEnable;
+	/*发布者名称*/
+	private String publishName;
 }

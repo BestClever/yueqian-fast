@@ -13,12 +13,17 @@ public class ActiverUser<T> {
 
     private Integer id;
 
+    /*用户id*/
+    private Integer userId;
+
     private String userName;
 
     private String loginName;
 
     @JsonIgnore
     private String password;
+    /** 头像 */
+    private String avatar;
 
     private String isDeleted;
 

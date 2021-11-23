@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <th:block th:include="../templates/portal/common/include :: header('跃迁谷服务平台用户中心')"/>
+    </head>
+</head>
+<body>
+<div class="layui-row-header">
+    <div class="topInfo-left">
+        <i class="layui-icon layui-icon-theme"></i>
+        <p><a href="/portal/index" style="color: white">跃迁谷基础服务平台欢迎您！</a></p>
+    </div>
+    <div class="topinfo-right">
+        <div th:switch="${session.activerUser == null}">
+            <div th:case="true">
+                    <span class="no-login">
+                    <a href="/portal/login">登录</a>
+                    <span><a href="/sys/toRegister">注册</a></span>
+                </span>
+            </div>
+            <div th:case="false">
+                <ul class="layui-nav" lay-filter="mine">
+                    <li class="layui-nav-item">
+                        <a href="">
+                            <img th:if="${not #strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
+                                 th:src="${session.activerUser.getUserInfo().getAvatar()}" class="layui-nav-img">
+                            <img th:if="${#strings.isEmpty(session.activerUser.getUserInfo().getAvatar())}"
+                                 th:src="@{/component/portal/image/header.png}" class="layui-nav-img">
+                            我</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/portal/user">个人中心</a></dd>
+                            <dd><a href="/sys/toSignOut">退出登录</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content userCenter">
+    <div class="main-container">
+        <div class="layui-col-md2">
+        </div>
+        <div class="layui-col-md2 left-nav" >
+            <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+                <li class="layui-nav-item layui-this">
+                    <a href="/portal/user">
+                        <i class="layui-icon">&#xe612;</i>
+                        用户中心
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/portal/userSet">
+                        <i class="layui-icon">&#xe620;</i>
+                        基本设置
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="message.html">
+                        <i class="layui-icon">&#xe611;</i>
+                        我的消息
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-col-md7 right-content layui-panel">
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <ul class="layui-tab-title" id="LAY_mine">
+                    <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span>89</span>）</li>
+                    <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖（<span>16</span>）</li>
+                </ul>
+                <div class="layui-tab-content" style="padding: 20px 0;">
+                    <div class="layui-tab-item layui-show">
+                        <ul class="mine-view jie-row">
+                            <li>
+                                <a class="jie-title" href="/jie/8116.html" target="_blank">LayIM 3.5.0 发布，移动端版本大更新（带演示图）</a>
+                                <i>2017/3/14 上午8:30:00</i>
+                                <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                                <em>661阅/10答</em>
+                            </li>
+                            <li>
+                                <a class="jie-title" href="/jie/8116.html" target="_blank">LayIM 3.5.0 发布，移动端版本大更新（带演示图）</a>
+                                <i>2017/3/14 上午8:30:00</i>
+                                <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                                <em>661阅/10答</em>
+                            </li>
+                            <li>
+                                <a class="jie-title" href="/jie/8116.html" target="_blank">LayIM 3.5.0 发布，移动端版本大更新（带演示图）</a>
+                                <i>2017/3/14 上午8:30:00</i>
+                                <a class="mine-edit" href="/jie/edit/8116">编辑</a>
+                                <em>661阅/10答</em>
+                            </li>
+                        </ul>
+                        <div id="LAY_page"></div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <ul class="mine-view jie-row">
+                            <li>
+                                <a class="jie-title" href="http://fly.layui.com/jie/5366.html" target="_blank">layui 常见问题的处理和实用干货集锦</a>
+                                <i>收藏于23小时前</i>  </li>
+                        </ul>
+                        <div id="LAY_page1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="../templates/portal/footer :: footer"></div>
+
+<th:block th:include="portal/common/include :: footer"/>
+<script>
+
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl'], function () {
+        let $ = layui.jquery,
+            carousel = layui.carousel,
+            laypage = layui.laypage,
+            laytpl = layui.laytpl;
+    })
+</script>
+
+</body>
+</html>

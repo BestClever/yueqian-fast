@@ -16,6 +16,8 @@
         <result column="create_time" property="createTime" />
         <result column="update_by" property="updateBy" />
         <result column="update_time" property="updateTime" />
+        <result column="publish_name" property="publishName"/>
+
 	</resultMap>  
     
     <!-- 表字段 -->
@@ -39,8 +41,8 @@
     <!-- 分页查询 -->
     <select id="selectSysNoticeList" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
 		SELECT         
-        	<include refid="baseColumns" />
-		FROM sys_notice t
+        	<include refid="baseColumns" />,s.user_name as publish_name
+		FROM sys_notice t left join sys_user s on t.create_by = s.id
         <trim prefix="WHERE" prefixOverrides="AND | OR">            
            <if test="id != null  and id != ''" >
              and t.id= #{id} 

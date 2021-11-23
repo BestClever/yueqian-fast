@@ -167,6 +167,10 @@ public class SysUserController extends BaseController {
         sysUserService.updateSysUserByCondtion(sysUser);
         //重新刷新
         SysUser result = sysUserService.selectSysUserById(userInfo.getUserInfo().getId());
+        //刷新缓存中的用户信息
+        userInfo.setUserId(result.getId());
+        userInfo.setAvatar(result.getAvatar());
+        userInfo.setUserName(result.getUserName());
         userInfo.setUserInfo(result);
         UserUtil.refreshUser(userInfo);
         return ResponseInfo.success("更新成功！");
@@ -232,8 +236,8 @@ public class SysUserController extends BaseController {
         ActiverUser<SysUser> currentUser = UserUtil.getCurrentUser();
         sysUser.setId(currentUser.getUserInfo().getId());
         sysUserService.updateSysUserByCondtion(sysUser);
-        //重新设置 session中的 值
-        currentUser.getUserInfo().setAvatar(sysUser.getAvatar());
+        //刷新缓存中的用户信息
+        currentUser.setAvatar(sysUser.getAvatar());
         UserUtil.refreshUser(currentUser);
         return ResponseInfo.success("更新成功！");
     }

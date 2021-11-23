@@ -24,7 +24,6 @@ layui.define(['jquery'],function (exports) {
             }
         }
         , success: function (res, succFun, failFun) {//图片上传完成回调 根据自己需要修改
-            debugger
             if (res[this.response.statusName] == this.response.statusCode.ok) {
                 succFun(res[this.response.dataName]);
             } else {

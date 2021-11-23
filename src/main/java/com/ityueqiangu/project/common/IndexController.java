@@ -123,7 +123,8 @@ public class IndexController {
         if (!StrUtil.equals(SecureUtil.md5(activerUser.getPassword()), resultSysUser.getPassword())) {
             throw new BusinessException("密码错误！");
         }
-        activerUser.setId(resultSysUser.getId());
+        activerUser.setUserId(resultSysUser.getId());
+        activerUser.setAvatar(resultSysUser.getAvatar());
         activerUser.setUserName(resultSysUser.getUserName());
         activerUser.setUserInfo(resultSysUser);
         request.getSession().setAttribute("activerUser", activerUser);

@@ -1,5 +1,7 @@
 package com.ityueqiangu.project.notice.service.impl;
 
+import cn.hutool.core.date.DateUtil;
+import com.ityueqiangu.common.utils.UserUtil;
 import com.ityueqiangu.project.notice.domain.SysNotice;
 import com.ityueqiangu.project.notice.mapper.SysNoticeMapper;
 import com.ityueqiangu.project.notice.service.ISysNoticeService;
@@ -26,7 +28,8 @@ public class SysNoticeServiceImpl implements ISysNoticeService{
      * @return 返回集合，没有返回空List
      */
      public List<SysNotice> selectSysNoticeList(SysNotice sysNotice) {
-       return sysNoticeMapper.selectSysNoticeList(sysNotice);
+         List<SysNotice> sysNotices = sysNoticeMapper.selectSysNoticeList(sysNotice);
+         return sysNotices;
     }
 
 
@@ -47,6 +50,8 @@ public class SysNoticeServiceImpl implements ISysNoticeService{
      * @return 返回ResultInfo
      */
     public Integer insertSysNotice(SysNotice sysNotice) {
+        sysNotice.setPublishBy(UserUtil.getCurrentUser().getId());
+        sysNotice.setPublishTime(DateUtil.date());
     	return sysNoticeMapper.insertSysNotice(sysNotice);
     }
 	

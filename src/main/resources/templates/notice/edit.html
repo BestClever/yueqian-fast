@@ -38,7 +38,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">资讯内容</label>
                     <div class="layui-input-block">
-                        <textarea name="content" id="LAY_TINYMCE" cols="30" rows="10"></textarea>
+                        <textarea name="content" id="LAY_TINYMCE" cols="30" rows="10" th:text="${sysNotice.content}"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -82,13 +82,11 @@
         //初始化 文本编辑器
         var edit = tinymce.render({
             elem: "#LAY_TINYMCE",
-            height: 400,
-            init_instance_callback: function (editor) {
-                tinyMCE.editors["LAY_TINYMCE"].insertContent([[${sysNotice.content}]]);
-            }
+            height: 400
         });
 
         form.on('submit(update)', function (data) {
+            data.field.content = edit.getContent();
             $.ajax({
                 url: '/sysNotice/update',
                 data: JSON.stringify(data.field),

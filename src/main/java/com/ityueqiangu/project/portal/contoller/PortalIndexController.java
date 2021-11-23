@@ -31,39 +31,66 @@ public class PortalIndexController {
 
     /**
      * 登录
+     *
+     * @return
      * @author FlowerStone
      * @date 2021年11月18日 0018 10:48:25
-     * @return
      */
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "portal/login";
     }
 
     /**
-     *  注册
+     * 注册
+     *
+     * @return
      * @author FlowerStone
      * @date 2021年11月18日 0018 10:48:17
-     * @return
      */
     @GetMapping("/register")
-    public String register(){
+    public String register() {
         return "portal/register";
     }
 
     /**
      * 跳转到主页
+     *
+     * @return
      * @author FlowerStone
      * @date 2021年11月19日 0019 16:15:04
-     * @return
      */
     @GetMapping("/index")
-    public String index(ModelMap mmp){
+    public String index(ModelMap mmp) {
         Carousel carousel = new Carousel();
         carousel.setType(Constants.FAIL);
         carousel.setIsDisplay(Constants.SUCCESS);
         List<Carousel> carousels = carouselService.selectCarouselList(carousel);
-        mmp.addAttribute("carouselList",carousels);
+        mmp.addAttribute("carouselList", carousels);
         return "portal/index";
     }
+
+    /**
+     * 个人中心
+     *
+     * @return
+     * @author FlowerStone
+     * @date 2021年11月23日 0023 9:56:12
+     */
+    @GetMapping(value = "/user")
+    public String userIndex() {
+        return "portal/user/index";
+    }
+
+    /**
+     * 用户设置
+     * @author FlowerStone
+     * @date 2021年11月23日 0023 11:10:51
+     * @return
+     */
+    @GetMapping(value = "/userSet")
+    public String userSet(){
+        return "portal/user/set";
+    }
+
 }
