@@ -106,7 +106,7 @@
             </if>
         </trim>
     </select>
-    <select id="getOne" resultType="com.ityueqiangu.project.notice.domain.SysNotice">
+    <select id="getOne" resultMap="BaseResultMap" parameterType="com.ityueqiangu.project.notice.domain.SysNotice">
         SELECT
         <include refid="baseColumns"/>
         FROM sys_notice t

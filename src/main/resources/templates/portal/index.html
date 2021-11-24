@@ -31,38 +31,18 @@
         </div>
         <div class="layui-col-md4">
             <div class="layui-card layui-card-notice" style="position: relative">
-                <div class="layui-card-header">
-                    <i class="layui-icon layui-icon-speaker" style="color: #FFA500"></i>
-                    <span>最新通知</span>
-                    <span style="font-size: 12px;color: grey">/ NOTICES</span>
+                <div class="layui-card-header layui-card-title">
+                    <div>
+                        <i class="layui-icon layui-icon-speaker" style="color: #FFA500"></i>
+                        <span>最新咨询</span>
+                        <span style="font-size: 12px;color: grey">/ INFORMATION</span>
+                    </div>
+                    <div>
+                        <a>查看更多</a>
+                    </div>
                 </div>
-                <div class="layui-card-body layui-card-content" id="notice_div">
-<!--                    <a href="">-->
-<!--                        <ul>-->
-<!--                            <li>-->
-<!--                                <div class="notice-item">-->
-<!--                                    <div class="yueqian-overflow">这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻</div>-->
-<!--                                    <div>2021-11-23</div>-->
-<!--                                </div>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </a>-->
-<!--                    <a>-->
-<!--                        <ul>-->
-<!--                            <li>-->
-<!--                                <div style="display: flex;justify-content: space-between">-->
-<!--                                    <div class="yueqian-overflow">这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻这就是一个新闻</div>-->
-<!--                                    <div>2021-11-23</div>-->
-<!--                                </div>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </a>-->
-<!--                    <ul>-->
-<!--                        <li>fdsfasdfasd</li>-->
-<!--                    </ul>-->
-                </div>
-                <div id="notice_page" class="notice_page_div" style="position: absolute;bottom: 0;right: 15px">
-                </div>
+                <div class="layui-card-body layui-card-content" id="information_div"></div>
+                <div id="information_page" style="position: absolute;bottom: 0;right: 15px"></div>
             </div>
         </div>
         <div class="layui-col-md4">
@@ -101,9 +81,9 @@
     </ul>
 </script>
 
-<script id="noticeLi" type="text/html">
+<script id="informationTpl" type="text/html">
     {{# layui.each(d, function(index, item){ }}
-    <a href="/portal/information/detail/${item.infoCode}">
+    <a href="/portal/information/detail/{{item.infoCode}}" title="{{item.name}}">
         <ul>
             <li>
                 <div class="notice-item">
@@ -117,19 +97,6 @@
     {{# if(d.length === 0){ }}
     暂无通知
     {{# } }}
-<!--    <ul id="notice_ul">-->
-<!--        {{# layui.each(d, function(index, item){ }}-->
-<!--        <li>-->
-<!--            <a href="/portal/noticeDetail?id={{item.id}}">-->
-<!--                <span>{{item.noticeTitle}}</span>-->
-<!--                <span style="font-size: 12px; color: grey">{{item.createTime}}</span>-->
-<!--            </a>-->
-<!--        </li>-->
-<!--        {{# }); }}-->
-<!--        {{# if(d.length === 0){ }}-->
-<!--        暂无通知-->
-<!--        {{# } }}-->
-<!--    </ul>-->
 </script>
 
 <th:block th:include="portal/common/include :: footer"/>
@@ -151,34 +118,41 @@
             //,anim: 'updown' //切换动画方式
         });
 
-        /*通知列表渲染*/
-        var renderNotice = function (data) {
-            var getTpl = document.getElementById("noticeLi").innerHTML;
+        /*新闻列表渲染*/
+        var renderInformation = function (data) {
+            var getTpl = document.getElementById("informationTpl").innerHTML;
             laytpl(getTpl).render(data, function (html) {
-                document.getElementById("notice_div").innerHTML = html;
+                document.getElementById("information_div").innerHTML = html;
             });
         }
-        var getNotice = function (page, limit) {
-            $.post('/ops/notice/page', {page: page, limit: limit}, function (res) {
-                renderNotice(res.data);
+        var getInformation = function (page, limit) {
+            $.get('/portal/information/listInformation', {page: page, limit: limit,orderByColumn:'createTime',isAsc:"desc"}, function (res) {
+                if(res.code == 0){
+                    renderInformation(res.data);
+                }else {
+                    renderInformation(null);
+                }
             })
         }
-        var pageNotice = function (total) {
+        var pageInformation = function (total) {
             laypage.render({
-                elem: 'notice_page'
+                elem: 'information_page'
                 , count: total
+                ,groups: 3 //连续出现的页码个数 默认5
                 , jump: function (obj, first) {
                     if (!first) {
-                        getNotice(obj.curr, obj.limit);
+                        getInformation(obj.curr, obj.limit);
                     }
                 }
             });
         };
         (function () {
-            $.post('/ops/notice/page', {page: 1, limit: 10, isValid: '0'}, function (res) {
-                renderNotice(res.data);
-                var total = res.count;
-                pageNotice(total);
+            $.get('/portal/information/listInformation', {page: 1, limit: 10,orderByColumn:'createTime',isAsc:"desc"}, function (res) {
+                if(res.code==0){
+                    renderInformation(res.data);
+                    let total = res.total;
+                    pageInformation(total);
+                }
             })
         })();
 
@@ -190,7 +164,7 @@
             });
         }
         var getNews = function (page, limit) {
-            $.post('/ops/news/page', {page: page, limit: limit}, function (res) {
+            $.get('/ops/news/page', {page: page, limit: limit}, function (res) {
                 renderNews(res.data);
             })
         }
@@ -205,13 +179,13 @@
                 }
             });
         };
-        (function () {
-            $.post('/ops/news/page', {page: 1, limit: 10, isValid: '0'}, function (res) {
-                renderNews(res.data);
-                var total = res.count;
-                pageNews(total);
-            })
-        })();
+        // (function () {
+        //     $.post('/ops/news/page', {page: 1, limit: 10, isValid: '0'}, function (res) {
+        //         renderNews(res.data);
+        //         var total = res.count;
+        //         pageNews(total);
+        //     })
+        // })();
     });
 </script>
 </body>

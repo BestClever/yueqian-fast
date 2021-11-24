@@ -32,7 +32,7 @@ public class SysNotice extends BaseEntity{
 	/** 是否发布 */
 	private String isPublish;
 	/** 发布时间 */
-	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:ss:mm")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date publishTime;
 	/** 发布人 */
