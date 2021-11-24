@@ -50,6 +50,10 @@ public class ResponseInfo extends HashMap<String, Object> {
          */
         WARN(301),
         /**
+         *  未授权
+         */
+        UNAUTHORIZED(401),
+        /**
          * 错误
          */
         ERROR(500);
@@ -209,6 +213,12 @@ public class ResponseInfo extends HashMap<String, Object> {
      */
     public static ResponseInfo error(String msg, Object data) {
         ResponseInfo responseInfo = new ResponseInfo(Type.ERROR, msg, data);
+        responseInfo.put(SUCCESS_SIGN, false);
+        return responseInfo;
+    }
+
+    public static ResponseInfo error(Type code,String msg,Object data){
+        ResponseInfo responseInfo = new ResponseInfo(code, msg, data);
         responseInfo.put(SUCCESS_SIGN, false);
         return responseInfo;
     }

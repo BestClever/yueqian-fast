@@ -40,8 +40,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             // Ajax请求会话过期处理
             if (ServletUtils.isAjaxRequest(request)) {
                 response.setHeader("SessionStatus", "sessionTimeOut");
+                response.setHeader("ServerType", "pc");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//没有权限
-                ServletUtils.responseOutWithJson(response, ResponseInfo.error("用户未授权，请重新登录"));
+                ServletUtils.responseOutWithJson(response, ResponseInfo.error(ResponseInfo.Type.UNAUTHORIZED,"用户未授权，请重新登录",null));
                 return false;
             }
             String path = session.getServletContext().getContextPath();
