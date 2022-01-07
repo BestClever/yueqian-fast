@@ -1,4 +1,4 @@
-package com.ityueqiangu.core.interceptor.impl;
+package com.ityueqiangu.core.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ityueqiangu.core.interceptor.RepeatSubmitInterceptor;

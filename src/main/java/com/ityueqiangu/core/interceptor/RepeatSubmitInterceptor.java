@@ -2,7 +2,7 @@ package com.ityueqiangu.core.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ityueqiangu.common.utils.ServletUtils;
-import com.ityueqiangu.core.interceptor.annotation.RepeatSubmit;
+import com.ityueqiangu.core.aspectj.annotation.RepeatSubmit;
 import com.ityueqiangu.core.web.domain.ResponseInfo;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

@@ -1,4 +1,4 @@
-package com.ityueqiangu.core.interceptor.annotation;
+package com.ityueqiangu.core.aspectj.annotation;
 
 import java.lang.annotation.*;
 
