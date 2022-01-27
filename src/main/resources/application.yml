@@ -5,144 +5,84 @@ framework:
   # 版本
   version: 1.0
   # 版权年份
-  copyrightYear: 2020
+  copyrightYear: 2022
   # 实例演示开关
   demoEnabled: false
   # 文件路径 示例（ Windows配置D:/ityueqiangu/uploadPath，Linux配置 /home/ityueqiangu/uploadPath）
   profile: D:/ityueqiangu/uploadPath
   # 获取ip地址开关
-  addressEnabled: true
+  addressEnabled: false
 
-# 开发环境配置
+
+
 server:
-  # 服务器的HTTP端口，默认为80
-  port: 8081
-  servlet:
-    # 应用的访问路径
-    context-path: /
-  tomcat:
-    # tomcat的URI编码
-    uri-encoding: UTF-8
-    # tomcat最大线程数，默认为200
-    max-threads: 800
-    # Tomcat启动初始化的线程数，默认值25
-    min-spare-threads: 30
- 
-# 日志配置
-logging:
-  level:
-    com.ityueqiangu: debug
-    org.springframework: warn
+  port: 8088
 
-# 用户配置
-user:
-  password:
-    # 密码错误{maxRetryCount}次锁定10分钟
-    maxRetryCount: 5
-
-# Spring配置
+# 数据库连接池
 spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://cdb-dzuvsk24.cd.tencentcdb.com:10075/stray_animal_adoption_platform?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: yun@2020
+    hikari:
+      # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+      connection-timeout: 60000
+      #此属性控制将测试连接的活动性的最长时间。此值必须小于connectionTimeout。可接受的最低验证超时为250毫秒。 默认值：5000
+      validation-timeout: 3000
+      # 最小连接数
+      minimum-idle: 10
+      # 最大连接数
+      maximum-pool-size: 10
+      # 自动提交
+      auto-commit: true
+      # 连接超时的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      idle-timeout: 60000
+      # 连接池名字
+      pool-name: DateSourceHikariCP
+      # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
+      max-lifetime: 60000
+      connection-test-query: SELECT 1
+
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
   # 模板引擎
   thymeleaf:
     mode: HTML
     encoding: utf-8
     # 禁用缓存
     cache: false
-  # 资源信息
-  messages:
-    # 国际化资源文件路径
-    basename: static/i18n/messages
-  jackson:
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
-  profiles: 
-    active: druid
-  # 文件上传
-  servlet:
-     multipart:
-       # 单个文件大小
-       max-file-size:  10MB
-       # 设置总上传的文件大小
-       max-request-size:  20MB
-  # 服务模块
-  devtools:
-    restart:
-      # 热部署开关
-      enabled: true
 
-# MyBatis
 mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.ityueqiangu.project.**.domain
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
-    mapperLocations: classpath:mybatis/**/*Mapper.xml
-    # 加载全局的配置文件
-    configLocation: classpath:mybatis/mybatis-config.xml
+  #typeAliasesPackage: com.ityueqiangu.project.**.domain
+  mapper-locations: classpath:mybatis/**/*Mapper.xml
+  #configuration-properties: classpath:mybatis/mybatis-config.xml
 
 # PageHelper分页插件
-pagehelper: 
+pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
-  params: count=countSql 
+  params: count=countSql
+# 打印sql
+logging:
+  level:
+    org.springframework: warn
+    com.ityueqiangu: debug
 
-# Shiro
-shiro:
-  user:
-    # 登录地址
-    loginUrl: /login
-    # 权限认证失败地址
-    unauthorizedUrl: /unauth
-    # 首页地址
-    indexUrl: /index
-    # 验证码开关
-    captchaEnabled: true
-    # 验证码类型 math 数组计算 char 字符
-    captchaType: math
-  cookie:
-    # 设置Cookie的域名 默认空，即当前访问的域名
-    domain: 
-    # 设置cookie的有效访问路径
-    path: /
-    # 设置HttpOnly属性
-    httpOnly: true
-    # 设置Cookie的过期时间，天为单位
-    maxAge: 30
-    # 设置密钥，务必保持唯一性（生成方式，直接拷贝到main运行即可）KeyGenerator keygen = KeyGenerator.getInstance("AES"); SecretKey deskey = keygen.generateKey(); System.out.println(Base64.encodeToString(deskey.getEncoded()));
-    cipherKey: zSyK5Kp6PZAAjlT+eeNMlg==
-  session:
-    # Session超时时间，-1代表永不过期（默认30分钟）
-    expireTime: 30
-    # 同步session到数据库的周期（默认1分钟）
-    dbSyncPeriod: 1
-    # 相隔多久检查一次session的有效性，默认就是10分钟
-    validationInterval: 10
-    # 同一个用户最大会话数，比如2的意思是同一个账号允许最多同时两个人登录（默认-1不限制）
-    maxSession: -1
-    # 踢出之前登录的/之后登录的用户，默认踢出之前登录的用户
-    kickoutAfter: false
-
-# 防止XSS攻击
-xss: 
-  # 过滤开关
-  enabled: true
-  # 排除链接（多个用逗号分隔）
-  excludes: /system/notice/*
-  # 匹配链接
-  urlPatterns: /system/*,/monitor/*,/tool/*
-
-# Swagger配置
-swagger:
-  # 是否开启swagger
-  enabled: true
-
-# 代码生成
-gen: 
-  # 作者
-  author: Clever、xia
-  # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
-  packageName: com.ityueqiangu.project.business
-  # 自动去除表前缀，默认是true
-  autoRemovePre: true
-  # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）
-  tablePrefix: sys_
+# 用户配置
+user:
+  indexUrl: /portal/index
+  password:
+    # 密码错误{maxRetryCount}次锁定10分钟
+    maxRetryCount: 5
