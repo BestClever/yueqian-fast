@@ -1,6 +1,7 @@
 package com.ityueqiangu.core.config;
 
 import com.ityueqiangu.common.constant.Constants;
+import com.ityueqiangu.core.interceptor.IsLoginInterceptor;
 import com.ityueqiangu.core.interceptor.LoginInterceptor;
 import com.ityueqiangu.core.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,11 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    private IsLoginInterceptor isLoginInterceptor;
+
     /*需要排除的请求*/
-    private static List<String> EXCLUDE_PATH = Arrays.asList("/", "/login", "/register","/portal/**", "/error","/profile/**", "/captcha/generate", "/register.html", "/index.html", "/admin/**", "/component/**", "/favicon.ico", "/yueqian.config.yml");
+    private static List<String> EXCLUDE_PATH = Arrays.asList("/", "/login", "/register","/portal/**", "/error","/profile/**", "/captcha/generate", "/register.html", "/index.html", "/test/**", "/admin/**", "/component/**", "/favicon.ico", "/yueqian.config.yml");
 
     /**
      * 默认首页的设置，当输入域名是可以自动跳转到默认指定的网页
@@ -61,5 +65,6 @@ public class ResourcesConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(EXCLUDE_PATH);
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(isLoginInterceptor).addPathPatterns("/**");
     }
 }
