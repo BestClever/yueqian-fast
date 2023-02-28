@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('角色授权')"/>
+</head>
+<body>
+<form action="" class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <ul class="dtree" data-id="1" id="resourceTreeId"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button class="yueqian-btn yueqian-btn-sm" type="reset">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-filter="saveFilter" lay-submit="" type="submit">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    layui.use(['dtree', 'form', 'jquery'], function () {
+        let dtree = layui.dtree;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        dtree.render({
+            elem: "#resourceTreeId",
+            method: "get",
+            url: "/admin/sysRole/getRoleResource?roleId=" + '[[${roleId}]]',
+            checkbar: true,
+            initLevel: "1",
+            checkbarType: "no-all",
+            skin: "layui",
+            dataStyle: "layuiStyle",  //使用layui风格的数据格式
+            dataFormat: "list",  //配置data的风格为list
+            response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
+            done: function(res, $ul, first){
+                if(first) {
+                    // 反选半选状态
+                    dtree.initNoAllCheck("resourceTreeId");
+                }
+            }
+        });
+
+        form.on('submit(saveFilter)', function (data) {
+            let param = dtree.getCheckbarNodesParam("resourceTreeId");
+            let ids = param.map(elemnt=>elemnt.nodeId);
+            data.field.roleId = [[${roleId}]];
+            data.field.resourceIds = ids.join(",");
+            $.ajax({
+                url: '/admin/sysRoleResource/saveRoleResource',
+                data: data.field,
+                dataType: 'json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            });
+            return false;
+        });
+
+    })
+</script>
+</body>
+</html>

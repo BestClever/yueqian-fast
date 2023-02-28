@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('资源修改')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="${sysResource.id}" name="id"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--手动输入-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">父级</label>
+                    <div class="layui-input-block">
+                        <ul class="dtree" data-id="0" id="selectParent" name="parentId"></ul>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" th:value="${sysResource.resourceName}"
+                               name="resourceName"
+                               placeholder="权限名称" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input name="resourceType" lay-filter="resourceType" title="目录" th:checked="${sysResource.resourceType eq '0'}"
+                               type="radio" value="0">
+                        <input checked lay-filter="resourceType" name="resourceType" title="菜单"
+                               th:checked="${sysResource.resourceType eq '1'}" type="radio" value="1">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="requestUrlItem">
+                    <label class="layui-form-label">路径</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" id="requestUrl"
+                               th:value="${sysResource.requestUrl}" name="requestUrl"
+                               placeholder="菜单路径" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item" id="openTypeItem">
+                    <label class="layui-form-label">打开</label>
+                    <div class="layui-input-block">
+                        <select id="openType" name="openType">
+                            <option value=""></option>
+                            <option th:selected="${sysResource.openType eq '_iframe'}" value="_iframe">框架</option>
+                            <option th:selected="${sysResource.openType eq '_blank'}" value="_blank">签页</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">图标</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" id="icon" lay-filter="icon" name="icon"
+                               th:value="${sysResource.icon}" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序</label>
+                    <div class="layui-input-block">
+                        <input autocomplete="off" class="layui-input" th:value="${sysResource.sort}" name="sort"
+                               placeholder="排序"
+                               type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="reset" class="yueqian-btn yueqian-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit=""
+                    lay-filter="update">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form', 'jquery', 'layerCustom', 'iconPicker', 'dtree', 'common'], function () {
+        let form = layui.form,
+            $ = layui.jquery,
+            iconPicker = layui.iconPicker,
+            dtree = layui.dtree,
+            common = layui.common,
+            layerCustom = layui.layerCustom;
+
+
+        /*表单验证*/
+        form.verify({});
+
+        dtree.renderSelect({
+            elem: "#selectParent",
+            url: "/admin/sysResource/selectParent",
+            method: 'get',
+            skin: "layui",
+            dataStyle: "layuiStyle",  //使用layui风格的数据格式
+            dataFormat: "list",  //配置data的风格为list
+            response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
+            selectInitVal: '[[${sysResource.parentId}]]'
+        });
+
+        form.on("radio(resourceType)", function () {
+            if (this.value == '0') {
+                $("#requestUrlItem").hide();
+                $("#openTypeItem").hide();
+                $("#requestUrl").val("");
+                $("#openType").val("");
+            } else if (this.value == '1') {
+                $("#requestUrlItem").show();
+                $("#openTypeItem").show();
+            }
+        });
+
+        form.on('submit(update)', function (data) {
+            data.field.icon = "layui-icon " + data.field.icon;
+            $.ajax({
+                url: '/admin/sysResource/update',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layerCustom.greenLaughMsg(result.msg, function () {
+                            //刷新父页面的表格
+                            parent.render();
+                            //先得到当前iframe层的索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭弹出框
+                            parent.layer.close(index);
+                        })
+                    } else {
+                        layer.msg(result.msg);
+                        return;
+                    }
+                }
+            });
+            return false;
+        });
+
+        iconPicker.render({
+            elem: '#icon',
+            type: 'fontClass',
+            search: true,
+            page: true,
+            limit: 12,
+            click: function (data) {
+                console.log(data);
+            }
+        });
+        if (!common.isEmpty('[[${sysResource.icon}]]')) {
+            iconPicker.checkIcon("icon",'[[${sysResource.icon}]]');
+        }
+
+        window.init = function (type) {
+            if (type == '0') {
+                $("#requestUrlItem").hide();
+                $("#openTypeItem").hide();
+                $("#requestUrl").val("");
+                $("#openType").val("");
+            } else if (type == '1') {
+                $("#requestUrlItem").show();
+                $("#openTypeItem").show();
+            }
+        }
+
+        window.init('[[${sysResource.resourceType}]]');
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

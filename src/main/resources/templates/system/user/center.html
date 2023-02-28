@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('个人中心')"/>
+    <link th:href="@{/admin/css/other/center.css}" rel="stylesheet"/>
+    <style>
+        .layui-form-item {
+            margin-top: 17px !important;
+            margin-bottom: 17px !important;
+        }
+    </style>
+</head>
+<body class="yueqian-container">
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-md3">
+        <div class="layui-card">
+            <div class="layui-card-body" style="padding: 25px;">
+                <div class="text-center layui-text">
+                    <div class="user-info-head" id="userInfoHead">
+                        <img alt="" height="115px" id="avatar" src="" width="115px">
+                    </div>
+                    <h2 style="padding-top: 20px;font-size: 20px;" th:text="${session.activerUser.sysUser.realName}"></h2>
+                    <p style="padding-top: 8px;margin-top: 10px;font-size: 13.5px;">China ， 中国</p>
+                </div>
+            </div>
+            <div style="height: 45px;border-top: 1px whitesmoke solid;text-align: center;line-height: 45px;font-size: 13.5px;">
+                <span th:text="${session.activerUser.sysUser.remark}">今日事 ，今日毕</span>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md9">
+        <div class="layui-card">
+            <div class="layui-card-header">个人信息</div>
+            <div class="layui-card-body">
+                <div class="layui-tab layui-tab-brief">
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <form class="layui-form">
+                                <div class="layui-form-item layui-hide">
+                                    <label class="layui-form-label">编号</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" lay-verify="title"
+                                               name="userId"
+                                               placeholder="请输入编号" th:value="${session.activerUser.userId}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">账号</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" lay-verify="title" name="username"
+                                               placeholder="请输入账号"
+                                               readonly th:value="${session.activerUser.userName}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">姓名</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" lay-verify="title"
+                                               name="realName"
+                                               placeholder="请输入姓名" th:value="${session.activerUser.sysUser.realName}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">邮箱</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" lay-verify="title" name="email"
+                                               placeholder="请输入邮箱" th:value="${session.activerUser.email}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">电话</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" lay-verify="title" name="phone"
+                                               placeholder="请输入电话" th:value="${session.activerUser.sysUser.phone}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">描述</label>
+                                    <div class="layui-input-block">
+                                        <textarea class="layui-textarea" name="remark" placeholder="请输入描述"
+                                                  th:text="${session.activerUser.sysUser.remark}"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-filter="user-update"
+                                                lay-submit>修改资料
+                                        </button>
+                                        <button class="yueqian-btn yueqian-btn-sm edit-password">更改密码</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    layui.use(['element', 'jquery', 'layer', 'form', 'convert','admin'], function () {
+        let $ = layui.jquery;
+        let layer = layui.layer;
+        let form = layui.form;
+        let convert = layui.convert;
+        let admin = layui.admin;
+
+        $(".edit-password").click(function () {
+            layer.open({
+                type: 2,
+                title: '修改密码',
+                shade: 0.1,
+                area: ['550px', '280px'],
+                content: '/admin/sysUser/editPassword'
+            });
+            return false;
+        })
+
+        let image = new Image();
+        let avater = [[${session.activerUser.avatar}]];
+        image.src = "/" + avater.substring(avater.indexOf("profile"),avater.length);
+        image.onload = function () {
+            $("#avatar").attr("src", convert.imageToBase64(image));
+        }
+
+        $("#avatar").click(function () {
+            layer.open({
+                type: 2,
+                title: '更换图片',
+                shade: 0.1,
+                area: ["900px", "500px"],
+                content: '/admin/sysUser/profile',
+                btn: ['确定', '取消'],
+                yes: function (index, layero) {
+                    window['layui-layer-iframe' + index].submitForm();
+                }
+            });
+        });
+
+        form.on('submit(user-update)', function (data) {
+            $.ajax({
+                url: '/admin/sysUser/updateInfo',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg("修改成功", {icon: 1, time: 1000});
+                        //刷新当前页面
+                        window.location.reload();
+                    } else {
+                        layer.msg("修改失败", {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+.volunteer .main-container{margin: 15px auto;min-height:100%;width: 80%}
+.volunteer .main-container li{display: flex;border-bottom: 1px dotted #e2e2e2;height: 45px; line-height: 22px; padding: 15px 15px 15px 30px;}
+.volunteer .main-container li:last-child{border-bottom: none;}
+.volunteer .main-container .left{display: flex;min-width: 90%;}
+.volunteer .main-container .left .title{margin-left: 10px;display: flex;flex-direction: column;justify-content: space-between;}
+.volunteer .main-container .right{display: flex;flex-direction: column;justify-content: space-between;}
+.volunteer .main-container .right .num{display: flex;justify-content: center;}
+
+.volunteerDetail .main-container{margin: auto 10%; }
+.volunteerDetail .main-container .title{display: flex;justify-content: center; }
+.volunteerDetail .main-container .time{display: flex;justify-content: flex-end;margin-right: 20% }
+.volunteerDetail .main-container .content{min-height: 350px;padding: 15px;}

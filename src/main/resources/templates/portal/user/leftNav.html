@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="active(flag)">
+    <ul class="layui-nav layui-nav-tree layui-inline" style="height: 100%;padding: 5px;" lay-filter="user">
+        <li th:class="${flag=='1'?'layui-nav-item layui-this':'layui-nav-item'}" >
+            <a href="/portal/user/userCenter">
+                <i class="layui-icon">&#xe612;</i>
+                基本设置
+            </a>
+        </li>
+<!--        <li th:class="${flag=='2'?'layui-nav-item layui-this':'layui-nav-item'}" >-->
+<!--            <a href="/authenticate/user">-->
+<!--                <i class="layui-icon">&#xe620;</i>-->
+<!--                宠物申请-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li th:class="${flag=='3'?'layui-nav-item layui-this':'layui-nav-item'}" >-->
+<!--            <a href="/authenticate/petLoveMatch">-->
+<!--                <i class="layui-icon">&#xe611;</i>-->
+<!--                配对申请-->
+<!--            </a>-->
+<!--        </li>-->
+<!--        <li th:class="${flag=='4'?'layui-nav-item layui-this':'layui-nav-item'}" >-->
+<!--            <a href="/authenticate/myPetTransport">-->
+<!--                <i class="layui-icon">&#xe613;</i>-->
+<!--                宠物运输-->
+<!--            </a>-->
+<!--        </li>-->
+    </ul>
+</div>

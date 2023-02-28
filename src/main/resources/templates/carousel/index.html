@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('列表')"/>
+</head>
+<body class="yueqian-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="query-form">
+            <div class="layui-form-item">
+                <!--自己手写 无法生成-->
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" placeholder="请输入" class="layui-input">
+                </div>
+                <label class="layui-form-label">类型</label>
+                <div class="layui-input-inline">
+                    <select name="type">
+                        <option value="">请选择</option>
+                        <option value="0">管理员端</option>
+                        <option value="1" selected="">门户</option>
+                    </select>
+                </div>
+                <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="search">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="yueqian-btn yueqian-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tableId" lay-filter="tableFilter"></table>
+    </div>
+</div>
+
+<!--工具栏 表格上方-->
+<script type="text/html" id="tableToolBar">
+    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<!--表格操作 表格内-->
+<script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="layui-icon layui-icon-edit"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </a>
+</script>
+
+<!--tpl 标签展示区域-->
+<script type="text/html" id="isDisplayTpl">
+    {{#if (d.isDisplay == 1) { }}
+    <span>展示</span>
+    {{# }else if(d.isDisplay == 0){ }}
+    <span>不展示</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="pathTpl">
+    <img style="height: 50px;width: 50px;cursor: pointer;"
+         src="{{ d.path}}"/>
+</script>
+
+<script type="text/html" id="typeTpl">
+    {{#if (d.type == 0) { }}
+    <span>管理员端</span>
+    {{# }else if(d.type == 1){ }}
+    <span>门户</span>
+    {{# } }}
+</script>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="none">
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom','common'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            layer = layui.layer,
+            common = layui.common,
+            form = layui.form;
+
+        var myTalbe = table.render({
+            elem: '#tableId'
+            , url: '/admin/carousel/list'
+            , skin: 'line'
+            , toolbar: '#tableToolBar'
+            , cols: [[
+                {type: 'checkbox'},
+                {title: '图片名称', field: 'name', align: 'center'},
+                {title: '跳转路径', field: 'url', align: 'center'},
+                {title: '图片地址', field: 'path', align: 'center', templet: "#pathTpl", event: "showImg"},
+                {title: '是否展示', field: 'isDisplay', align: 'center', templet: "#isDisplayTpl"},
+                {title: '类型', field: 'type', align: 'center', templet: "#typeTpl"},
+                {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
+            ]]
+            , page: true
+        });
+
+        form.on("submit(search)", function (data) {
+            myTalbe.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        //表格上层工具栏
+        table.on('toolbar(tableFilter)', function (obj) {
+            switch (obj.event) {
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        //表格中操作栏
+        table.on("tool(tableFilter)", function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case "update":
+                    update(data);
+                    break;
+                case "del":
+                    del(data);
+                    break;
+            }
+
+            var event = obj.event;
+            if (event === "showImg") {
+                //预览图片
+                common.previewImg(data.path,"700","600");
+            }
+        });
+
+        function add() {
+            layerCustom.open("添加", '/admin/carousel/add', "550px", "500px", function (layero, index) {
+            })
+        }
+
+        function update(data) {
+            layerCustom.open("修改信息", '/admin/carousel/edit?id=' + data.id, "550px", "500px", function (layero, index) {
+            })
+        }
+
+        function del(data) {
+            layerCustom.confirm("是否要删除该条数据", function () {
+                var loading = layer.load();
+                var params = {
+                    id: data.id
+                }
+                $.ajax({
+                    url: "/admin/carousel/delete",
+                    data: params,
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layerCustom.greenLaughMsg(result.msg, function () {
+                                myTalbe.reload();
+                            });
+                        } else {
+                            layerCustom.redCryMsg(result.msg);
+                        }
+                    }
+                })
+            })
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+body {
+    background-repeat: no-repeat;
+    background-color: rgb(242,242,242);
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+html { height: 100%; }
+.content { flex: 1; }
+
+/*=====================图标展示start============================*/
+.icon-disply{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: 100px;
+    grid-gap: 10px;
+    /*background-color: #2196F3;*/
+    padding: 10px;
+}
+.icon-disply div{
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px 0;
+}
+.icon-disply .iconfont{
+    font-size: 45px;
+    cursor: pointer;
+}
+/*=====================图标展示rnd============================*/
+
+/*辅助*/
+.yueqian-overflow{
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+a:hover{color: #2d8cf0; transition: all .3s;}
+a{cursor: pointer}
+
+/*固定位置*/
+.is-fixed { position: fixed; top: 0; box-shadow: 0px 3px 10px 1px rgba(144, 161, 180, 0.4); z-index: 99; width: 100%}
+
+/*头部*/
+.topnav{display: flex;justify-content: space-evenly;}
+.layui-row-header { padding: 10px 50px;background-color: rgb(60, 64, 76);color: rgb(127, 198, 147);display: flex;justify-content: space-between;}
+.layui-row-header .topInfo-left { display: flex }
+.layui-row-header .topInfo-left i{margin-right: 10px }
+.layui-row-header .topInfo-left p { font-size: 1.8rem;color: white;font-family: Verdana, Geneva, sans-serif;}
+.layui-row-header .topinfo-right {line-height: 38px;display: flex;cursor: pointer;}
+.layui-row-header .topinfo-right .no-login a{ color: white;}
+.layui-row-header .topinfo-right .no-login a:hover { text-decoration: none;color: #2d8cf0; transition: all .3s; }
+.layui-row-header .topinfo-right .no-login span{ margin: 0 20px; padding: 3px 10px; border: 1px solid white; }
+.layui-row-header .topinfo-right .layui-nav {background-color: rgb(60, 64, 76);height: 50px; margin-top: -10px;}
+.layui-nav-header {border-radius: 0;}
+.layui-nav-header li{margin-left: 50px;}
+
+
+
+/*用户*/
+.userCenter .main-container{display: flex;justify-content: flex-start;margin-top: 15px}
+.userCenter .left-nav{height:calc(100vh - 140px);}
+.userCenter .left-nav .layui-nav{height:100%;padding: 10px 0;}
+.userCenter .right-content{margin-left: -40px;padding: 20px;}
+/* 单行列表 */
+.jie-row li{position: relative; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dotted #E9E9E9; font-size: 0;}
+.jie-row li *{position: relative; display:inline-block; *display:inline; *zoom:1; vertical-align: top; line-height: 20px; font-size:12px;}
+.jie-row li span{padding: 0 6px; margin-right: 10px; background-color: #DADADA; color:#fff; font-size:12px;}
+.jie-row li .jie-status{margin:0 10px 0 0;}
+.jie-row li .jie-status-ok{background-color:#8FCDA0;}
+.jie-row li a{ padding-right:15px; font-size:14px;}
+.jie-row li cite{padding-right:15px;}
+.jie-row li i, .jie-row li em, .jie-row li cite{font-size:12px; color:#999; font-style: normal;}
+.jie-row li .mine-edit{margin-left:15px; padding:0 6px; background-color: #8FCDA0; color:#fff; font-size:12px;}
+.jie-row li em{position:absolute; right:0; top:0;}
+.jie-row li .jie-user{}
+.jie-row li .jie-title{max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.jie-row li .jie-user img{position:relative; top: 16px; width: 35px; height: 35px;}
+/* 我的消息 */
+#LAY-minemsg{min-height:420px;}
+.mine-msg li{position:relative; margin-bottom: 15px; padding: 10px 0 5px; line-height:24px; border-bottom:1px dotted #E9E9E9}
+.mine-msg li cite{padding: 0 5px; color: #4F99CF;}
+.mine-msg li i{color:#4F99CF; padding-right:5px;}
+.mine-msg li>p{position: relative; margin-top: 5px; line-height: 26px; text-align: right;}
+.mine-msg li>p span{position: absolute; left: 0; top: 0; color:#999;}
+.mine-msg li .fly-delete{position: relative; top: -3px;}
+.mine-msg li .layui-elem-quote p[download]{padding: 10px 0 5px;}
+
+/* 设置 */
+.avatar-add{position:relative; width:373px; height:373px; background-color:#F2F2F5;}
+.avatar-add .upload-img{position:absolute; left:50%; top:35px; margin:0 0 0 -56px;}
+.avatar-add img{position:absolute; left:50%; top:50%; width:168px; height:168px; margin:-50px 0 0 -84px; border-radius:100%;}
+.avatar-add .loading{display:none; position:absolute; width:100%; height:100%; left:0; top:0; padding: 0; background-color:#000; opacity:0.5; filter: Alpha(opacity=50);}
+.avatar-add p{position:absolute; top:70px; width:100%; margin-top: 10px;; font-size:12px; text-align:center; color:#999;}
+.app-bind li{margin-bottom:10px; line-height:30px; color:#999;background-color: #F8F8F8;padding: 10px 15px;}
+.app-bind li .iconfont{position: relative; top: 3px; margin-right: 5px; font-size:28px; }
+.app-bind .app-havebind{color:#333;}
+.app-bind .app-havebind .icon-qq{color:#7CA9C9}
+.app-bind .app-havebind .icon-weibo{color:#E6162D}
+
+
+/*底部*/
+.layui-row-footer {
+    width: 95%;
+    height: 20px;
+    padding: 15px 30px;
+    border-top: 1px solid #C0C0C0;
+}
+.layui-row-footer p span { margin-left: 20px; }
+
+
+/*详情*/
+.layui-breadcrumb-div { margin: 20px 30px; }
+.detail>.main { line-height: 45px; padding: 20px 100px; }
+.detail>.main>h1 { text-align: center; }
+.detail>.main>.info { text-align: center; }
+.detail>.main p{ line-height: 30px; text-indent:2em; }
+.detail>.main img{ max-width: 100%}
+
+/*许愿池*/
+.wish .form-wrapper { max-width: 80%; margin: 0 auto; padding: 20px; }
+.wish .form-wrapper .no-login-tip{margin: 0 auto; background-color: white;width: 80%;padding: 10px;border-radius: 3px;display: flex }
+.wish .form-wrapper .no-login-tip i{ color: #00a65a;font-size: 20px;margin-right: 8px }
+.wish .form-wrapper .no-login-tip p{ color: #00a65a;font-weight: bold;font-family: Verdana, Geneva, sans-serif; }
+.wish .form-wrapper .no-login-tip p a{ font-size: 1.04rem; color: #556B2F}
+.wish .form-wrapper .no-login-tip p a:hover{ text-decoration: underline}
+.wish .form-wrapper .layui-form { background-color: white; padding: 20px; border-radius: 3px; }
+.wish .form-wrapper .layui-form p { color: #00a65a; }
+.wish .form-wrapper .layui-form .layui-form-item { margin: 10px 0; }
+.wish .layui-tab-wrapper {
+    max-width: 70%;
+    margin: 0 auto;
+    padding-left: 20px;
+    background-color: white;
+    border-radius: 3px;
+}
+.wish .layui-tab-wrapper .layui-tab-content .layui-row { padding: 10px 0; }
+.wish .layui-tab-wrapper .layui-tab-content .username { font-weight: bold; }
+.wish .layui-tab-wrapper .layui-tab-content .time { font-size: 12px; color: grey; margin-left: 20px; }
+.wish .layui-tab-wrapper .layui-tab-content .content { margin-top: 5px;font-size: 12px }
+.wish .layui-tab-wrapper .layui-tab-content .reply {
+    margin: 10px;
+    padding:10px 10px 50px 10px;
+    background-color: rgb(242,242,245);
+    border-top: 1px solid #DCDCDC;
+}
+.wish .hasLike{
+    color: #DC143C
+}
+
+/*宠物列表*/
+.petInfo .search{
+    width: 86%;
+    margin: 15px auto 15px;
+    padding: 15px;
+}
+.petInfo .search dl{display: flex;padding: 10px;}
+.petInfo .search dl a{margin: 10px; cursor: pointer;}
+.petInfo .search dt{font-size: 15px; color: #009688;}
+.petInfoActive{background: #5fb878 none repeat scroll 0 0;border-radius: 2px;color: #fff;padding: 10px}
+
+.petInfo .main-container{
+    min-height: 550px;
+    width: 88%;
+    margin: 15px auto 15px;
+}
+.petInfo .main-container .item{min-height: 340px;min-width: 263px;width: 239px;margin-left: 10px;margin-top: 10px;display: flex;flex-direction: column;}
+.petInfo .main-container .item .item-header{margin:10px auto;}
+.petInfo .main-container .item .item-header:hover .layui-btn{display: inline-block;}
+.petInfo .main-container .item .item-header img{width: 239px;height: 150px;cursor: pointer;}
+.petInfo .main-container .item .item-header .layui-btn{display: none;position: absolute;bottom: 200px;left: 35%;border: 1px solid #C9C9C9;background-color: #fff;color: #555;}
+.petInfo .main-container .item .item-body{padding:0px 10px 0px 10px}
+.petInfo .main-container .item .item-body h2{padding: 10px 0 5px;line-height: 22px;font-size: 18px;white-space: nowrap;overflow: hidden;text-align: center;}
+.petInfo .main-container .item .item-bottom{border-top: 1px dotted #eee;margin: 10px 0 0;display: flex;padding: 10px}
+.petInfo .main-container .item .item-bottom img{width: 35px;height: 35px;border-radius: 100%;}
+
+/*宠物新增*/
+.petAdd .content {min-height: 550px;margin: 15px auto 15px;width: 80%}
+.petAdd .content .header{display: flex;}
+.petAdd .content .header i{font-size: 50px; color: #5fb878;margin-top: 10px;margin-left: 30px}
+.petAdd .content .header h3{font-size: 30px;margin-top: 16px;color: #5fb878;}
+
+.petInfoDetail .content{margin: 15px auto 15px;width: 80%;display: flex}
+.petInfoDetail .content .left-content {margin:20px 40px;}
+.petInfoDetail .content .left-content img{width: 500px;height: 450px}
+.petInfoDetail .content .right-content{margin:20px 40px;}
+.petInfoDetail .content .right-content p{font-size: 20px;}
+.petInfoDetail .content .right-content .form-custom{display: flex;}
+.petInfoDetail .content .right-content .form-custom ul{margin-top: 20px;width: 300px;}
+.petInfoDetail .content .right-content .form-custom ul li{margin-top: 20px;}
+
+.yueqian-avatar{display: block;width: 45px;height: 45px;margin: 0;border-radius: 2px;}
+.petlostinfo .main-header{margin: 15px auto;min-height: 200px;width: 80%}
+.petlostinfo .main-container{margin: 15px auto;min-height: 400px;width: 80%}
+.petlostinfo .main-container li{display: flex;border-bottom: 1px dotted #e2e2e2;height: 45px; line-height: 22px; padding: 15px 15px 15px 30px;}
+.petlostinfo .main-container li:last-child{border-bottom: none;}
+.petlostinfo .main-container .left{display: flex;min-width: 95%;}
+.petlostinfo .main-container .left .title{margin-left: 10px;display: flex;flex-direction: column;justify-content: space-between;}
+.petlostinfo .main-container .right{display: flex;flex-direction: column;justify-content: space-between;}
+
+.petLostInfoDetail .content{margin: 15px auto 15px;width: 80%;display: flex;flex-direction: column;padding: 20px}
+
+/********************************************文章列表************************************************/
+.article {
+    padding: 15px;
+    background: #fff;
+    border-bottom: 1px solid #f2f2f2;
+    position: relative;
+    overflow: hidden;
+    height: 150px;
+}
+
+.article .article-title {
+    margin-bottom: 10px;
+}
+
+.article .article-title a {
+    font-size: 14px;
+    color: #333;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}
+
+.article .article-title a:hover {
+    color: #01AAED;
+    -moz-transition: all .2s;
+    -o-transition: all .2s;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}
+
+.article > .article-right > .article-abstract {
+    color: #999;
+    min-height: 100px;
+    line-height: 25px;
+}
+
+.article > .article-left {
+    width: 18%;
+    float: left;
+    overflow: hidden;
+    border: 1px solid #f2f2f2;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.article > .article-left > img {
+    width: 100%;
+    height: 150px;
+}
+
+.article > .article-left > img:hover {
+    -moz-transition: all .6s ease 0s;
+    -o-transition: all .6s ease 0s;
+    -webkit-transition: all .6s ease 0s;
+    transition: all .6s ease 0s;
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.article > .article-right {
+    width: 80%;
+    float: right;
+    padding-left: 2%;
+}
+
+
+.article .article-footer {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #999;
+    height: 22px;
+    line-height: 22px;
+}
+
+.article .article-footer > span,
+.article .article-footer > a {
+    padding-right: 2%;
+}
+
+.article .article-footer > .read {
+    padding-right: 5px;
+    float: right;
+}
+
+.article .flag {
+    position: absolute;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    width: 74px;
+    background-color: #FF5722;
+    color: #fff;
+}
+
+.article .flag-left {
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    left: -18px;
+    top: 9px;
+}
+
+.article .flag-right {
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    right: -18px;
+    top: 9px;
+}
+/********************************************文章列表End************************************************/

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <th:block th:include="portal/common/include :: header('用户登录')"/>
+    <!--    引入自定义css-->
+    <link rel="stylesheet" th:href="@{/component/portal/css/user.css}" media="all"/>
+</head>
+<body>
+<div th:replace="portal/common/header :: header('1')"></div>
+<div class="content">
+    <div class="layui-container" style="margin-top: 10px;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-lg12 main-body">
+                <!--主体部分-->
+                <!--left-->
+                <div th:replace="portal/user/leftNav :: active('1')"></div>
+                <!--right-->
+                <div class="layui-panel left-content">
+                    <div class="layui-tab layui-tab-brief" lay-filter="user">
+                        <ul class="layui-tab-title" id="LAY_mine">
+                            <li class="layui-this" lay-id="info">我的资料</li>
+                            <li lay-id="avatar">头像</li>
+                            <li lay-id="pass">密码</li>
+                        </ul>
+                        <div class="layui-tab-content" style="padding: 20px 0;">
+                            <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                                <form>
+                                    <div class="layui-form-item">
+                                        <label for="L_email" class="layui-form-label">邮箱</label>
+                                        <div class="layui-input-inline">
+                                            <input readonly type="text" id="L_email" name="email" required
+                                                   lay-verify="email" autocomplete="off" class="layui-input"
+                                                   th:value="${session.activerUserInfo.user.email}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="L_email" class="layui-form-label">电话号码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="L_phone" name="phone"
+                                                   readonly autocomplete="off" class="layui-input"
+                                                   th:value="${session.activerUserInfo.user.phone}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="L_username" class="layui-form-label">昵称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" id="L_username" name="realName" required
+                                                   lay-verify="required"
+                                                   autocomplete="off" class="layui-input"
+                                                   th:value="${session.activerUserInfo.user.userName}">
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="layui-input-inline">
+                                                <input type="radio" name="sex" value="0" title="男"
+                                                       th:checked="${session.activerUserInfo.user.sex eq '1'}">
+                                                <input type="radio" name="sex" value="1" title="女"
+                                                       th:checked="${session.activerUserInfo.user.sex eq '2'}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-form-text">
+                                        <label for="L_sign" class="layui-form-label">签名</label>
+                                        <div class="layui-input-block">
+                                    <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="remark" autocomplete="off"
+                                              class="layui-textarea" style="height: 80px;"
+                                              th:text="${session.activerUserInfo.user.remark}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <button class="layui-btn" key="set-mine" lay-filter="confirmChange" lay-submit>
+                                            确认修改
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="layui-form layui-form-pane layui-tab-item">
+                                <div class="layui-form-item">
+                                    <div class="avatar-add">
+                                        <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
+                                        <button type="button" class="layui-btn upload-img">
+                                            <i class="layui-icon">&#xe67c;</i>上传头像
+                                        </button>
+                                        <img th:if="${not #strings.isEmpty(session.activerUserInfo.getAvatar())}"
+                                             th:src="${session.activerUserInfo.getAvatar()}"
+                                             class="layui-nav-img avatar-img">
+                                        <img th:if="${#strings.isEmpty(session.activerUserInfo.getAvatar())}"
+                                             th:src="@{/component/portal/image/header.png}"
+                                             class="layui-nav-img avatar-img">
+                                        <span class="loading"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-form layui-form-pane layui-tab-item">
+                                <form>
+                                    <div class="layui-form-item">
+                                        <label for="L_nowPassword" class="layui-form-label layui-required">当前密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" id="L_nowPassword" name="nowPassword" required
+                                                   lay-verify="required"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="password" class="layui-form-label layui-required">新密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" id="password" name="password" required
+                                                   lay-verify="required"
+                                                   autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label for="L_repass" class="layui-form-label layui-required">确认密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" id="L_repass" name="repass" required
+                                                   lay-verify="required|confirmPassword" autocomplete="off"
+                                                   class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <button class="layui-btn" key="set-mine" lay-filter="changePwd" lay-submit>
+                                            确认修改
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="portal/common/footer :: footer"></div>
+<th:block th:include="portal/common/include :: footer"/>
+<script>
+    layui.use(['layerCustom', 'form', 'element', 'laypage', 'layer', 'form', 'laytpl', 'upload', 'common'], function () {
+        let $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            laypage = layui.laypage,
+            upload = layui.upload,
+            common = layui.common,
+            form = layui.form,
+            laytpl = layui.laytpl;
+
+
+        upload.render({
+            elem: '.upload-img'
+            , url: '/common/upload'
+            , size: 50
+            , before: function () {
+                $('.avatar-add').find('.loading').show();
+            }
+            , done: function (res) {
+                if (res.success) {
+                    $(".avatar-img").attr("src", res.url);
+                    //更新头像信息
+                    let url = "/authenticate/updateAvatar";
+                    let param = {
+                        avatar: res.url
+                    };
+                    common.ajax.post(url, param, function (result) {
+                        if (result.success) {
+                            layerCustom.greenLaughMsg(result.msg)
+                        } else {
+                            layerCustom.redCryMsg(result.msg)
+                        }
+                    })
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+                $('.avatar-add').find('.loading').hide();
+            }
+            , error: function () {
+                avatarAdd.find('.loading').hide();
+            }
+        });
+
+        //表单提交
+        form.on('submit(confirmChange)', function (data) {
+            let url = "/portal/user/updateUserInfo";
+            common.ajax.post(url, data.field, function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        window.location.reload();
+                    })
+                } else {
+                    layerCustom.redCryMsg(result.msg)
+                }
+            });
+            return false;
+        });
+
+        /*表单验证*/
+        form.verify({
+            confirmPassword: function (value) {
+                var password = $("#password").val();
+                if (password != value) {
+                    return "两次输入的密码不一致！";
+                }
+            }
+        });
+        //修改密码表单提交
+        form.on('submit(changePwd)', function (data) {
+            let url = "/portal/user/updateUserPassword";
+            common.ajax.post(url, data.field, function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        window.location.reload();
+                    })
+                } else {
+                    layerCustom.redCryMsg(result.msg)
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

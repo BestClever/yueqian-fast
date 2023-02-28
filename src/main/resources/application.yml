@@ -1,0 +1,93 @@
+# 项目相关配置
+framework:
+  # 名称
+  name: ItYueQianGu
+  # 版本
+  version: 1.0
+  # 版权年份
+  copyrightYear: 2022
+  # 实例演示开关
+  demoEnabled: false
+  # 文件路径 示例（ Windows配置D:/ityueqiangu/uploadPath，Linux配置 /home/ityueqiangu/uploadPath）
+  profile: D:/ityueqiangu/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+
+
+
+server:
+  port: 8088
+
+# 数据库连接池
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://cdb-dzuvsk24.cd.tencentcdb.com:10075/yueqian-springboot-layui?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: yun@2020
+    hikari:
+      # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+      connection-timeout: 60000
+      #此属性控制将测试连接的活动性的最长时间。此值必须小于connectionTimeout。可接受的最低验证超时为250毫秒。 默认值：5000
+      validation-timeout: 3000
+      # 最小连接数
+      minimum-idle: 10
+      # 最大连接数
+      maximum-pool-size: 10
+      # 自动提交
+      auto-commit: true
+      # 连接超时的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      idle-timeout: 60000
+      # 连接池名字
+      pool-name: DateSourceHikariCP
+      # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
+      max-lifetime: 60000
+      connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+
+
+
+mybatis:
+  #typeAliasesPackage: com.ityueqiangu.project.**.domain
+  mapper-locations: classpath:mybatis/**/*Mapper.xml
+  #configuration-properties: classpath:mybatis/mybatis-config.xml
+
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+# 打印sql
+logging:
+  level:
+    org.springframework: warn
+    com.ityueqiangu: debug
+
+# 用户配置
+user:
+  indexUrl: /admin/login
+  password:
+    # 密码错误{maxRetryCount}次锁定10分钟
+    maxRetryCount: 5

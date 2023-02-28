@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header(flag)">
+    <div class="layui-row-header">
+        <div class="topInfo-left">
+            <i class="layui-icon layui-icon-theme"></i>
+            <p><a href="/portal/index" style="color: white">跃迁管理系统欢迎您！</a></p>
+        </div>
+        <div class="topinfo-right">
+            <div style="margin-right: 40px;display: flex;">
+                <input class="layui-input" placeholder="输入内容进行查询">
+                <i class="layui-icon layui-icon-search" id="search" title="搜索"></i>
+            </div>
+            <div th:switch="${session.activerUserInfo == null}">
+                <div th:case="true">
+                    <span class="no-login">
+                    <a href="/portal/login">登录</a>
+                    <span><a href="/portal/register">注册</a></span>
+                </span>
+                </div>
+                <div th:case="false">
+                    <ul class="layui-nav" lay-filter="mine">
+                        <li class="layui-nav-item">
+                            <a>
+                                <img th:if="${not #strings.isEmpty(session.activerUserInfo.getAvatar())}"
+                                     th:src="${session.activerUserInfo.getAvatar()}" class="layui-nav-img">
+                                <img th:if="${#strings.isEmpty(session.activerUserInfo.getAvatar())}"
+                                     th:src="@{/component/portal/image/header.png}" class="layui-nav-img">
+                                <span th:text="${session.activerUserInfo.getUserName()}"></span>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="/portal/user/userCenter">个人中心</a></dd>
+                                <dd><a href="/portal/logout">退出登录</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="layui-nav layui-nav-header topnav" lay-filter="nav">
+        <li class="layui-nav-item" th:class="${flag=='1'?'layui-nav-item layui-this':'layui-nav-item'}"><a
+                href="/portal/index">首页</a></li>
+        <li class="layui-nav-item " th:class="${flag=='2'?'layui-nav-item layui-this':'layui-nav-item'}" style=""><a
+                href="">占位</a></li>
+        <li class="layui-nav-item" th:class="${flag=='3'?'layui-nav-item layui-this':'layui-nav-item'}"><a
+                href="">占位</a></li>
+        <li class="layui-nav-item" th:class="${flag=='4'?'layui-nav-item layui-this':'layui-nav-item'}"><a
+                href="">占位</a></li>
+        <li class="layui-nav-item" th:class="${flag=='4'?'layui-nav-item layui-this':'layui-nav-item'}"><a
+                href="">占位</a></li>
+        <li class="layui-nav-item" th:class="${flag=='4'?'layui-nav-item layui-this':'layui-nav-item'}"><a
+                href="">占位</a></li>
+        <li class="layui-nav-item" th:class="${flag=='5'?'layui-nav-item layui-this':'layui-nav-item'}"><a
+                href="">关于我们</a></li>
+    </ul>
+</div>
+</html>

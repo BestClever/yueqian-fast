@@ -1,0 +1,42 @@
+
+.main-body{
+    display: flex;
+    min-height: calc(100vh - 210px)
+}
+/*主体样式*/
+.left-content{
+    margin-left: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+/* 设置 */
+.avatar-add{position:relative; width:373px; height:373px; background-color:#F2F2F5;}
+.avatar-add .upload-img{position:absolute; left:50%; top:35px; margin:0 0 0 -56px;}
+.avatar-add img{position:absolute; left:50%; top:50%; width:168px; height:168px; margin:-50px 0 0 -84px; border-radius:100%;}
+.avatar-add .loading{display:none; position:absolute; width:100%; height:100%; left:0; top:0; padding: 0; background-color:#000; opacity:0.5; filter: Alpha(opacity=50);}
+.avatar-add p{position:absolute; top:70px; width:100%; margin-top: 10px;; font-size:12px; text-align:center; color:#999;}
+.app-bind li{margin-bottom:10px; line-height:30px; color:#999;background-color: #F8F8F8;padding: 10px 15px;}
+.app-bind li .iconfont{position: relative; top: 3px; margin-right: 5px; font-size:28px; }
+.app-bind .app-havebind{color:#333;}
+.app-bind .app-havebind .icon-qq{color:#7CA9C9}
+.app-bind .app-havebind .icon-weibo{color:#E6162D}
+
+
+.jie-row,
+.fly-home-da .home-jieda{min-height: calc(100vh - 420px); padding: 5px 20px;}
+/* 单行列表 */
+.jie-row li{position: relative; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dotted #E9E9E9; font-size: 0;}
+.jie-row li *{position: relative; display:inline-block; *display:inline; *zoom:1; vertical-align: top; line-height: 20px; font-size:12px;}
+.jie-row li span{padding: 0 6px; margin-right: 10px; background-color: #DADADA; color:#fff; font-size:12px;}
+.jie-row li a{ padding-right:15px; font-size:14px;}
+.jie-row li a:hover{color: #009688; transition: all .3s;}
+.jie-row li cite{padding-right:15px;}
+.jie-row li i, .jie-row li em, .jie-row li cite{font-size:12px; color:#999; font-style: normal;}
+.jie-row li .mine-edit{margin-left:15px; padding:0 6px; background-color: #8FCDA0; color:#fff; font-size:12px;}
+.jie-row li em{position:absolute; right:0; top:0;}
+.jie-row li .jie-user{}
+.jie-row li .jie-title{max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.jie-row li .jie-user img{position:relative; top: 16px; width: 35px; height: 35px;}
+
+

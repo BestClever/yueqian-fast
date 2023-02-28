@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('公告新增')"/>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <!--手动输入-->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-required">公告名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" lay-verify="required" autocomplete="off"
+                               placeholder="请输入名称" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-required">公告类型</label>
+                    <div class="layui-input-inline">
+                        <select name="type">
+                            <option value="0" selected="">新闻</option>
+                            <option value="1">公告</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">公告内容</label>
+                <div class="layui-input-block">
+                    <textarea name="content" id="LAY_TINYMCE" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">公告状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="isPublish" value="1" title="发布" checked="">
+                    <input type="radio" name="isPublish" value="0" title="撤回">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="reset" class="yueqian-btn yueqian-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    layui.use(['element','form','layerCustom','common', 'tinymce'], function () {
+        let form = layui.form,
+            element = layui.element,
+            common = layui.common,
+            tinymce = layui.tinymce,
+            layerCustom = layui.layerCustom;
+        //初始化 文本编辑器
+        var edit = tinymce.render({
+            elem: "#LAY_TINYMCE",
+            height: 400,
+        });
+
+        /*表单验证*/
+        form.verify({
+            exist: function (value) {
+                var url = '/admin/sysAnnouncement/exist';
+                var param = {
+                    key: value
+                }
+                var returnMsg = '';
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    async: false,
+                    data: param,
+                    dataType: "json",
+                    success: function (result) {
+                        if (!result.success) {
+                            returnMsg = result.msg;
+                        }
+                    }
+                });
+                if (returnMsg) {
+                    return returnMsg;
+                }
+            }
+        });
+
+        form.on('submit(add)', function (data) {
+            data.field.content = edit.getContent();
+            var url = '/admin/announcement/insert';
+            common.ajax.postWithJson(url, JSON.stringify(data.field),function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        //刷新父页面的表格
+                        parent.layui.table.reload('tableId');
+                        //先得到当前iframe层的索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭弹出框
+                        parent.layer.close(index);
+                    })
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                    return false;
+                }
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

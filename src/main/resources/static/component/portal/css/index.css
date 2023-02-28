@@ -1,0 +1,13 @@
+/*首页*/
+.index .main-content { padding: 30px 20px;width: 95%;height: 100%; }
+.index .main-content .layui-card{ height: 450px }
+.index .main-content .layui-card-title{display: flex;justify-content: space-between;padding: -1px}
+.index .main-content .layui-card-header i{margin-right: 5px}
+.index .main-content .layui-card-header span{ font-size: 1.1rem;}
+.index .main-content  ul li { margin-bottom: 10px; }
+.index .main-content  ul li a { display: flex; justify-content: space-between; }
+.index .main-content  ul li a:hover { text-decoration: underline; }
+.index .main-content .layui-card-wish i{ color: rgb(62,181,237)}
+.index .main-content .layui-card-content a{cursor: pointer;font-size: 14px;}
+.index .main-content .layui-card-content ul{border-bottom: 1px dotted #E9E9E9;}
+.index .main-content .layui-card-content .notice-item{display: flex;justify-content: space-between}

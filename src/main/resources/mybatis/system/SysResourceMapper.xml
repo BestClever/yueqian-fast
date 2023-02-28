@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.project.system.mapper.SysResourceMapper">
+    <resultMap id="BaseResultMap" type="com.ityueqiangu.project.system.domain.SysResource">
+        <result column="id" property="id"/>
+        <result column="resource_name" property="resourceName"/>
+        <result column="resource_type" property="resourceType"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="request_url" property="requestUrl"/>
+        <result column="open_type" property="openType"/>
+        <result column="icon" property="icon"/>
+        <result column="sort" property="sort"/>
+        <result column="is_enable" property="isEnable"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="ResuMenuMap" type="com.ityueqiangu.core.web.domain.SysMenu">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="resource_name" property="title"/>
+        <result column="user_name" property="userName"/>
+        <result column="resource_type" property="type"/>
+        <result column="icon" property="icon"/>
+        <result column="open_type" property="openType"/>
+        <result column="request_url" property="href"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.resource_name
+    , t.resource_type
+    , t.parent_id
+    , t.request_url
+    , t.open_type
+    , t.icon
+    , t.sort
+    , t.is_enable
+    , t.remark
+    , t.is_deleted
+    , t.create_by
+    , t.create_time
+    , t.update_by
+    , t.update_time
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSysResourceList" resultMap="BaseResultMap"
+            parameterType="com.ityueqiangu.project.system.domain.SysResource">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_resource t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null  and id != ''">
+                and t.id= #{id}
+            </if>
+            <if test="resourceName != null  and resourceName != ''">
+                and t.resource_name= #{resourceName}
+            </if>
+            <if test="resourceType != null  and resourceType != ''">
+                and t.resource_type= #{resourceType}
+            </if>
+            <if test="parentId != null  and parentId != ''">
+                and t.parent_id= #{parentId}
+            </if>
+            <if test="requestUrl != null  and requestUrl != ''">
+                and t.request_url= #{requestUrl}
+            </if>
+            <if test="openType != null  and openType != ''">
+                and t.open_type= #{openType}
+            </if>
+            <if test="icon != null  and icon != ''">
+                and t.icon= #{icon}
+            </if>
+            <if test="sort != null  and sort != ''">
+                and t.sort= #{sort}
+            </if>
+            <if test="isEnable != null  and isEnable != ''">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null  and remark != ''">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null  and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null  and createBy != ''">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null  and createTime != ''">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null  and updateBy != ''">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null  and updateTime != ''">
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="selectSysResourceById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_resource t
+        WHERE t.id = #{id}
+    </select>
+    <select id="getOne" parameterType="com.ityueqiangu.project.system.domain.SysResource" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_resource t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="resourceName != null  and resourceName != ''">
+                and t.resource_name= #{resourceName}
+            </if>
+            <if test="requestUrl != null  and requestUrl != ''">
+                and t.request_url= #{requestUrl}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectMenu" parameterType="string" resultMap="ResuMenuMap">
+        SELECT DISTINCT sre.* FROM sys_resource sre where sre.is_enable = '1'
+    </select>
+
+    <select id="selectMenuByUsername" parameterType="string" resultMap="ResuMenuMap">
+        SELECT DISTINCT sre.* FROM sys_resource sre
+        LEFT JOIN sys_role_resource srr ON srr.resource_id = sre.id
+        LEFT JOIN sys_role sro ON srr.role_id = sro.id
+        LEFT JOIN sys_user_role sur ON sro.id = sur.user_id
+        LEFT JOIN sys_user su ON sur.user_id = su.id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="userName != null and userName!=''">
+                and user_name = #{userName}
+            </if>
+            and sre.is_enable = '1'
+            and sro.is_enable = '1'
+            and su.is_enable = '1'
+        </trim>
+    </select>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertSysResource" parameterType="com.ityueqiangu.project.system.domain.SysResource"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resourceName != null">
+                resource_name,
+            </if>
+            <if test="resourceType != null">
+                resource_type,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="requestUrl != null">
+                request_url,
+            </if>
+            <if test="openType != null">
+                open_type,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="isEnable != null">
+                is_enable,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="resourceName != null">
+                #{resourceName},
+            </if>
+            <if test="resourceType != null">
+                #{resourceType},
+            </if>
+            <if test="parentId != null">
+                #{parentId},
+            </if>
+            <if test="requestUrl != null">
+                #{requestUrl},
+            </if>
+            <if test="openType != null">
+                #{openType},
+            </if>
+            <if test="icon != null">
+                #{icon},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="isEnable != null">
+                #{isEnable},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateSysResource" parameterType="com.ityueqiangu.project.system.domain.SysResource">
+        UPDATE sys_resource
+        <set>
+            <if test="resourceName != null">
+                resource_name=#{resourceName},
+            </if>
+            <if test="resourceType != null">
+                resource_type=#{resourceType},
+            </if>
+            <if test="parentId != null">
+                parent_id=#{parentId},
+            </if>
+            <if test="requestUrl != null">
+                request_url=#{requestUrl},
+            </if>
+            <if test="openType != null">
+                open_type=#{openType},
+            </if>
+            <if test="icon != null">
+                icon=#{icon},
+            </if>
+            <if test="sort != null">
+                sort=#{sort},
+            </if>
+            <if test="isEnable != null">
+                is_enable=#{isEnable},
+            </if>
+            <if test="remark != null">
+                remark=#{remark},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted=#{isDeleted},
+            </if>
+            <if test="createBy != null">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by=#{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据主键删除记录 -->
+    <delete id="deleteSysResourceById" parameterType="Integer">
+        delete from sys_resource where id = #{id}
+	</delete>
+
+    <!-- 根据条件删除记录 -->
+    <delete id="deleteSysResourceByCondition" parameterType="com.ityueqiangu.project.system.domain.SysResource">
+        delete from sys_resource
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null  and id != ''">
+                and t.id= #{id}
+            </if>
+            <if test="resourceName != null  and resourceName != ''">
+                and t.resource_name= #{resourceName}
+            </if>
+            <if test="resourceType != null  and resourceType != ''">
+                and t.resource_type= #{resourceType}
+            </if>
+            <if test="parentId != null  and parentId != ''">
+                and t.parent_id= #{parentId}
+            </if>
+            <if test="requestUrl != null  and requestUrl != ''">
+                and t.request_url= #{requestUrl}
+            </if>
+            <if test="openType != null  and openType != ''">
+                and t.open_type= #{openType}
+            </if>
+            <if test="icon != null  and icon != ''">
+                and t.icon= #{icon}
+            </if>
+            <if test="sort != null  and sort != ''">
+                and t.sort= #{sort}
+            </if>
+            <if test="isEnable != null  and isEnable != ''">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null  and remark != ''">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null  and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null  and createBy != ''">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null  and createTime != ''">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null  and updateBy != ''">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null  and updateTime != ''">
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </delete>
+
+</mapper>

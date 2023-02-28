@@ -6,15 +6,13 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title th:text="${title}"></title>
-    <link rel="icon" th:href="@{/resources/favicon.ico}">
-    <link rel="stylesheet" th:href="@{/resources/yueqian/css/yueqian.css}"media="all"/>
-    <link rel="stylesheet" th:href="@{/resources/css/public.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/component/yueqian/css/yueqian.css}">
 </head>
 
 <!-- 通用 JAVASCRIPT -->
 <div th:fragment="footer">
-    <script th:inline="javascript"> var ctx = [[@{/}]];</script>
-    <script th:src="@{/resources/layui/layui.js}"></script>
-    <script th:src="@{/resources/yueqian/yueqian-ui.js}"></script>
+    <script th:src="@{/component/layui/layui.js}"></script>
+    <script th:src="@{/component/yueqian/yueqian.js}"></script>
+    <script th:src="@{/admin/js/jquery.min.js}"></script>
 </div>
 

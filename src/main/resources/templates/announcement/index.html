@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('列表')"/>
+</head>
+<body class="yueqian-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="query-form">
+            <div class="layui-form-item">
+                <!--自己手写 无法生成-->
+                <label class="layui-form-label">公告名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" placeholder="请输入公告名称" class="layui-input">
+                </div>
+                <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="search">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="yueqian-btn yueqian-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tableId" lay-filter="tableFilter"></table>
+    </div>
+</div>
+
+<!--工具栏 表格上方-->
+<script type="text/html" id="tableToolBar">
+    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<!--表格操作 表格内-->
+<script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="layui-icon layui-icon-edit"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </a>
+</script>
+
+<!--tpl 标签展示区域-->
+<script type="text/html" id="typeTpl">
+    {{# if(d.type ==0){ }}
+        <span class="layui-font-green">新闻</span>
+    {{# }else{ }}
+        <span class="layui-font-orange">公告</span>
+    {{# } }}
+</script>
+<script type="text/html" id="isPublishTpl">
+    <input type="checkbox" name="isEnable" value="{{d.id}}" lay-skin="switch" lay-text="发布|撤回" lay-filter="isEnable"
+           {{d.isPublish== '1' ? 'checked' : '' }} />
+</script>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="none">
+    layui.use(['element', 'table', 'form', 'jquery', 'common', 'layerCustom'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            common = layui.common,
+            form = layui.form;
+
+        var myTalbe = table.render({
+            elem: '#tableId'
+            , url: '/admin/announcement/list'
+            , skin: 'line'
+            , toolbar: '#tableToolBar'
+            , cols: [[
+                {type: 'checkbox'},
+                {title: '名称', field: 'name', align: 'center', width: 110},
+                {title: '公告编码', field: 'infoCode', align: 'center', width: 110},
+                {title: '类型', field: 'type', align: 'center', width: 110,templet:"#typeTpl"},
+                {title: '内容', field: 'content', align: 'center', width: 110},
+                {title: '是否发布', field: 'isPublish', align: 'center', width: 110,templet:"#isPublishTpl"},
+                {title: '发布时间', field: 'publishTime', align: 'center', width: 110},
+                {title: '发布人', field: 'publishByName', align: 'center', width: 110},
+                {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
+            ]]
+            , page: true
+        });
+
+        form.on("submit(search)", function (data) {
+            myTalbe.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        form.on("switch(isEnable)", function (data) {
+            let operate;
+            if (data.elem.checked) {
+                operate = "1";
+            } else {
+                operate = "0";
+            }
+            const url = "/admin/announcement/update";
+            const param = {
+                id: this.value,
+                isPublish: operate
+            };
+            common.ajax.postWithJson(url, JSON.stringify(param), function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg);
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                }
+            });
+        });
+
+        //表格上层工具栏
+        table.on('toolbar(tableFilter)', function (obj) {
+            switch (obj.event) {
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        //表格中操作栏
+        table.on("tool(tableFilter)", function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case "update":
+                    update(data);
+                    break;
+                case "del":
+                    del(data);
+                    break;
+            }
+        });
+
+        function add() {
+            layerCustom.open("添加", '/admin/announcement/add', "750px", "600px", function (layero, index) {
+            })
+        }
+
+        function update(data) {
+            layerCustom.open("修改信息", '/admin/announcement/edit?id=' + data.id, "750px", "600px", function (layero, index) {
+            })
+        }
+
+        function del(data) {
+            let url = "/admin/announcement/delete";
+            common.ajaxRemove(url, data.id, function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        myTalbe.reload();
+                    });
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

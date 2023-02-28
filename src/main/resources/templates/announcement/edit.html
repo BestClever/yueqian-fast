@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改')"/>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="layui-form-item layui-hide">
+                <label class="layui-form-label">主键</label>
+                <div class="layui-input-block">
+                    <input type="text" th:value="${announcement.id}" name="id"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <!--手动输入-->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-required">资讯名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" th:value="${announcement.name}" lay-verify="required"
+                               autocomplete="off"
+                               placeholder="请输入名称" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label layui-required">资讯类型</label>
+                    <div class="layui-input-inline">
+                        <select name="type">
+                            <option value="0" th:selected="${announcement.type eq '0'}">新闻</option>
+                            <option value="1" th:selected="${announcement.type eq '1'}">公告</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">资讯内容</label>
+                <div class="layui-input-block">
+                    <textarea name="content" id="LAY_TINYMCE" cols="30" rows="10" th:text="${announcement.content}"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">资讯状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="isPublish" value="1" title="发布"
+                           th:checked="${announcement.isPublish eq '1'}">
+                    <input type="radio" name="isPublish" value="0" title="撤回"
+                           th:checked="${announcement.isPublish eq '0'}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit=""
+                    lay-filter="update">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="button" class="yueqian-btn yueqian-btn-sm" id="closeLayer">
+                <i class="iconfont layui-icon-ali-guanbi1"></i>
+                关闭
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    layui.use(['element', 'form', 'layerCustom', 'common', 'tinymce'], function () {
+        let form = layui.form,
+            element = layui.element,
+            common = layui.common,
+            $ = layui.jquery,
+            tinymce = layui.tinymce,
+            layerCustom = layui.layerCustom;
+
+        //初始化 文本编辑器
+        var edit = tinymce.render({
+            elem: "#LAY_TINYMCE",
+            height: 400,
+        });
+        /*表单验证*/
+        form.verify({});
+
+        form.on('submit(update)', function (data) {
+            data.field.content = edit.getContent()
+            var url = '/admin/announcement/update';
+            common.ajax.postWithJson(url, JSON.stringify(data.field), function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        //刷新父页面的表格
+                        parent.layui.table.reload('tableId');
+                        //先得到当前iframe层的索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭弹出框
+                        parent.layer.close(index);
+                    })
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                    return false;
+                }
+            });
+            return false;
+        });
+
+        /**
+         * 关闭窗口
+         */
+        $("#closeLayer").on('click', function () {
+            var index = parent.layer.getFrameIndex(window.name);
+            //关闭弹出框
+            parent.layer.close(index);
+        });
+    })
+</script>
+</body>
+</html>

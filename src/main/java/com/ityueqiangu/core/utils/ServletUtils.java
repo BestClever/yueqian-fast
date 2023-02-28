@@ -1,5 +1,6 @@
 package com.ityueqiangu.core.utils;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import org.springframework.web.context.request.RequestAttributes;
@@ -14,91 +15,82 @@ import java.io.PrintWriter;
 
 /**
  * 客户端工具类
- * 
- * @author nomes
+ *
+ * @author FlowerStone
  */
-public class ServletUtils
-{
+public class ServletUtils {
+    /**
+     * 定义移动端请求的所有可能类型
+     */
+    private final static String[] agent = {"Android", "iPhone", "iPod", "iPad", "Windows Phone", "MQQBrowser"};
+
     /**
      * 获取String参数
      */
-    public static String getParameter(String name)
-    {
+    public static String getParameter(String name) {
         return getRequest().getParameter(name);
     }
 
     /**
      * 获取String参数
      */
-    public static String getParameter(String name, String defaultValue)
-    {
+    public static String getParameter(String name, String defaultValue) {
         return Convert.toStr(getRequest().getParameter(name), defaultValue);
     }
 
     /**
      * 获取Integer参数
      */
-    public static Integer getParameterToInt(String name)
-    {
+    public static Integer getParameterToInt(String name) {
         return Convert.toInt(getRequest().getParameter(name));
     }
 
     /**
      * 获取Integer参数
      */
-    public static Integer getParameterToInt(String name, Integer defaultValue)
-    {
+    public static Integer getParameterToInt(String name, Integer defaultValue) {
         return Convert.toInt(getRequest().getParameter(name), defaultValue);
     }
 
     /**
      * 获取request
      */
-    public static HttpServletRequest getRequest()
-    {
+    public static HttpServletRequest getRequest() {
         return getRequestAttributes().getRequest();
     }
 
     /**
      * 获取response
      */
-    public static HttpServletResponse getResponse()
-    {
+    public static HttpServletResponse getResponse() {
         return getRequestAttributes().getResponse();
     }
 
     /**
      * 获取session
      */
-    public static HttpSession getSession()
-    {
+    public static HttpSession getSession() {
         return getRequest().getSession();
     }
 
-    public static ServletRequestAttributes getRequestAttributes()
-    {
+    public static ServletRequestAttributes getRequestAttributes() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return (ServletRequestAttributes) attributes;
     }
 
     /**
      * 将字符串渲染到客户端
-     * 
+     *
      * @param response 渲染对象
-     * @param string 待渲染的字符串
+     * @param string   待渲染的字符串
      * @return null
      */
-    public static String renderString(HttpServletResponse response, String string)
-    {
-        try
-        {
-            response.setStatus(200);
+    public static String renderString(HttpServletResponse response, String string) {
+        try {
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
             response.getWriter().print(string);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
@@ -106,7 +98,8 @@ public class ServletUtils
 
     /**
      * 将对象渲染到客户端
-     * @param response 渲染对象
+     *
+     * @param response       渲染对象
      * @param responseObject 待渲染的对象
      */
     public static void responseOutWithJson(HttpServletResponse response,
@@ -130,54 +123,48 @@ public class ServletUtils
 
     /**
      * 是否是Ajax异步请求
-     * 
+     *
      * @param request
      */
-    public static boolean isAjaxRequest(HttpServletRequest request)
-    {
+    public static boolean isAjaxRequest(HttpServletRequest request) {
         String accept = request.getHeader("accept");
-        if (accept != null && accept.indexOf("application/json") != -1)
-        {
+        if (accept != null && accept.indexOf("application/json") != -1) {
             return true;
         }
 
         String xRequestedWith = request.getHeader("X-Requested-With");
-        if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1)
-        {
+        if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1) {
             return true;
         }
 
         String uri = request.getRequestURI();
-        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml"))
-        {
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
             return true;
         }
 
         String ajax = request.getParameter("__ajax");
-        if (StringUtils.inStringIgnoreCase(ajax, "json", "xml"))
-        {
+        if (StringUtils.inStringIgnoreCase(ajax, "json", "xml")) {
             return true;
         }
         return false;
     }
 
-    public static ServletRequestAttributes getServletRequestAttributes() {
-        return (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    }
-
     /**
-     * 得到当前线程的请求对象
-     * @return
+     * 判断User-Agent 是不是来自于手机
      */
-    public static HttpServletRequest getHttpServletRequest() {
-        return getServletRequestAttributes().getRequest();
+    public static boolean checkAgentIsMobile(String ua) {
+        boolean flag = false;
+        if (!ua.contains("Windows NT") || (ua.contains("Windows NT") && ua.contains("compatible; MSIE 9.0;"))) {
+            // 排除 苹果桌面系统
+            if (!ua.contains("Windows NT") && !ua.contains("Macintosh")) {
+                for (String item : agent) {
+                    if (ua.contains(item)) {
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return flag;
     }
-
-    /**
-     * 得到session对象
-     */
-    public static HttpSession getHttpSession() {
-        return getHttpServletRequest().getSession();
-    }
-
 }

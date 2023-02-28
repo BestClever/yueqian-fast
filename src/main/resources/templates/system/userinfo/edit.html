@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+            	<div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="${activerUserInfo.id}" name="id"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--手动输入-->
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="reset" class="yueqian-btn yueqian-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit="" lay-filter="update">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    layui.use(['form', 'jquery', 'layerCustom'], function () {
+        let form = layui.form,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom;
+
+        /*表单验证*/
+        form.verify({
+            
+        });
+
+        form.on('submit(update)', function (data) {
+            $.ajax({
+                url: '/userInfo/update',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layerCustom.greenLaughMsg(result.msg, function () {
+                            //刷新父页面的表格
+                            parent.layui.table.reload('tableId')
+                            //先得到当前iframe层的索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭弹出框
+                            parent.layer.close(index);
+                        })
+                    } else {
+                        layer.msg(result.msg);
+                        return;
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

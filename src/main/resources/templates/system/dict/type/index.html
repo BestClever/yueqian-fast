@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('列表')"/>
+</head>
+<body class="yueqian-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="query-form">
+            <div class="layui-form-item">
+                <!--自己手写 无法生成-->
+				<label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="" placeholder="请输入" class="layui-input">
+                </div>
+                <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="search">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="yueqian-btn yueqian-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tableId" lay-filter="tableFilter"></table>
+    </div>
+</div>
+
+<!--工具栏 表格上方-->
+<script type="text/html" id="tableToolBar">
+    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<!--表格操作 表格内-->
+<script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="layui-icon layui-icon-edit"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </a>
+</script>
+
+<!--tpl 标签展示区域-->
+<script type="text/html" id="dictTypeTpl">
+   <a class="layui-font-blue" href="javascript:void(0)" onclick='detail("{{d.dictType}}")'>{{d.dictType}}</a>
+</script>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="none">
+    layui.use(['element', 'table', 'form', 'jquery', 'common', 'layerCustom','tab'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            common = layui.common,
+            tab = layui.tab,
+            form = layui.form;
+
+        var myTalbe = table.render({
+            elem: '#tableId'
+            , url: '/admin/sysDictType/list'
+            , skin: 'line'
+            , toolbar: '#tableToolBar'
+            , cols: [[
+                {type: 'checkbox'},
+                {title: '字典名称', field: 'dictName', align: 'center'},
+                {title: '字典类型', field: 'dictType', align: 'center',templet:"#dictTypeTpl"},
+                {title: '字典编码', field: 'dictCode', align: 'center'},
+                {title: '是否启用', field: 'isEnable', align: 'center',templet:function (d) {
+                        return '<span class="layui-font-green">启用</span>';
+                    }},
+                {title: '备注', field: 'remark', align: 'center', width: 110},
+                {title: '创建时间', field: 'creatTime', align: 'center', width: 110},
+                {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
+            ]]
+            , page: true
+        });
+
+        form.on("submit(search)", function (data) {
+            myTalbe.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        //表格上层工具栏
+        table.on('toolbar(tableFilter)', function (obj) {
+            switch (obj.event) {
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        //表格中操作栏
+        table.on("tool(tableFilter)", function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case "update":
+                    update(data);
+                    break;
+                case "del":
+                    del(data);
+                    break;
+            }
+        });
+
+        function add() {
+            layerCustom.open("添加", '/admin/sysDictType/add', "650px", "500px", function (layero, index) {
+            })
+        }
+
+        function update(data) {
+            layerCustom.open("修改信息", '/admin/sysDictType/edit?id='+data.id, "650px", "500px", function (layero, index) {
+            })
+        }
+
+        function del(data) {
+        	let url = "/admin/sysDictType/delete";
+            common.ajaxRemove(url, data.id, function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        myTalbe.reload();
+                    });
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                }
+            });
+        }
+
+        window.detail = function (dictType) {
+            let url = '/admin/sysDictData/index/'+dictType;
+            parent.layui.tab.addTabOnlyByElem("content", {
+                id: common.uuid(),
+                title: "字典数据",
+                url: url,
+                close: true
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

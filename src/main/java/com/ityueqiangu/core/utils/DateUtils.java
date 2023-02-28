@@ -1,22 +1,19 @@
 package com.ityueqiangu.core.utils;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
+
+import cn.hutool.core.date.DateUtil;
 
 import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author BestClever
- * @title: DateUtils
- * @projectName intelligent_park_lot
- * @description: TODO
- * @date 2020-11-13 14:53
+ * 时间工具类
+ *
+ * @author FlowerStone
  */
-public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
-
+public class DateUtils {
     public static String YYYY = "yyyy";
 
     public static String YYYY_MM = "yyyy-MM";
@@ -37,8 +34,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
      *
      * @return Date() 当前日期
      */
-    public static Date getNowDate()
-    {
+    public static Date getNowDate() {
         return new Date();
     }
 
@@ -47,44 +43,34 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
      *
      * @return String
      */
-    public static String getDate()
-    {
+    public static String getDate() {
         return dateTimeNow(YYYY_MM_DD);
     }
 
-    public static final String getTime()
-    {
+    public static final String getTime() {
         return dateTimeNow(YYYY_MM_DD_HH_MM_SS);
     }
 
-    public static final String dateTimeNow()
-    {
+    public static final String dateTimeNow() {
         return dateTimeNow(YYYYMMDDHHMMSS);
     }
 
-    public static final String dateTimeNow(final String format)
-    {
+    public static final String dateTimeNow(final String format) {
         return parseDateToStr(format, new Date());
     }
 
-    public static final String dateTime(final Date date)
-    {
+    public static final String dateTime(final Date date) {
         return parseDateToStr(YYYY_MM_DD, date);
     }
 
-    public static final String parseDateToStr(final String format, final Date date)
-    {
+    public static final String parseDateToStr(final String format, final Date date) {
         return new SimpleDateFormat(format).format(date);
     }
 
-    public static final Date dateTime(final String format, final String ts)
-    {
-        try
-        {
+    public static final Date dateTime(final String format, final String ts) {
+        try {
             return new SimpleDateFormat(format).parse(ts);
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -92,45 +78,33 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
     /**
      * 日期路径 即年/月/日 如2018/08/08
      */
-    public static final String datePath()
-    {
+    public static final String datePath() {
         Date now = new Date();
-        return DateFormatUtils.format(now, "yyyy/MM/dd");
+        return DateUtil.format(now, "yyyy/MM/dd");
     }
 
     /**
      * 日期路径 即年/月/日 如20180808
      */
-    public static final String dateTime()
-    {
+    public static final String dateTime() {
         Date now = new Date();
-        return DateFormatUtils.format(now, "yyyyMMdd");
+        return DateUtil.format(now, "yyyyMMdd");
     }
 
     /**
      * 日期型字符串转化为日期 格式
      */
-    public static Date parseDate(Object str)
-    {
-        if (str == null)
-        {
+    public static Date parseDate(Object str) {
+        if (str == null) {
             return null;
         }
-        try
-        {
-            return parseDate(str.toString(), parsePatterns);
-        }
-        catch (ParseException e)
-        {
-            return null;
-        }
+        return DateUtil.parse(str.toString(), parsePatterns);
     }
 
     /**
      * 获取服务器启动时间
      */
-    public static Date getServerStartDate()
-    {
+    public static Date getServerStartDate() {
         long time = ManagementFactory.getRuntimeMXBean().getStartTime();
         return new Date(time);
     }
@@ -138,16 +112,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
     /**
      * 计算相差天数
      */
-    public static int differentDaysByMillisecond(Date date1, Date date2)
-    {
+    public static int differentDaysByMillisecond(Date date1, Date date2) {
         return Math.abs((int) ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24)));
     }
 
     /**
      * 计算两个时间差
      */
-    public static String getDatePoor(Date endDate, Date nowDate)
-    {
+    public static String getDatePoor(Date endDate, Date nowDate) {
         long nd = 1000 * 24 * 60 * 60;
         long nh = 1000 * 60 * 60;
         long nm = 1000 * 60;
@@ -165,27 +137,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
         return day + "天" + hour + "小时" + min + "分钟";
     }
 
-
-    public static Long getBetweenHour(Date endDate, Date nowDate){
-        long nd = 1000 * 24 * 60 * 60;
-        long nh = 1000 * 60 * 60;
-        long nm = 1000 * 60;
-        // long ns = 1000;
-        // 获得两个时间的毫秒时间差异
-        long diff = endDate.getTime() - nowDate.getTime();
-        // 计算差多少小时
-        long hour = diff % nd / nh;
-        return hour;
+    public static String timestamp2Date(Long timestamp, String pattern) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new Date(timestamp*1000));
     }
 
-    public static void main(String[] args) {
-        Calendar calendar = Calendar.getInstance();
-        /* HOUR_OF_DAY 指示一天中的小时 */
-
-        calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 2);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Long betweenHour = DateUtils.getBetweenHour(calendar.getTime(), new Date());
-        System.out.println(betweenHour-0.5);
-
+    public static int dateTime2TimeStamp(String time,String pattern){
+        SimpleDateFormat format =  new SimpleDateFormat(pattern);
+        Date date = null;
+        try {
+            date = format.parse(time);
+        } catch (ParseException e) {
+            return 0;
+        }
+        return (int)(date.getTime()/1000);
     }
 }

@@ -1,0 +1,36 @@
+body {
+    font-size: 14px;
+    background-size: cover;
+    border-bottom: none;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 0;
+    height: 98vh;
+}
+
+.register-form {
+    width: 350px;
+    padding: 50px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.register-form .register-title {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.has-account{
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+}
+
+.has-account a{
+    color: blue;
+}
+

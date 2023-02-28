@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false">
+
+    <!-- diskStore：ehcache其实是支持内存+磁盘+堆外内存，几个层级的缓存 -->
+    <!-- 在这里设置一下，但是一般不用的 -->
+    <diskStore path="D:/ehcache/cache" />
+
+    <!--
+        name:缓存名称。
+       maxElementsInMemory：缓存最大个数。
+       eternal:对象是否永久有效，一但设置了，timeout将不起作用。
+       timeToIdleSeconds：设置对象在失效前的允许闲置时间（单位：秒）。仅当eternal=false对象不是永久有效时使用，可选属性，默认值是0，也就是可闲置时间无穷大。
+       timeToLiveSeconds：设置对象在失效前允许存活时间（单位：秒）。最大时间介于创建时间和失效时间之间。仅当eternal=false对象不是永久有效时使用，默认是0.，也就是对象存活时间无穷大。
+       overflowToDisk：当内存中对象数量达到maxElementsInMemory时，Ehcache将会对象写到磁盘中。
+       diskSpoolBufferSizeMB：这个参数设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区。
+       maxElementsOnDisk：硬盘最大缓存个数。
+       diskPersistent：是否缓存虚拟机重启期数据 Whether the disk store persists between restarts of the Virtual Machine. The default value is false.
+       diskExpiryThreadIntervalSeconds：磁盘失效线程运行时间间隔，默认是120秒。
+       memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）。
+       clearOnFlush：内存数量最大时是否清除。
+    -->
+    <defaultCache
+            eternal="true"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="0"
+            memoryStoreEvictionPolicy="LRU" />
+
+    <!-- 手动指定的缓存策略 -->
+    <!-- 比如你一个应用吧，可能要缓存很多种不同的数据，比如说商品信息，或者是其他的一些数据 -->
+    <!-- 对不同的数据，缓存策略可以在这里配置多种 -->
+    <cache
+            name="local"
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="true"
+            clearOnFlush="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="0"
+            memoryStoreEvictionPolicy="LRU" />
+
+    <!-- ehcache这种东西，简单实用，是很快速的，1小时上手可以用在项目里了，没什么难度的 -->
+    <!-- ehcache这个技术，如果讲深了，里面的东西还是很多的，高级的feature，但是我们这里就不涉及了 -->
+
+</ehcache>
+

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.project.announcement.mapper.AnnouncementMapper">
+    <resultMap id="BaseResultMap" type="com.ityueqiangu.project.announcement.domain.Announcement">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="info_code" property="infoCode"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="is_publish" property="isPublish"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="publish_by" property="publishBy"/>
+        <result column="is_enable" property="isEnable"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="publish_by_name" property="publishByName"/>
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+      t.id
+    , t.name
+    , t.info_code
+    , t.type
+    , t.content
+    , t.is_publish
+    , t.publish_time
+    , t.publish_by
+    , t.is_enable
+    , t.remark
+    , t.is_deleted
+    , t.create_by
+    , t.create_time
+    , t.update_by
+    , t.update_time
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectAnnouncementList" resultMap="BaseResultMap"
+            parameterType="com.ityueqiangu.project.announcement.domain.Announcement">
+        SELECT
+        <include refid="baseColumns"/>,u.user_name as publish_by_name
+        FROM t_announcement t left join sys_user u on t.publish_by = u.user_name
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null">
+                and t.id= #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and t.name= #{name}
+            </if>
+            <if test="infoCode != null and infoCode != ''">
+                and t.info_code= #{infoCode}
+            </if>
+            <if test="type != null and type != ''">
+                and t.type= #{type}
+            </if>
+            <if test="content != null and content != ''">
+                and t.content= #{content}
+            </if>
+            <if test="isPublish != null and isPublish != ''">
+                and t.is_publish= #{isPublish}
+            </if>
+            <if test="publishTime != null">
+                and t.publish_time= #{publishTime}
+            </if>
+            <if test="publishBy != null">
+                and t.publish_by= #{publishBy}
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null and remark != ''">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="selectAnnouncementById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM t_announcement t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null  ">
+                t.id = #{id}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insertAnnouncement" parameterType="com.ityueqiangu.project.announcement.domain.Announcement"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO t_announcement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoCode != null and infoCode != ''">
+                info_code,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="type != null and type != ''">
+                type,
+            </if>
+            <if test="content != null and content != ''">
+                content,
+            </if>
+            <if test="isPublish != null and isPublish != ''">
+                is_publish,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="publishBy != null and publishBy != ''">
+                publish_by,
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                is_enable,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                is_deleted,
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="infoCode != null and infoCode != ''" >
+                #{infoCode},
+            </if>
+            <if test="name != null and name != ''" >
+                #{name},
+            </if>
+            <if test="type != null and type != ''" >
+                #{type},
+            </if>
+            <if test="content != null and content != ''" >
+                #{content},
+            </if>
+            <if test="isPublish != null and isPublish != ''" >
+                #{isPublish},
+            </if>
+            <if test="publishTime != null" >
+                #{publishTime},
+            </if>
+            <if test="publishBy != null and publishBy != ''" >
+                #{publishBy},
+            </if>
+            <if test="isEnable != null and isEnable != ''" >
+                #{isEnable},
+            </if>
+            <if test="remark != null and remark != ''" >
+                #{remark},
+            </if>
+            <if test="isDeleted != null and isDeleted != ''" >
+                #{isDeleted},
+            </if>
+            <if test="createBy != null and createBy != ''" >
+                #{createBy},
+            </if>
+            <if test="createTime != null" >
+                #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''" >
+                #{updateBy},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateAnnouncement" parameterType="com.ityueqiangu.project.announcement.domain.Announcement">
+        UPDATE t_announcement
+        <set>
+            <if test="name != null and name != '' ">
+                name=#{name},
+            </if>
+            <if test="infoCode != null and infoCode != '' ">
+                info_code=#{infoCode},
+            </if>
+            <if test="type != null and type != '' ">
+                type=#{type},
+            </if>
+            <if test="content != null and content != '' ">
+                content=#{content},
+            </if>
+            <if test="isPublish != null and isPublish != '' ">
+                is_publish=#{isPublish},
+            </if>
+            <if test="publishTime != null">
+                publish_time=#{publishTime},
+            </if>
+            <if test="publishBy != null">
+                publish_by=#{publishBy},
+            </if>
+            <if test="isEnable != null and isEnable != '' ">
+                is_enable=#{isEnable},
+            </if>
+            <if test="remark != null and remark != '' ">
+                remark=#{remark},
+            </if>
+            <if test="isDeleted != null and isDeleted != '' ">
+                is_deleted=#{isDeleted},
+            </if>
+            <if test="createBy != null and createBy != '' ">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != '' ">
+                update_by=#{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据主键删除记录 -->
+    <delete id="deleteAnnouncementById" parameterType="Integer">
+        delete from t_announcement where id = #{id}
+	</delete>
+
+    <!-- 根据条件删除记录 -->
+    <delete id="deleteAnnouncementByCondition" parameterType="com.ityueqiangu.project.announcement.domain.Announcement">
+        delete from t_announcement
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null" >
+                and t.id= #{id}
+            </if>
+            <if test="name != null and name != '' " >
+                and t.name= #{name}
+            </if>
+            <if test="infoCode != null and infoCode != '' " >
+                and t.info_code= #{infoCode}
+            </if>
+            <if test="type != null and type != '' " >
+                and t.type= #{type}
+            </if>
+            <if test="content != null and content != '' " >
+                and t.content= #{content}
+            </if>
+            <if test="isPublish != null and isPublish != '' " >
+                and t.is_publish= #{isPublish}
+            </if>
+            <if test="publishTime != null" >
+                and t.publish_time= #{publishTime}
+            </if>
+            <if test="publishBy != null" >
+                and t.publish_by= #{publishBy}
+            </if>
+            <if test="isEnable != null and isEnable != '' " >
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null and remark != '' " >
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null and isDeleted != '' " >
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null and createBy != '' " >
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null" >
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != '' " >
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null" >
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </delete>
+
+</mapper>

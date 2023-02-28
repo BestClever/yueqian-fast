@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('用户修改')"/>
+</head>
+<body>
+<form class="layui-form">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">主键</label>
+                    <div class="layui-input-block">
+                        <input type="text" th:value="${sysUser.id}" name="id"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label layui-required">账号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="userName" disabled readonly th:value="${sysUser.userName}"
+                                   lay-verify="required" autocomplete="off"
+                                   placeholder="请输入账号" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label layui-required">姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="realName" th:value="${sysUser.realName}" lay-verify="required"
+                                   autocomplete="off"
+                                   placeholder="请输入姓名" class="layui-input"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" th:checked="${sysUser.sex eq '0'}" name="sex" value="0" title="男">
+                            <input type="radio" th:checked="${sysUser.sex eq '1'}" name="sex" value="1" title="女">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户状态</label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" th:checked="${sysUser.isEnable eq '0'}" name="isEnable" value="0"
+                                   lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="email" th:value="${sysUser.email}" lay-verify="email"
+                                   autocomplete="off" placeholder="请输入标题"
+                                   class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">电话</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="phone" th:value="${sysUser.phone}" lay-verify="phone"
+                                   autocomplete="off" placeholder="请输入标题"
+                                   class="layui-input"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色</label>
+                    <div class="layui-input-block">
+                        <input th:each="sysRole:${sysRoles}" th:checked="${sysRole.checked}"
+                               th:value="${sysRole.id}" th:title="${sysRole.roleName}" type="checkbox"
+                               name="roleIds" lay-skin="primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="reset" class="yueqian-btn yueqian-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+            <button type="submit" class="yueqian-btn yueqian-btn-primary yueqian-btn-sm" lay-submit="" lay-filter="add">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+        </div>
+    </div>
+</form>
+<th:block th:include="include :: footer"/>
+<script>
+    layui.use(['form', 'jquery','common', 'layerCustom'], function () {
+        let form = layui.form,
+            $ = layui.jquery,
+            common = layui.common,
+            layerCustom = layui.layerCustom;
+
+        /*表单验证*/
+        form.verify({
+
+        });
+
+        form.on('submit(add)', function (data) {
+            //将switch赋值
+            if (common.isEmpty(data.isEnable)) {
+                data.field.isEnable = "1";
+            }
+            //将选中的checkbox补上值
+            let roleIds = [];
+            $('input[type=checkbox]:checked').each(function () {
+                roleIds.push($(this).val());
+            });
+            data.field.roleIds = roleIds.join(",");
+            $.ajax({
+                url: '/admin/sysUser/update',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layerCustom.greenLaughMsg(result.msg, function () {
+                            //刷新父页面的表格
+                            parent.layui.table.reload('tableId')
+                            //先得到当前iframe层的索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭弹出框
+                            parent.layer.close(index);
+                        })
+                    } else {
+                        layer.msg(result.msg);
+                        return;
+                    }
+                }
+            });
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

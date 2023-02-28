@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('列表')"/>
+    <link rel="stylesheet" th:href="@{/admin/css/other/user.css}"/>
+</head>
+<body class="yueqian-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="query-form">
+            <div class="layui-form-item">
+                <!--自己手写 无法生成-->
+				<label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="text" name="" placeholder="请输入" class="layui-input">
+                </div>
+                <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="search">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="yueqian-btn yueqian-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tableId" lay-filter="tableFilter"></table>
+    </div>
+</div>
+
+<!--工具栏 表格上方-->
+<script type="text/html" id="tableToolBar">
+    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<!--表格操作 表格内-->
+<script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="layui-icon layui-icon-edit"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </a>
+</script>
+
+<!--tpl 标签展示区域-->
+<script type="text/html" id="">
+   
+</script>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="none">
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            layer = layui.layer,
+            form = layui.form;
+
+        var myTalbe = table.render({
+            elem: '#tableId'
+            , url: '/userInfo/list'
+            , skin: 'line'
+            , toolbar: '#tableToolBar'
+            , cols: [[
+                {type: 'checkbox'},
+                {title: '用户名称', field: 'userName', align: 'center', width: 110},
+                {title: '密码', field: 'password', align: 'center', width: 110},
+                {title: '真实姓名', field: 'realName', align: 'center', width: 110},
+                {title: '身份号码', field: 'idcardNo', align: 'center', width: 110},
+                {title: '邮箱', field: 'email', align: 'center', width: 110},
+                {title: '头像', field: 'avatar', align: 'center', width: 110},
+                {title: '性别', field: 'sex', align: 'center', width: 110},
+                {title: '手机号码', field: 'phone', align: 'center', width: 110},
+                {title: '是否激活', field: 'isActive', align: 'center', width: 110},
+                {title: '最后登录时间', field: 'lastLoginTime', align: 'center', width: 110},
+                {title: '注册方式', field: 'registerType', align: 'center', width: 110},
+                {title: '是否启用', field: 'isEnable', align: 'center', width: 110},
+                {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
+            ]]
+            , page: true
+        });
+
+        form.on("submit(search)", function (data) {
+            myTalbe.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        //表格上层工具栏
+        table.on('toolbar(tableFilter)', function (obj) {
+            switch (obj.event) {
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        //表格中操作栏
+        table.on("tool(tableFilter)", function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case "update":
+                    update(data);
+                    break;
+                case "del":
+                    del(data);
+                    break;
+            }
+        });
+
+        function add() {
+            layerCustom.open("添加", '/userInfo/add', "750px", "600px", function (layero, index) {
+            })
+        }
+
+        function update(data) {
+            layerCustom.open("修改信息", '/userInfo/edit?id='+data.id, "750px", "600px", function (layero, index) {
+            })
+        }
+
+        function del(data) {
+            layerCustom.confirm("是否要删除该条数据", function () {
+                var loading = layer.load();
+                var params = {
+                    id: data.id
+                }
+                $.ajax({
+                    url: "/userInfo/delete",
+                    data: params,
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layerCustom.greenLaughMsg(result.msg, function () {
+                                myTalbe.reload();
+                            });
+                        } else {
+                            layerCustom.redCryMsg(result.msg);
+                        }
+                    }
+                })
+            })
+        }
+    });
+</script>
+
+</body>
+</html>

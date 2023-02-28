@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <link rel="stylesheet" th:href="@{/component/yueqian/css/yueqian.css}" media="all"/>
+    <!--    引入自定义css-->
+    <link rel="stylesheet" th:href="@{/component/portal/css/register.css}" media="all"/>
+</head>
+<body style="background-image: url('/component/portal/image/register.jpg');">
+<div class="layui-panel register-form">
+    <form class="layui-form" action="" style="margin-right: 25px;">
+        <h1 class="register-title">
+            <span>用户登录</span>
+        </h1>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required">登录名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="loginName" placeholder="请输入登录名称"
+                       autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required">用户名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="userName" placeholder="请输入用户名称"
+                       autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" placeholder="请输入密码"
+                       autocomplete="off" class="layui-input" lay-verify="required|pass">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required">邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" placeholder="请输入邮箱"
+                       autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required">手机号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" placeholder="请输入登录名称"
+                       autocomplete="off" class="layui-input" lay-verify="required|phone">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="1" title="男" checked>
+                <input type="radio" name="sex" value="2" title="女">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="register">立即提交</button>
+            </div>
+        </div>
+        <div class="has-account">
+            已有账号？<a th:href="@{/portal/login}">立即登录</a>
+        </div>
+    </form>
+</div>
+<script th:src="@{/component/layui/layui.js}"></script>
+<script th:src="@{/component/yueqian/yueqian.js}"></script>
+<script>
+    layui.use(['carousel', 'element', 'laypage', 'layer', 'form', 'laytpl', 'common', 'layerCustom'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            common = layui.common,
+            form = layui.form;
+
+        form.verify({
+            userName: function (value) {
+                if (value.length < 3) {
+                    return '账号至少得3个字符';
+                }
+                return true;
+            },
+            pass: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格']
+        });
+
+        form.on('submit(register)', function (data) {
+            var url ="/portal/register";
+            common.ajax.post(url, data.field, function (result) {
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg, function () {
+                        window.location.href = "/portal/login";
+                    })
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

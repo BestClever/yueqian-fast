@@ -1,25 +1,43 @@
 package com.ityueqiangu.core.web.domain;
 
-import com.ityueqiangu.system.domain.User;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ityueqiangu.project.system.domain.SysUser;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
 
 /**
- * @Author: 落亦-
- * @Date: 2019/11/21 20:41
+ * @author FlowerStone
+ * @date 2021-11-10 21:32:22
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ActiverUser {
 
-    private User user;
+    /*用户id*/
+    private Integer userId;
+    /*用户名称*/
+    private String userName;
+    /*邮箱地址*/
+    private String email;
+    /*登录名称*/
+    @NotBlank(message = "登录名称不能为空")
+    private String loginName;
+    /*密码*/
+    @JsonIgnore
+    @NotBlank(message = "密码不能为空")
+    private String password;
+    /** 头像 */
+    private String avatar;
+    /*是否删除*/
+    private String isDeleted;
+    /*角色id*/
+    private Integer roleId;
+    /*部门id*/
+    private Integer deptId;
+    /*角色名称*/
+    private String roleName;
+    /*验证码*/
+    private String captcha;
 
-    private List<String> roles;
-
-    private List<String> permission;
-
+    private SysUser sysUser;
 }

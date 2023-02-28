@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ityueqiangu.project.system.mapper.SysDictDataMapper">
+    <resultMap id="BaseResultMap" type="com.ityueqiangu.project.system.domain.SysDictData">
+        <result column="id" property="id"/>
+        <result column="dict_type" property="dictType"/>
+        <result column="dict_label" property="dictLabel"/>
+        <result column="dict_value" property="dictValue"/>
+        <result column="dict_code" property="dictCode"/>
+        <result column="list_class" property="listClass"/>
+        <result column="dict_sort" property="dictSort"/>
+        <result column="is_default" property="isDefault"/>
+        <result column="is_enable" property="isEnable"/>
+        <result column="remark" property="remark"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+     t.id
+    , t.dict_type
+    , t.dict_label
+    , t.dict_value
+    , t.dict_code
+    , t.list_class
+    , t.dict_sort
+    , t.is_default
+    , t.is_enable
+    , t.remark
+    , t.is_deleted
+    , t.create_by
+    , t.create_time
+    , t.update_by
+    , t.update_time
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSysDictDataList" resultMap="BaseResultMap"
+            parameterType="com.ityueqiangu.project.system.domain.SysDictData">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dict_data t
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null">
+                and t.id= #{id}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and t.dict_type= #{dictType}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and t.dict_label= #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and t.dict_value= #{dictValue}
+            </if>
+            <if test="dictCode != null and dictCode != ''">
+                and t.dict_code= #{dictCode}
+            </if>
+            <if test="listClass != null and listClass != ''">
+                and t.list_class= #{listClass}
+            </if>
+            <if test="dictSort != null">
+                and t.dict_sort= #{dictSort}
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                and t.is_default= #{isDefault}
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null and remark != ''">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="selectSysDictDataById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dict_data t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null  ">
+                t.id = #{id}
+            </if>
+        </trim>
+    </select>
+
+    <!--根据字典类型查询字典数据-->
+    <select id="selectDictDataByType" resultMap="BaseResultMap"
+            parameterType="com.ityueqiangu.project.system.domain.SysDictData">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dict_data t
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            and is_enable = '1'
+            <if test="dictType != null and dictType != ''">
+                and t.dict_type= #{dictType}
+            </if>
+        </trim>
+        order by dict_sort asc
+    </select>
+
+    <!--根据字典类型和字典键值查询字典数据信息-->
+    <select id="selectDictLabel" resultType="java.lang.String">
+        select dict_label from sys_dict_data
+        where dict_type = #{dictType} and dict_value = #{dictValue}
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insertSysDictData" parameterType="com.ityueqiangu.project.system.domain.SysDictData"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_dict_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dictType != null and dictType != ''">
+                dict_type,
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                dict_label,
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                dict_value,
+            </if>
+            <if test="dictCode != null and dictCode != ''">
+                dict_code,
+            </if>
+            <if test="listClass != null and listClass != ''">
+                list_class,
+            </if>
+            <if test="dictSort != null">
+                dict_sort,
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                is_default,
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                is_enable,
+            </if>
+            <if test="remark != null and remark != ''">
+                remark,
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                is_deleted,
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="dictType != null and dictType != ''">
+                #{dictType},
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                #{dictLabel},
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                #{dictValue},
+            </if>
+            <if test="dictCode != null and dictCode != ''">
+                #{dictCode},
+            </if>
+            <if test="listClass != null and listClass != ''">
+                #{listClass},
+            </if>
+            <if test="dictSort != null">
+                #{dictSort},
+            </if>
+            <if test="isDefault != null and isDefault != ''">
+                #{isDefault},
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                #{isEnable},
+            </if>
+            <if test="remark != null and remark != ''">
+                #{remark},
+            </if>
+            <if test="isDeleted != null and isDeleted != ''">
+                #{isDeleted},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="updateSysDictData" parameterType="com.ityueqiangu.project.system.domain.SysDictData">
+        UPDATE sys_dict_data
+        <set>
+            <if test="dictType != null and dictType != '' ">
+                dict_type=#{dictType},
+            </if>
+            <if test="dictLabel != null and dictLabel != '' ">
+                dict_label=#{dictLabel},
+            </if>
+            <if test="dictValue != null and dictValue != '' ">
+                dict_value=#{dictValue},
+            </if>
+            <if test="dictCode != null and dictCode != '' ">
+                dict_code=#{dictCode},
+            </if>
+            <if test="listClass != null and listClass != '' ">
+                list_class=#{listClass},
+            </if>
+            <if test="dictSort != null">
+                dict_sort=#{dictSort},
+            </if>
+            <if test="isDefault != null and isDefault != '' ">
+                is_default=#{isDefault},
+            </if>
+            <if test="isEnable != null and isEnable != '' ">
+                is_enable=#{isEnable},
+            </if>
+            <if test="remark != null and remark != '' ">
+                remark=#{remark},
+            </if>
+            <if test="isDeleted != null and isDeleted != '' ">
+                is_deleted=#{isDeleted},
+            </if>
+            <if test="createBy != null and createBy != '' ">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != '' ">
+                update_by=#{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据主键删除记录 -->
+    <delete id="deleteSysDictDataById" parameterType="Integer">
+        delete from sys_dict_data where id = #{id}
+	</delete>
+
+    <!-- 根据条件删除记录 -->
+    <delete id="deleteSysDictDataByCondition" parameterType="com.ityueqiangu.project.system.domain.SysDictData">
+        delete from sys_dict_data
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null">
+                and t.id= #{id}
+            </if>
+            <if test="dictType != null and dictType != '' ">
+                and t.dict_type= #{dictType}
+            </if>
+            <if test="dictLabel != null and dictLabel != '' ">
+                and t.dict_label= #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != '' ">
+                and t.dict_value= #{dictValue}
+            </if>
+            <if test="dictCode != null and dictCode != '' ">
+                and t.dict_code= #{dictCode}
+            </if>
+            <if test="listClass != null and listClass != '' ">
+                and t.list_class= #{listClass}
+            </if>
+            <if test="dictSort != null">
+                and t.dict_sort= #{dictSort}
+            </if>
+            <if test="isDefault != null and isDefault != '' ">
+                and t.is_default= #{isDefault}
+            </if>
+            <if test="isEnable != null and isEnable != '' ">
+                and t.is_enable= #{isEnable}
+            </if>
+            <if test="remark != null and remark != '' ">
+                and t.remark= #{remark}
+            </if>
+            <if test="isDeleted != null and isDeleted != '' ">
+                and t.is_deleted= #{isDeleted}
+            </if>
+            <if test="createBy != null and createBy != '' ">
+                and t.create_by= #{createBy}
+            </if>
+            <if test="createTime != null">
+                and t.create_time= #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != '' ">
+                and t.update_by= #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and t.update_time= #{updateTime}
+            </if>
+        </trim>
+    </delete>
+
+</mapper>

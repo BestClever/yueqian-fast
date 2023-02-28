@@ -1,0 +1,8 @@
+.petlove .main-container{margin: 15px auto;min-height:100%;width: 80%}
+.petlove .main-container li{display: flex;border-bottom: 1px dotted #e2e2e2;height: 45px; line-height: 22px; padding: 15px 15px 15px 30px;}
+.petlove .main-container li:last-child{border-bottom: none;}
+.petlove .main-container .left{display: flex;min-width: 95%;}
+.petlove .main-container .left .title{margin-left: 10px;display: flex;flex-direction: column;justify-content: space-between;}
+.petlove .main-container .right{display: flex;flex-direction: column;justify-content: space-between;}
+
+.petloveDetail .main-container{margin: auto 10% }

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('列表')"/>
+    <link rel="stylesheet" th:href="@{/admin/css/other/user.css}"/>
+</head>
+<body class="yueqian-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="query-form">
+            <div class="layui-form-item">
+                <!--自己手写 无法生成-->
+                <label class="layui-form-label">权限名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="resourceName" placeholder="请输入权限名称" class="layui-input">
+                </div>
+                <button class="yueqian-btn yueqian-btn-md yueqian-btn-primary" lay-submit lay-filter="search">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="yueqian-btn yueqian-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="tableId" lay-filter="tableFilter"></table>
+    </div>
+</div>
+
+<!--工具栏 表格上方-->
+<script type="text/html" id="tableToolBar">
+    <button class="yueqian-btn yueqian-btn-primary yueqian-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+</script>
+
+<!--表格操作 表格内-->
+<script type="text/html" id="tableTool">
+    <a class="yueqian-btn yueqian-btn-warming yueqian-btn-md" lay-event="update">
+        <i class="layui-icon layui-icon-edit"></i>
+        修改
+    </a>
+    <a class="yueqian-btn yueqian-btn-danger yueqian-btn-md" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </a>
+</script>
+
+<!--tps 标签展示区域-->
+<script type="text/html" id="iconTpl">
+    <i class="layui-icon {{d.icon}}"></i>
+</script>
+
+<script type="text/html" id="openTypeTpl">
+    {{#if (d.openType == '_iframe') { }}
+    <span>框架</span>
+    {{# }else if(d.openType == '_blank'){ }}
+    <span>签页</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="resourceTypeTpl">
+    {{#if (d.resourceType == '0') { }}
+    <span>目录</span>
+    {{# }else if(d.resourceType == '1'){ }}
+    <span>菜单</span>
+    {{# }else if(d.resourceType == '2'){ }}
+    <span>按钮</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="isEnableTpl">
+    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="isEnable"
+           {{d.isEnable== '1' ? 'checked' : '' }} />
+</script>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="none">
+    layui.use(['element', 'table', 'form', 'jquery', 'layer', 'layerCustom', 'treetable'], function () {
+        var element = layui.element,
+            table = layui.table,
+            $ = layui.jquery,
+            layerCustom = layui.layerCustom,
+            treetable = layui.treetable,
+            layer = layui.layer,
+            form = layui.form;
+
+        window.render = function () {
+            treetable.render({
+                treeColIndex: 1
+                , treeSpid: 1 //开始的父节点id
+                , treeIdName: 'id'
+                , treePidName: 'parentId'
+                , elem: '#tableId'
+                , url: '/admin/sysResource/list'
+                , skin: 'line'
+                , treeDefaultClose: false
+                , toolbar: '#tableToolBar'
+                , page: false
+                , cols: [[
+                    {type: 'checkbox'},
+                    {title: '资源名称', field: 'resourceName', align: 'center'},
+                    {title: '请求路径', field: 'requestUrl', align: 'center'},
+                    {title: '资源类型', field: 'resourceType', align: 'center',templet:'#resourceTypeTpl'},
+                    {title: '图标', field: 'icon', align: 'center',templet:'#iconTpl'},
+                    {title: '排序', field: 'sort', align: 'center'},
+                    {title: '是否启用', field: 'isEnable', align: 'center',templet:'#isEnableTpl'},
+                    {title: '操作', templet: '#tableTool', fixed: 'right', width: 250, align: 'center'}
+                ]]
+                , page: true
+            });
+        };
+
+        render();
+
+        form.on('submit(search)', function (data) {
+            var keyword = data.field.resourceName.trim();
+            var $tds = $('#tableId').next('.treeTable').find('.layui-table-body tbody tr td');
+            if (!keyword) {
+                $tds.css('background-color', 'transparent');
+                layer.msg("请输入关键字", {icon: 5});
+                return;
+            }
+            var searchCount = 0;
+            $tds.each(function () {
+                $(this).css('background-color', 'transparent');
+                if ($(this).text().indexOf(keyword) >= 0) {
+                    $(this).css('background-color', 'rgba(250,230,160,0.5)');
+                    if (searchCount == 0) {
+                        $('body,html').stop(true);
+                        $('body,html').animate({scrollTop: $(this).offset().top - 150}, 500);
+                    }
+                    searchCount++;
+                }
+            });
+            if (searchCount == 0) {
+                layer.msg("没有匹配结果", {icon: 5});
+            } else {
+                treetable.expandAll('#tableId');
+            }
+            return false;
+        });
+
+        form.on("switch(isEnable)",function (data) {
+            let operate;
+            if (data.elem.checked) {
+                operate = "0";
+            } else {
+                operate = "1";
+            }
+            let loading = layer.load();
+            const url = "/admin/sysResource/updateStatus";
+            const param = {
+                id:this.value,
+                isEnable:operate
+            };
+            $.post(url,param,function (result) {
+                layer.close(loading);
+                if (result.success) {
+                    layerCustom.greenLaughMsg(result.msg);
+                } else {
+                    layerCustom.redCryMsg(result.msg);
+                }
+            });
+        });
+
+        //表格上层工具栏
+        table.on('toolbar(tableFilter)', function (obj) {
+            switch (obj.event) {
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        //表格中操作栏
+        table.on("tool(tableFilter)", function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case "update":
+                    update(data);
+                    break;
+                case "del":
+                    del(data);
+                    break;
+                case "authorization":
+                    authorization(data);
+                    break;
+            }
+        });
+
+        function add() {
+            layerCustom.open("添加", '/admin/sysResource/add', "450px", "550px", function (layero, index) {
+            })
+        }
+
+        function update(data) {
+            layerCustom.open("修改信息", '/admin/sysResource/edit?id=' + data.id, "450px", "550px", function (layero, index) {
+            })
+        }
+
+        function del(data) {
+            layerCustom.confirm("是否要删除该条数据", function () {
+                var loading = layer.load();
+                var params = {
+                    id: data.id
+                };
+                $.ajax({
+                    url: "/admin/sysResource/delete",
+                    data: params,
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layerCustom.greenLaughMsg(result.msg, function () {
+                                render();
+                            });
+                        } else {
+                            layerCustom.redCryMsg(result.msg);
+                        }
+                    }
+                })
+            })
+        }
+    });
+</script>
+
+</body>
+</html>
