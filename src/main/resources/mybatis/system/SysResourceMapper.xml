@@ -134,9 +134,9 @@
             <if test="userName != null and userName!=''">
                 and user_name = #{userName}
             </if>
-            and sre.is_enable = '0'
-            and sro.is_enable = '0'
-            and su.is_enable = '0'
+            and sre.is_enable = '1'
+            and sro.is_enable = '1'
+            and su.is_enable = '1'
         </trim>
     </select>
 
